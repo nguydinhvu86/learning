@@ -21,7 +21,7 @@ export default function NotificationBell() {
     .catch(() => {});
 
     // Hook SocketIO
-    const socket: Socket = io({ {
+    const socket: Socket = io('/', {
       query: { token }
     });
 
