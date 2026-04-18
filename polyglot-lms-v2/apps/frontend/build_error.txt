@@ -1,0 +1,19 @@
+
+> frontend@0.1.0 build
+> next build
+
+  ▲ Next.js 14.2.35
+
+   Creating an optimized production build ...
+
+[Browserslist] Could not parse C:\Users\admin\Documents\HSK4_mindmap\package.json. Ignoring it.
+[Browserslist] Could not parse C:\Users\admin\Documents\HSK4_mindmap\package.json. Ignoring it.
+ ⨯ page.tsx doesn't have a root layout. To fix this error, make sure every page has a root layout.
+Next.js build worker exited with code: 1 and signal: null
+npm error Lifecycle script `build` failed with error:
+npm error code 1
+npm error path C:\Users\admin\Documents\HSK4_mindmap\polyglot-lms-v2\apps\frontend
+npm error workspace frontend@0.1.0
+npm error location C:\Users\admin\Documents\HSK4_mindmap\polyglot-lms-v2\apps\frontend
+npm error command failed
+npm error command C:\Windows\system32\cmd.exe /d /s /c next build
