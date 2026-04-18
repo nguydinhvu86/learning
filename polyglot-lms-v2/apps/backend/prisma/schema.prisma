@@ -284,3 +284,14 @@ model Notification {
 
   user        User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
+
+model SystemSetting {
+  id                  String   @id @default("global")
+  platform_name       String   @default("Polyglot Hub")
+  tagline             String   @default("E-Learning Ecosystem")
+  description         String   @db.Text
+  company_name        String   @default("TSOL")
+  company_description String   @db.Text
+  company_url         String   @default("https://thegioigiaiphap.vn")
+  updated_at          DateTime @updatedAt
+}

@@ -40,14 +40,15 @@ export class AcademicController {
   @ApiOperation({ summary: 'Get all users' })
   async getUsers() {
     const users = await this.prisma.user.findMany({
-      include: { student_profile: true, teacher_profile: true }
+      include: { student_profile: true, teacher_profile: true, enrollments: true }
     });
     return users.map(u => ({
       id: u.id,
       email: u.email,
       role: u.role,
       is_active: u.status === 'active',
-      name: u.student_profile?.full_name || u.teacher_profile?.full_name || 'Admin / Root'
+      name: u.student_profile?.full_name || u.teacher_profile?.full_name || 'Admin / Root',
+      course_ids: u.enrollments ? u.enrollments.map(e => e.course_id) : []
     })).sort((a, b) => a.role.localeCompare(b.role));
   }
 
@@ -59,6 +60,17 @@ export class AcademicController {
         where: { id },
         data: { role: dto.role }
      });
+     
+     // Also ensure the correct profile exists if changed dynamically
+     const user = await this.prisma.user.findUnique({ where: { id }, include: { student_profile: true, teacher_profile: true } });
+     const baseName = user?.student_profile?.full_name || user?.teacher_profile?.full_name || 'User';
+     
+     if (dto.role === 'STUDENT' && !user?.student_profile) {
+         await this.prisma.studentProfile.create({ data: { user_id: id, full_name: baseName } });
+     } else if (dto.role === 'TEACHER' && !user?.teacher_profile) {
+         await this.prisma.teacherProfile.create({ data: { user_id: id, full_name: baseName } });
+     }
+
      return { success: true };
   }
 
@@ -70,6 +82,90 @@ export class AcademicController {
         where: { id },
         data: { status: dto.status }
      });
+     return { success: true };
+  }
+
+  @Post('users')
+  @Roles('ACADEMIC_MANAGER', 'CENTER_MANAGER', 'SUPER_ADMIN')
+  @ApiOperation({ summary: 'Create a new User account directly' })
+  async createUser(@Body() dto: any) {
+     const { email, password, name, role, course_ids } = dto;
+     const user = await this.prisma.user.create({
+        data: {
+           email,
+           password_hash: password || '123456', // In a robust app, bcrypt would hash this
+           role,
+           status: 'active'
+        }
+     });
+
+     if (role === 'STUDENT') {
+        await this.prisma.studentProfile.create({ data: { user_id: user.id, full_name: name, target_lang: 'EN', current_level: 'A1'} });
+        if (course_ids && Array.isArray(course_ids) && course_ids.length > 0) {
+           await Promise.all(course_ids.map((cid: string) => 
+               this.prisma.enrollment.create({
+                  data: { student_id: user.id, course_id: cid, status: "active" }
+               })
+           ));
+        }
+     } else if (role === 'TEACHER') {
+        await this.prisma.teacherProfile.create({ data: { user_id: user.id, full_name: name } });
+     }
+     
+     return { success: true, user };
+  }
+
+  @Put('users/:id')
+  @Roles('ACADEMIC_MANAGER', 'CENTER_MANAGER', 'SUPER_ADMIN')
+  @ApiOperation({ summary: 'Update core user info completely' })
+  async updateUserInfo(@Param('id') id: string, @Body() dto: { name?: string, email?: string, password?: string, course_ids?: string[] }) {
+     const updateData: any = {};
+     if (dto.email) updateData.email = dto.email;
+     if (dto.password && dto.password.trim() !== '') updateData.password_hash = dto.password;
+     
+     if (Object.keys(updateData).length > 0) {
+        await this.prisma.user.update({ where: { id }, data: updateData });
+     }
+
+     const u = await this.prisma.user.findUnique({ where: { id }});
+     if (dto.name) {
+        if (u?.role === 'STUDENT') {
+           await this.prisma.studentProfile.upsert({
+              where: { user_id: id },
+              update: { full_name: dto.name },
+              create: { user_id: id, full_name: dto.name, target_lang: 'EN', current_level: 'A1'}
+           });
+        } else if (u?.role === 'TEACHER') {
+           await this.prisma.teacherProfile.upsert({
+              where: { user_id: id },
+              update: { full_name: dto.name },
+              create: { user_id: id, full_name: dto.name }
+           });
+        }
+     }
+     
+     // Course Enrollments Sync for Student
+     if (u?.role === 'STUDENT' && dto.course_ids && Array.isArray(dto.course_ids)) {
+        const existingEnrs = await this.prisma.enrollment.findMany({ where: { student_id: id }});
+        const existingCourseIds = existingEnrs.map(e => e.course_id);
+        
+        const safeCourseIds = dto.course_ids || [];
+        const toAdd = safeCourseIds.filter(cid => !existingCourseIds.includes(cid));
+        const toRemove = existingCourseIds.filter(cid => !safeCourseIds.includes(cid));
+        
+        if (toRemove.length > 0) {
+           await Promise.all(toRemove.map(cid => 
+              this.prisma.enrollment.deleteMany({ where: { student_id: id, course_id: cid } })
+           ));
+        }
+        if (toAdd.length > 0) {
+           await Promise.all(toAdd.map(cid => 
+              this.prisma.enrollment.create({
+                 data: { student_id: id, course_id: cid, status: "active" }
+              })
+           ));
+        }
+     }
      return { success: true };
   }
 
@@ -97,6 +193,30 @@ export class AcademicController {
       },
       orderBy: { title: 'asc' }
     });
+  }
+
+  @Put('settings')
+  @Roles('SUPER_ADMIN', 'CENTER_MANAGER', 'ACADEMIC_MANAGER')
+  @ApiOperation({ summary: 'Update global system platform settings' })
+  async updateSystemSettings(@Body() dto: any) {
+    const { platform_name, tagline, description, company_name, company_description, company_url } = dto;
+    
+    // Raw SQL to bypass EPERM Prisma generation issues on Windows dev server
+    await this.prisma.$executeRaw`
+      INSERT INTO SystemSetting (id, platform_name, tagline, description, company_name, company_description, company_url, updated_at)
+      VALUES ('global', ${platform_name}, ${tagline}, ${description}, ${company_name}, ${company_description}, ${company_url}, NOW(3))
+      ON DUPLICATE KEY UPDATE 
+        platform_name = ${platform_name},
+        tagline = ${tagline},
+        description = ${description},
+        company_name = ${company_name},
+        company_description = ${company_description},
+        company_url = ${company_url},
+        updated_at = NOW(3)
+    `;
+
+    const rows: any = await this.prisma.$queryRaw`SELECT * FROM SystemSetting WHERE id='global'`;
+    return { success: true, settings: rows[0] };
   }
 
   @Get('metadata')

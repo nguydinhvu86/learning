@@ -21,8 +21,17 @@ export class CurriculumController {
   @ApiOperation({ summary: 'Get all available courses for the user' })
   async getCourses(@Request() req: any) {
     const user_id = req.user.id;
+    const user = await this.prisma.user.findUnique({ where: { id: user_id } });
+
+    let courseFilter: any = {};
+    if (user?.role === 'STUDENT') {
+       const enrollments = await this.prisma.enrollment.findMany({ where: { student_id: user_id } });
+       const enrolledCourseIds = enrollments.map(e => e.course_id);
+       courseFilter = { id: { in: enrolledCourseIds } };
+    }
 
     const dbCourses = await this.prisma.course.findMany({
+      where: courseFilter,
       include: {
         program: true,
         level: true,
