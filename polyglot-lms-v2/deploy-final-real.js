@@ -25,23 +25,26 @@ module.exports = {
 
   const cmd = `
     export PATH=/www/server/nvm/versions/node/v24.14.0/bin:$PATH || export PATH=$PATH:/usr/local/bin &&
-    cd /www/wwwroot/learning/polyglot-lms-v2 &&
     
     echo "--- PULLING FROM GIT ---" &&
+    cd /www/wwwroot/learning/polyglot-lms-v2 &&
+    chattr -i .user.ini >/dev/null 2>&1 || true &&
     git fetch --all &&
     git reset --hard origin/main &&
-    git clean -fd &&
+    git clean -fd || true &&
+    chattr +i .user.ini >/dev/null 2>&1 || true &&
     
     echo "--- NPM INSTALL WORKSPACE ---" &&
+    cd /www/wwwroot/learning/polyglot-lms-v2 &&
     npm install &&
     
     echo "--- BUILD NEXT.JS ---" &&
-    cd apps/frontend &&
+    cd /www/wwwroot/learning/polyglot-lms-v2/apps/frontend &&
     rm -rf .next || true &&
     npm run build &&
 
     echo "--- GENERATING PRISMA CLIENT ---" &&
-    cd ../backend &&
+    cd /www/wwwroot/learning/polyglot-lms-v2/apps/backend &&
     npx prisma generate &&
     
     echo "--- REBOOTING PM2 ---" &&
