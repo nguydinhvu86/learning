@@ -9,7 +9,7 @@ export default function ClassRoster({ params }: { params: { classId: string } })
   useEffect(() => {
     const token = localStorage.getItem('polyglot_token');
     
-    fetch(`http://${window.location.hostname}:3001/api/v1/classes/${params.classId}/students`, {
+    fetch(`/api/v1/classes/${params.classId}/students`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
     .then(res => res.json())

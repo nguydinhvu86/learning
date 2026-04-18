@@ -43,7 +43,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const token = localStorage.getItem('polyglot_token');
     
-    fetch(`http://${window.location.hostname}:3001/api/v1/admin/dashboard`, {
+    fetch(`/api/v1/admin/dashboard`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
     .then(res => res.json())
@@ -59,7 +59,7 @@ export default function AdminDashboard() {
   }, []);
 
   const fetchMetadata = async (token: string) => {
-    fetch(`http://${window.location.hostname}:3001/api/v1/admin/metadata`, {
+    fetch(`/api/v1/admin/metadata`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
     .then(res => res.json())
@@ -69,7 +69,7 @@ export default function AdminDashboard() {
 
   const loadUsers = async () => {
     const token = localStorage.getItem('polyglot_token');
-    const res = await fetch(`http://${window.location.hostname}:3001/api/v1/admin/users`, {
+    const res = await fetch(`/api/v1/admin/users`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     const data = await res.json();
@@ -79,7 +79,7 @@ export default function AdminDashboard() {
   const handleCreateUser = async () => {
      if(!newUser.email || !newUser.password || !newUser.name) return alert('Vui lòng điền đủ thông tin Email, Tên và Mật khẩu.');
      const token = localStorage.getItem('polyglot_token');
-     const res = await fetch(`http://${window.location.hostname}:3001/api/v1/admin/users`, {
+     const res = await fetch(`/api/v1/admin/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(newUser)
@@ -97,13 +97,13 @@ export default function AdminDashboard() {
      if(!editingUser) return;
      const token = localStorage.getItem('polyglot_token');
 
-     await fetch(`http://${window.location.hostname}:3001/api/v1/admin/users/${editingUser.id}`, {
+     await fetch(`/api/v1/admin/users/${editingUser.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ name: editingUser.name, email: editingUser.email, password: editingUser.new_password, course_ids: editingUser.course_ids })
      });
 
-     await fetch(`http://${window.location.hostname}:3001/api/v1/admin/users/${editingUser.id}/role`, {
+     await fetch(`/api/v1/admin/users/${editingUser.id}/role`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ role: editingUser.role })
@@ -117,7 +117,7 @@ export default function AdminDashboard() {
   const handleToggleLock = async (user: any) => {
      if(!confirm(`Bạn chắc chắn muốn ${user.is_active ? 'KHÓA' : 'MỞ KHÓA'} tài khoản này?`)) return;
      const token = localStorage.getItem('polyglot_token');
-     await fetch(`http://${window.location.hostname}:3001/api/v1/admin/users/${user.id}/status`, {
+     await fetch(`/api/v1/admin/users/${user.id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ status: user.is_active ? 'locked' : 'active' })
@@ -127,7 +127,7 @@ export default function AdminDashboard() {
 
   const loadCourses = async () => {
     const token = localStorage.getItem('polyglot_token');
-    const res = await fetch(`http://${window.location.hostname}:3001/api/v1/admin/courses`, {
+    const res = await fetch(`/api/v1/admin/courses`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     const data = await res.json();
@@ -136,7 +136,7 @@ export default function AdminDashboard() {
 
   const handleBroadcast = async () => {
     const token = localStorage.getItem('polyglot_token');
-    const res = await fetch(`http://${window.location.hostname}:3001/api/v1/notifications/admin/broadcast`, {
+    const res = await fetch(`/api/v1/notifications/admin/broadcast`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ title: broadcastTitle, message: broadcastMessage })
@@ -153,7 +153,7 @@ export default function AdminDashboard() {
   const handleCreateCourse = async () => {
     if(!newCourse.title || !newCourse.program_id || !newCourse.level_id) return alert('Điền đủ thông tin bắt buộc!');
     const token = localStorage.getItem('polyglot_token');
-    const res = await fetch(`http://${window.location.hostname}:3001/api/v1/admin/courses`, {
+    const res = await fetch(`/api/v1/admin/courses`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify(newCourse)
@@ -168,7 +168,7 @@ export default function AdminDashboard() {
 
   const loadSettings = async () => {
     try {
-      const res = await fetch(`http://${window.location.hostname}:3001/api/v1/public/settings`);
+      const res = await fetch(`/api/v1/public/settings`);
       const data = await res.json();
       if(data && data.platform_name) setSiteSettings(data);
     } catch(err) { console.error(err); }
@@ -176,7 +176,7 @@ export default function AdminDashboard() {
 
   const handleSaveSettings = async () => {
     const token = localStorage.getItem('polyglot_token');
-    const res = await fetch(`http://${window.location.hostname}:3001/api/v1/admin/settings`, {
+    const res = await fetch(`/api/v1/admin/settings`, {
        method: 'PUT',
        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
        body: JSON.stringify(siteSettings)
@@ -188,7 +188,7 @@ export default function AdminDashboard() {
   const handleCreateProgram = async () => {
     if(!newProgram.title || !newProgram.language) return alert('Điền đủ thông tin Program!');
     const token = localStorage.getItem('polyglot_token');
-    const res = await fetch(`http://${window.location.hostname}:3001/api/v1/admin/programs`, {
+    const res = await fetch(`/api/v1/admin/programs`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify(newProgram)
@@ -203,7 +203,7 @@ export default function AdminDashboard() {
   const handleCreateLevel = async () => {
     if(!newLevel.name || !newLevel.framework_id) return alert('Điền đủ thông tin Level!');
     const token = localStorage.getItem('polyglot_token');
-    const res = await fetch(`http://${window.location.hostname}:3001/api/v1/admin/levels`, {
+    const res = await fetch(`/api/v1/admin/levels`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify(newLevel)
@@ -219,7 +219,7 @@ export default function AdminDashboard() {
      const newTitle = prompt('Sửa Tên Chương Trình:', p.title);
      if(!newTitle) return;
      const token = localStorage.getItem('polyglot_token');
-     await fetch(`http://${window.location.hostname}:3001/api/v1/admin/programs/${p.id}`, { 
+     await fetch(`/api/v1/admin/programs/${p.id}`, { 
        method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
        body: JSON.stringify({ title: newTitle, language: p.language, description: p.description })
      });
@@ -229,7 +229,7 @@ export default function AdminDashboard() {
   const handleDeleteProgram = async (id: string) => {
      if(!confirm('🚨 CẢNH BÁO: Bạn có chắc muốn xóa Program này? Hành động này sẽ xóa luân lý toàn bộ Course bên dưới (Cascade)! Hệ thống không chịu trách nhiệm.')) return;
      const token = localStorage.getItem('polyglot_token');
-     await fetch(`http://${window.location.hostname}:3001/api/v1/admin/programs/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }});
+     await fetch(`/api/v1/admin/programs/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }});
      fetchMetadata(token!);
   };
 
@@ -237,7 +237,7 @@ export default function AdminDashboard() {
      const newName = prompt('Sửa Tên Cấp Độ:', l.name);
      if(!newName) return;
      const token = localStorage.getItem('polyglot_token');
-     await fetch(`http://${window.location.hostname}:3001/api/v1/admin/levels/${l.id}`, { 
+     await fetch(`/api/v1/admin/levels/${l.id}`, { 
        method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
        body: JSON.stringify({ name: newName, framework_id: l.framework_id, order: l.order })
      });
@@ -247,7 +247,7 @@ export default function AdminDashboard() {
   const handleDeleteLevel = async (id: string) => {
      if(!confirm('Xác nhận xóa LEVEL này khỏi hệ thống?')) return;
      const token = localStorage.getItem('polyglot_token');
-     await fetch(`http://${window.location.hostname}:3001/api/v1/admin/levels/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }});
+     await fetch(`/api/v1/admin/levels/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }});
      fetchMetadata(token!);
   };
 
@@ -255,7 +255,7 @@ export default function AdminDashboard() {
      const newTitle = prompt('Sửa Tên Khóa Học:', c.title);
      if(!newTitle) return;
      const token = localStorage.getItem('polyglot_token');
-     await fetch(`http://${window.location.hostname}:3001/api/v1/admin/courses/${c.id}`, { 
+     await fetch(`/api/v1/admin/courses/${c.id}`, { 
        method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
        body: JSON.stringify({ title: newTitle, program_id: c.program_id, level_id: c.level_id, description: c.description })
      });
@@ -265,7 +265,7 @@ export default function AdminDashboard() {
   const handleDeleteCourse = async (id: string) => {
      if(!confirm('🚨 CẢNH BÁO: Xóa Course sẽ làm mất toàn bộ Curriculum bên trong (Units, Lessons, Flashcards). Khó hồi phục. Vẫn xóa?')) return;
      const token = localStorage.getItem('polyglot_token');
-     await fetch(`http://${window.location.hostname}:3001/api/v1/admin/courses/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }});
+     await fetch(`/api/v1/admin/courses/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }});
      loadCourses();
   };
 

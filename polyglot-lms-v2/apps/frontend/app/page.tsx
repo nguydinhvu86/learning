@@ -13,7 +13,7 @@ export default function LandingPortal() {
   });
 
   useEffect(() => {
-     fetch(`http://${window.location.hostname}:3001/api/v1/public/settings`)
+     fetch(`/api/v1/public/settings`)
        .then(res => res.json())
        .then(data => {
           if (data && data.platform_name) setSettings(data);

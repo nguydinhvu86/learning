@@ -10,7 +10,7 @@ export default function CurriculumBuilderPage() {
   const loadCurriculum = async () => {
     const token = localStorage.getItem('polyglot_token');
     if (!token) return router.push('/login');
-    const res = await fetch(`http://${window.location.hostname}:3001/api/v1/admin/courses/${courseId}/curriculum`, {
+    const res = await fetch(`/api/v1/admin/courses/${courseId}/curriculum`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     const data = await res.json();
@@ -26,7 +26,7 @@ export default function CurriculumBuilderPage() {
      const order = prompt('Thứ tự sắp xếp (số nguyên):', '1');
      if(!title || !order) return;
      const token = localStorage.getItem('polyglot_token');
-     await fetch(`http://${window.location.hostname}:3001/api/v1/admin/units`, {
+     await fetch(`/api/v1/admin/units`, {
        method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
        body: JSON.stringify({ course_id: courseId, title, order })
      });
@@ -38,7 +38,7 @@ export default function CurriculumBuilderPage() {
      const order = prompt('Sửa Thứ tự:', String(u.order));
      if(!title || !order) return;
      const token = localStorage.getItem('polyglot_token');
-     await fetch(`http://${window.location.hostname}:3001/api/v1/admin/units/${u.id}`, {
+     await fetch(`/api/v1/admin/units/${u.id}`, {
        method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
        body: JSON.stringify({ title, order })
      });
@@ -48,7 +48,7 @@ export default function CurriculumBuilderPage() {
   const handleDeleteUnit = async (id: string) => {
      if(!confirm('Xóa Unit sẽ mất hết các Lesson bên trong?')) return;
      const token = localStorage.getItem('polyglot_token');
-     await fetch(`http://${window.location.hostname}:3001/api/v1/admin/units/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }});
+     await fetch(`/api/v1/admin/units/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }});
      loadCurriculum();
   };
 
@@ -57,7 +57,7 @@ export default function CurriculumBuilderPage() {
      const order = prompt('Thứ tự:', '1');
      if(!title || !order) return;
      const token = localStorage.getItem('polyglot_token');
-     const res = await fetch(`http://${window.location.hostname}:3001/api/v1/admin/lessons`, {
+     const res = await fetch(`/api/v1/admin/lessons`, {
        method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
        body: JSON.stringify({ unit_id, title, order })
      });
@@ -74,7 +74,7 @@ export default function CurriculumBuilderPage() {
        ];
 
        for (let i = 0; i < defaultBlocks.length; i++) {
-          await fetch(`http://${window.location.hostname}:3001/api/v1/admin/blocks`, {
+          await fetch(`/api/v1/admin/blocks`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ lesson_id: newLessonId, type: defaultBlocks[i].type, seq_no: i + 1, content: defaultBlocks[i].content })
@@ -89,7 +89,7 @@ export default function CurriculumBuilderPage() {
      const order = prompt('Sửa Thứ tự:', String(l.order));
      if(!title || !order) return;
      const token = localStorage.getItem('polyglot_token');
-     await fetch(`http://${window.location.hostname}:3001/api/v1/admin/lessons/${l.id}`, {
+     await fetch(`/api/v1/admin/lessons/${l.id}`, {
        method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
        body: JSON.stringify({ title, order })
      });
@@ -99,7 +99,7 @@ export default function CurriculumBuilderPage() {
   const handleDeleteLesson = async (id: string) => {
      if(!confirm('Xóa Lesson này?')) return;
      const token = localStorage.getItem('polyglot_token');
-     await fetch(`http://${window.location.hostname}:3001/api/v1/admin/lessons/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }});
+     await fetch(`/api/v1/admin/lessons/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }});
      loadCurriculum();
   };
 

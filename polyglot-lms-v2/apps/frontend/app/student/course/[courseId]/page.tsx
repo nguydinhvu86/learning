@@ -8,7 +8,7 @@ export default function CourseHub({ params }: { params: { courseId: string } }) 
   useEffect(() => {
     const token = localStorage.getItem('polyglot_token');
     
-    fetch(`http://${window.location.hostname}:3001/api/v1/curriculum/courses/${params.courseId}/roadmap`, {
+    fetch(`/api/v1/curriculum/courses/${params.courseId}/roadmap`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
     .then(res => res.json())

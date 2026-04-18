@@ -17,7 +17,7 @@ export default function TeacherDashboard() {
   useEffect(() => {
     const token = localStorage.getItem('polyglot_token');
     
-    fetch(`http://${window.location.hostname}:3001/api/v1/classes/my-classes`, {
+    fetch(`/api/v1/classes/my-classes`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
     .then(res => res.json())

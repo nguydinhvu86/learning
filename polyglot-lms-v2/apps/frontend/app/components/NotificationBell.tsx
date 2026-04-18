@@ -11,7 +11,7 @@ export default function NotificationBell() {
     if (!token) return;
 
     // Initial Fetch
-    fetch(`http://${window.location.hostname}:3001/api/v1/notifications/my-alerts`, {
+    fetch(`/api/v1/notifications/my-alerts`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
     .then(res => res.json())
@@ -21,7 +21,7 @@ export default function NotificationBell() {
     .catch(() => {});
 
     // Hook SocketIO
-    const socket: Socket = io(`http://${window.location.hostname}:3001`, {
+    const socket: Socket = io({ {
       query: { token }
     });
 
@@ -41,7 +41,7 @@ export default function NotificationBell() {
 
   const markRead = async (id: string) => {
     const token = localStorage.getItem('polyglot_token');
-    await fetch(`http://${window.location.hostname}:3001/api/v1/notifications/${id}/read`, {
+    await fetch(`/api/v1/notifications/${id}/read`, {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${token}` }
     });

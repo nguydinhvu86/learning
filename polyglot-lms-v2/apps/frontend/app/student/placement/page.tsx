@@ -75,7 +75,7 @@ export default function PlacementTest() {
     const token = localStorage.getItem('polyglot_token');
     
     try {
-      const res = await fetch(`http://${window.location.hostname}:3001/api/v1/placement/submit`, {
+      const res = await fetch(`/api/v1/placement/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

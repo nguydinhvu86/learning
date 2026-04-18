@@ -20,7 +20,7 @@ export default function StudentDashboard() {
   useEffect(() => {
     const token = localStorage.getItem('polyglot_token');
     
-    fetch(`http://${window.location.hostname}:3001/api/v1/curriculum/courses`, {
+    fetch(`/api/v1/curriculum/courses`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
     .then(res => res.json())
@@ -52,7 +52,7 @@ export default function StudentDashboard() {
     });
     
     // Fetch dashboard stats from DB
-    fetch(`http://${window.location.hostname}:3001/api/v1/progress/dashboard`, {
+    fetch(`/api/v1/progress/dashboard`, {
        headers: { 'Authorization': `Bearer ${token}` }
     })
     .then(res => res.json())
@@ -60,7 +60,7 @@ export default function StudentDashboard() {
     .catch(console.error);
 
     // Fetch user profile
-    fetch(`http://${window.location.hostname}:3001/api/v1/auth/me`, {
+    fetch(`/api/v1/auth/me`, {
        headers: { 'Authorization': `Bearer ${token}` }
     })
     .then(res => res.json())
@@ -76,7 +76,7 @@ export default function StudentDashboard() {
   const saveProfile = async () => {
     const token = localStorage.getItem('polyglot_token');
     try {
-      await fetch(`http://${window.location.hostname}:3001/api/v1/auth/me`, {
+      await fetch(`/api/v1/auth/me`, {
         method: 'PUT',
         headers: { 
            'Authorization': `Bearer ${token}`, 

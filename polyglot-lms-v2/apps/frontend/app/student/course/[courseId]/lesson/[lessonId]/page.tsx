@@ -38,10 +38,10 @@ export default function LessonViewer({ params }: { params: { courseId: string, l
     
     // Fetch blocks and backend progress concurrently
     Promise.all([
-       fetch(`http://${window.location.hostname}:3001/api/v1/curriculum/lessons/${params.lessonId}`, {
+       fetch(`/api/v1/curriculum/lessons/${params.lessonId}`, {
          headers: { 'Authorization': `Bearer ${token}` }
        }).then(res => res.json()),
-       fetch(`http://${window.location.hostname}:3001/api/v1/progress/lesson/${params.lessonId}`, {
+       fetch(`/api/v1/progress/lesson/${params.lessonId}`, {
          headers: { 'Authorization': `Bearer ${token}` }
        }).then(res => res.json()).catch(() => ({ completed_block_ids: [] }))
     ])
@@ -102,7 +102,7 @@ export default function LessonViewer({ params }: { params: { courseId: string, l
      // Sync wipe with backend
      const token = localStorage.getItem('polyglot_token');
      if (token) {
-        fetch(`http://${window.location.hostname}:3001/api/v1/progress/lesson-reset`, {
+        fetch(`/api/v1/progress/lesson-reset`, {
            method: 'POST',
            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
            body: JSON.stringify({ lesson_id: params.lessonId })
@@ -130,7 +130,7 @@ export default function LessonViewer({ params }: { params: { courseId: string, l
      const token = localStorage.getItem('polyglot_token');
      if (!token) return;
      try {
-       await fetch(`http://${window.location.hostname}:3001/api/v1/progress/lesson-pulse-undo`, {
+       await fetch(`/api/v1/progress/lesson-pulse-undo`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
           body: JSON.stringify({ lesson_id: params.lessonId, block_id: blockId })
@@ -163,7 +163,7 @@ export default function LessonViewer({ params }: { params: { courseId: string, l
          const token = localStorage.getItem('polyglot_token');
          if (!token) return;
          try {
-             await fetch(`http://${window.location.hostname}:3001/api/v1/progress/lesson-pulse`, {
+             await fetch(`/api/v1/progress/lesson-pulse`, {
                  method: 'POST',
                  headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                  body: JSON.stringify({
@@ -199,7 +199,7 @@ export default function LessonViewer({ params }: { params: { courseId: string, l
     if (!token) return;
 
     try {
-      await fetch(`http://${window.location.hostname}:3001/api/v1/curriculum/progress`, {
+      await fetch(`/api/v1/curriculum/progress`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ block_id: blockId, status, score })

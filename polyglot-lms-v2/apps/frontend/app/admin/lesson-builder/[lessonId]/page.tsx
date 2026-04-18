@@ -24,7 +24,7 @@ export default function LessonBuilderPage() {
 
   const loadLesson = async () => {
     const token = localStorage.getItem('polyglot_token');
-    const res = await fetch(`http://${window.location.hostname}:3001/api/v1/admin/lessons/${lessonId}/blocks`, {
+    const res = await fetch(`/api/v1/admin/lessons/${lessonId}/blocks`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     const data = await res.json();
@@ -54,7 +54,7 @@ export default function LessonBuilderPage() {
 
        const token = localStorage.getItem('polyglot_token');
        const nextSeq = (lesson.blocks?.length || 0) + 1;
-       const res = await fetch(`http://${window.location.hostname}:3001/api/v1/admin/blocks`, {
+       const res = await fetch(`/api/v1/admin/blocks`, {
          method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
          body: JSON.stringify({ lesson_id: lessonId, type: blockType, seq_no: nextSeq, content: parsedContent })
        });
@@ -75,7 +75,7 @@ export default function LessonBuilderPage() {
      try {
        const parsedContent = JSON.parse(newStr);
        const token = localStorage.getItem('polyglot_token');
-       await fetch(`http://${window.location.hostname}:3001/api/v1/admin/blocks/${b.id}`, {
+       await fetch(`/api/v1/admin/blocks/${b.id}`, {
          method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
          body: JSON.stringify({ content: parsedContent })
        });
@@ -88,7 +88,7 @@ export default function LessonBuilderPage() {
   const handleDeleteBlock = async (id: string) => {
      if(!confirm('Xóa Block nội dung này khỏi bài giảng?')) return;
      const token = localStorage.getItem('polyglot_token');
-     await fetch(`http://${window.location.hostname}:3001/api/v1/admin/blocks/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }});
+     await fetch(`/api/v1/admin/blocks/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }});
      loadLesson();
   };
 
@@ -153,7 +153,7 @@ export default function LessonBuilderPage() {
           }
 
           const token = localStorage.getItem('polyglot_token');
-          const res = await fetch(`http://${window.location.hostname}:3001/api/v1/admin/blocks/${block.id}`, {
+          const res = await fetch(`/api/v1/admin/blocks/${block.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ content: existingContent })
@@ -213,7 +213,7 @@ export default function LessonBuilderPage() {
     });
 
     const token = localStorage.getItem('polyglot_token');
-    await fetch(`http://${window.location.hostname}:3001/api/v1/admin/blocks/${quizBlock.id}`, {
+    await fetch(`/api/v1/admin/blocks/${quizBlock.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ content: { questions } })
