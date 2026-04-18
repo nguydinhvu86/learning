@@ -1,0 +1,36 @@
+{
+  "simplified": "爱心",
+  "radical": "爫",
+  "level": [
+    "newest-4",
+    "new-3",
+    "old-5"
+  ],
+  "frequency": 5809,
+  "pos": [
+    "n"
+  ],
+  "forms": [
+    {
+      "traditional": "愛心",
+      "transcriptions": {
+        "pinyin": "ài xīn",
+        "numeric": "ai4 xin1",
+        "wadegiles": "ai⁴ hsin¹",
+        "bopomofo": "ㄞˋ ㄒㄧㄣ",
+        "romatzyh": "ay shin"
+      },
+      "meanings": [
+        "compassion",
+        "kindness",
+        "care for others",
+        "love",
+        "charity (bazaar, golf day etc)",
+        "heart (the symbol ♥)"
+      ],
+      "classifiers": [
+        "片"
+      ]
+    }
+  ]
+}

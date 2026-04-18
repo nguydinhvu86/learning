@@ -1,0 +1,554 @@
+{
+  "HSK1": [
+    [
+      "STT",
+      "Từ mới",
+      "Phiên âm",
+      "Giải thích",
+      "Ví dụ (chữ hán)",
+      "Phiên âm",
+      "Dịch"
+    ],
+    [
+      1,
+      "爱",
+      "ài",
+      "yêu",
+      "我爱你。",
+      "Wǒ ài nǐ.",
+      "Tôi yêu bạn."
+    ],
+    [
+      2,
+      "八",
+      "bā",
+      "tám",
+      "他有八个苹果。",
+      "Tā yǒu bā ge píngguǒ.",
+      "Anh ấy có tám quả táo."
+    ],
+    [
+      3,
+      "爸爸",
+      "bàba",
+      "bố",
+      "我的爸爸很高。",
+      "Wǒ de bàba hěn gāo.",
+      "Bố của tôi rất cao."
+    ],
+    [
+      4,
+      "杯子",
+      "bēizi",
+      "cốc",
+      "这是我的杯子。",
+      "Zhè shì wǒ de bēizi.",
+      "Đây là cốc của tôi."
+    ],
+    [
+      5,
+      "北京",
+      "Běijīng",
+      "Bắc Kinh",
+      "北京很大。",
+      "Běijīng hěn dà.",
+      "Bắc Kinh thì lớn."
+    ],
+    [
+      6,
+      "本",
+      "běn",
+      "cuốn (dùng cho sách)",
+      "这本书很有趣。",
+      "Zhè běn shū hěn yǒuqù.",
+      "Quyển sách này rất thú vị."
+    ],
+    [
+      7,
+      "不客气",
+      "bú kèqì",
+      "không có gì (đáp lại lời cảm ơn)",
+      "不客气。",
+      "bú kèqì.",
+      "Không có gì."
+    ],
+    [
+      8,
+      "不",
+      "bù",
+      "không",
+      "他不喜欢吃鱼。",
+      "Tā bù xǐhuān chī yú.",
+      "Anh ấy không thích ăn cá."
+    ],
+    [
+      9,
+      "菜",
+      "cài",
+      "món ăn, rau củ",
+      "我喜欢吃菜。",
+      "Wǒ xǐhuān chī cài.",
+      "Tôi thích ăn rau."
+    ]
+  ],
+  "HSK2": [
+    [
+      "STT",
+      "Từ mới",
+      "Phiên âm",
+      "Giải thích",
+      "Ví dụ (chữ hán)",
+      "Phiên âm",
+      "Dịch"
+    ],
+    [
+      1,
+      "吧",
+      "ba",
+      "đi, nhé, nhỉ (đứng cuối câu)",
+      "请你帮我吧。",
+      "Qǐng nǐ bāng wǒ ba.",
+      "Xin bạn giúp tôi nhé."
+    ],
+    [
+      2,
+      "白",
+      "bái",
+      "trắng",
+      "他的白色衬衫很漂亮。",
+      "Tā de báisè chènshān hěn piàoliang.",
+      "Áo sơ mi trắng của anh ấy rất đẹp."
+    ],
+    [
+      3,
+      "百",
+      "bǎi",
+      "trăm",
+      "我们要买一百个苹果。",
+      "Wǒmen yào mǎi yī bǎi gè píngguǒ.",
+      "Chúng tôi muốn mua một trăm quả táo."
+    ],
+    [
+      4,
+      "帮助",
+      "bāngzhù",
+      "giúp đỡ",
+      "请你帮忙翻译这篇文章。",
+      "Qǐng nǐ bāngmáng fānyì zhè piān wénzhāng.",
+      "Xin bạn giúp dịch bài viết này."
+    ],
+    [
+      5,
+      "报纸",
+      "bàozhǐ",
+      "báo",
+      "我每天都看报纸。",
+      "Wǒ měitiān dōu kàn bàozhǐ.",
+      "Tôi đọc báo mỗi ngày."
+    ],
+    [
+      6,
+      "比",
+      "bǐ",
+      "so sánh",
+      "我的家比你的家大。",
+      "Wǒ de jiā bǐ nǐ de jiā dà.",
+      "Nhà của tôi lớn hơn nhà của bạn."
+    ],
+    [
+      7,
+      "别",
+      "bié",
+      "đừng, khác biệt",
+      "别忘带钥匙。",
+      "Bié wàng dài yàoshi.",
+      "Đừng quên mang theo chìa khóa."
+    ],
+    [
+      8,
+      "长",
+      "cháng",
+      "dài",
+      "她的头发很长。",
+      "Tā de tóufǎ hěn cháng.",
+      "Tóc của cô ấy rất dài."
+    ],
+    [
+      9,
+      "唱歌",
+      "chànggē",
+      "hát",
+      "我喜欢唱歌。",
+      "Wǒ xǐhuān chànggē.",
+      "Tôi thích hát."
+    ]
+  ],
+  "HSK3": [
+    [
+      "STT",
+      "Từ mới",
+      "Phiên âm",
+      "Giải thích",
+      "Ví dụ (chữ hán)",
+      "Phiên âm",
+      "Dịch"
+    ],
+    [
+      1,
+      "阿姨",
+      "āyí",
+      "dì, cô",
+      "阿姨非常喜欢我们。",
+      "Āyí fēicháng xǐhuān wǒmen.",
+      "Dì rất thích chúng tôi."
+    ],
+    [
+      2,
+      "啊",
+      "a",
+      "a, à, ơ (trợ từ ngữ khí)",
+      "啊，我忘记了！",
+      "A, wǒ wàngjì le!",
+      "À, tôi quên rồi!"
+    ],
+    [
+      3,
+      "矮",
+      "ǎi",
+      "thấp, lùn",
+      "他比我矮。",
+      "Tā bǐ wǒ ǎi.",
+      "Anh ấy thấp hơn tôi."
+    ],
+    [
+      4,
+      "爱好",
+      "àihào",
+      "sở thích",
+      "我的爱好是画画儿。",
+      "Wǒ de àihào shì huà huàr.",
+      "Sở thích của tôi là vẽ tranh."
+    ],
+    [
+      5,
+      "安静",
+      "ānjìng",
+      "yên tĩnh",
+      "请保持安静。",
+      "Qǐng bǎochí ānjìng.",
+      "Xin hãy giữ yên lặng."
+    ],
+    [
+      6,
+      "把",
+      "bǎ",
+      "đem, lấy (giới từ)",
+      "把书给我。",
+      "Bǎ shū gěi wǒ.",
+      "Đưa cuốn sách cho tôi."
+    ],
+    [
+      7,
+      "班",
+      "bān",
+      "lớp, ca (làm việc)",
+      "我们班有二十个学生。",
+      "Wǒmen bān yǒu èrshí gè xuéshēng.",
+      "Lớp chúng tôi có hai mươi học sinh."
+    ],
+    [
+      8,
+      "搬",
+      "bān",
+      "chuyển, dời",
+      "他搬家到北京了。",
+      "Tā bānjiā dào Běijīng le.",
+      "Anh ấy đã chuyển nhà đến Bắc Kinh."
+    ],
+    [
+      9,
+      "半",
+      "bàn",
+      "một nửa",
+      "我们半个小时后见。",
+      "Wǒmen bàn gè xiǎoshí hòu jiàn.",
+      "Chúng ta gặp nhau sau nửa giờ."
+    ]
+  ],
+  "HSK4": [
+    [
+      "STT",
+      "Từ mới",
+      "Phiên âm",
+      "Giải thích",
+      "Ví dụ (chữ hán)",
+      "Phiên âm",
+      "Dịch"
+    ],
+    [
+      1,
+      "爱情",
+      "ài qíng [ái tình]",
+      "tình yêu",
+      "他们的爱情很美好。",
+      "Tāmen de àiqíng hěn měihǎo.",
+      "Tình yêu của họ rất đẹp."
+    ],
+    [
+      2,
+      "安排",
+      "ān pái [an bài]",
+      "sắp xếp",
+      "我已经安排好了行程。",
+      "Wǒ yǐjīng ānpái hǎo le xíngchéng.",
+      "Tôi đã sắp xếp xong hành trình."
+    ],
+    [
+      3,
+      "安全",
+      "ān quán [an toàn]",
+      "an toàn",
+      "这个地方很安全。",
+      "Zhège dìfāng hěn ānquán.",
+      "Nơi này rất an toàn."
+    ],
+    [
+      4,
+      "按时",
+      "àn shí",
+      "đúng hạn",
+      "我们必须按时完成任务。",
+      "Wǒmen bìxū ànshí wánchéng rènwù.",
+      "Chúng ta phải hoàn thành nhiệm vụ đúng giờ."
+    ],
+    [
+      5,
+      "按照",
+      "àn zhào",
+      "dựa vào, theo",
+      "请按照说明操作。",
+      "Qǐng ànzhào shuōmíng cāozuò.",
+      "Vui lòng làm theo hướng dẫn."
+    ],
+    [
+      6,
+      "百分之",
+      "bǎi fēn zhī",
+      "%",
+      "他的考试成绩是百分之九十。",
+      "Tā de kǎoshì chéngjī shì bǎifēn zhī jiǔshí.",
+      "Điểm thi của anh ấy là 90%."
+    ],
+    [
+      7,
+      "棒",
+      "bàng",
+      "cây gậy/ giỏi, tốt",
+      "你真棒！",
+      "Nǐ zhēn bàng!",
+      "Bạn thật tuyệt!"
+    ],
+    [
+      8,
+      "包子",
+      "bāo zi",
+      "bánh bao",
+      "我喜欢吃包子。",
+      "Wǒ xǐhuān chī bāozi.",
+      "Tôi thích ăn bánh bao."
+    ],
+    [
+      9,
+      "保护",
+      "bǎo hù",
+      "che chở, bảo vệ",
+      "我们要保护环境。",
+      "Wǒmen yào bǎohù huánjìng.",
+      "Chúng ta cần bảo vệ môi trường."
+    ]
+  ],
+  "HSK5": [
+    [
+      "STT",
+      "Từ mới",
+      "Phiên âm",
+      "Giải thích",
+      "Ví dụ (chữ hán)",
+      "Phiên âm",
+      "Dịch"
+    ],
+    [
+      1,
+      "哎",
+      "āi",
+      "thán từ",
+      "哎，我忘记带钥匙了！",
+      "Āi, wǒ wàngjì dài yàoshi le!",
+      "Ôi, tôi quên mang chìa khóa rồi!"
+    ],
+    [
+      2,
+      "唉",
+      "āi",
+      "thán từ",
+      "唉，这个问题真难！",
+      "Ài, zhège wèntí zhēn nán!",
+      "Than ôi, vấn đề này thật khó!"
+    ],
+    [
+      3,
+      "爱护",
+      "ài hù",
+      "yêu thương, giữ gìn",
+      "我们要爱护环境。",
+      "Wǒmen yào àihù huánjìng.",
+      "Chúng ta phải bảo vệ môi trường."
+    ],
+    [
+      4,
+      "爱惜",
+      "ài xī",
+      "quý trọng",
+      "他很爱惜自己的书。",
+      "Tā hěn àixī zìjǐ de shū.",
+      "Anh ấy rất trân trọng sách của mình."
+    ],
+    [
+      5,
+      "爱心",
+      "ài xīn",
+      "lòng tốt",
+      "她有一颗善良的爱心。",
+      "Tā yǒu yī kē shànliáng de àixīn.",
+      "Cô ấy có một tấm lòng yêu thương."
+    ],
+    [
+      6,
+      "安装",
+      "ān zhuāng",
+      "lắp đặt",
+      "我们正在安装新软件。",
+      "Wǒmen zhèngzài ānzhuāng xīn ruǎnjiàn.",
+      "Chúng tôi đang lắp đặt phần mềm mới."
+    ],
+    [
+      7,
+      "岸",
+      "àn",
+      "bờ",
+      "他站在河的对岸。",
+      "Tā zhàn zài hé de duì'àn.",
+      "Anh ấy đứng ở bờ bên kia của con sông."
+    ],
+    [
+      8,
+      "暗",
+      "àn",
+      "tối",
+      "房间里很暗。",
+      "Fángjiān lǐ hěn àn.",
+      "Trong phòng rất tối."
+    ],
+    [
+      9,
+      "熬夜",
+      "áo yè",
+      "thức đêm",
+      "他经常熬夜工作。",
+      "Tā jīngcháng áoyè gōngzuò.",
+      "Anh ấy thường xuyên thức khuya làm việc."
+    ]
+  ],
+  "HSK6": [
+    [
+      "STT",
+      "Từ mới",
+      "Phiên âm",
+      "Giải thích",
+      "Ví dụ (chữ hán)",
+      "Phiên âm",
+      "Dịch"
+    ],
+    [
+      1,
+      "哎哟",
+      "āi yōu",
+      "ái chà",
+      "哎哟，这个问题真是让人头疼。",
+      "āiyō, zhè gè wèntí zhēn shì ràng rén tóuténg.",
+      "Ôi chao, vấn đề này thật là nhức đầu."
+    ],
+    [
+      2,
+      "挨",
+      "ái",
+      "chịu đựng, bị",
+      "他每天都要挨饿。",
+      "tā měitiān dōu yào āi è.",
+      "Anh ấy phải chịu đói mỗi ngày."
+    ],
+    [
+      3,
+      "癌症",
+      "ái zhèng",
+      "ung thư",
+      "她不幸患上了癌症。",
+      "tā bùxìng huàn shàng le áizhèng.",
+      "Cô ấy không may mắc bệnh ung thư."
+    ],
+    [
+      4,
+      "爱不释手",
+      "ài bù shì shǒu",
+      "yêu không rời tay",
+      "这本书让他爱不释手。",
+      "zhè běn shū ràng tā àibùshìshǒu.",
+      "Cuốn sách này làm anh ấy không thể rời tay."
+    ],
+    [
+      5,
+      "爱戴",
+      "ài dài",
+      "yêu mến, kính trọng",
+      "他深受大家的爱戴。",
+      "tā shēn shòu dàjiā de àidài.",
+      "Anh ấy được mọi người yêu mến."
+    ],
+    [
+      6,
+      "暧昧",
+      "ài mèi",
+      "mập mờ, không rõ ràng",
+      "他们之间的关系有点暧昧。",
+      "tāmen zhījiān de guānxì yǒu diǎn àimèi.",
+      "Mối quan hệ giữa họ có chút mờ ám."
+    ],
+    [
+      7,
+      "安居乐业",
+      "ān jū lè yè",
+      "an cư lạc nghiệp",
+      "他们在这里安居乐业。",
+      "tāmen zài zhèlǐ ānjūlèyè.",
+      "Họ sống an cư lạc nghiệp ở đây."
+    ],
+    [
+      8,
+      "安宁",
+      "ān níng",
+      "yên bình",
+      "她喜欢安宁的生活。",
+      "tā xǐhuān ānníng de shēnghuó.",
+      "Cô ấy thích cuộc sống yên bình."
+    ],
+    [
+      9,
+      "安详",
+      "ān xiáng",
+      "bình thản, điềm tĩnh",
+      "他总是表现得很安详。",
+      "tā zǒng shì biǎoxiàn de hěn ānxiáng.",
+      "Anh ấy luôn tỏ ra rất điềm tĩnh."
+    ]
+  ]
+}

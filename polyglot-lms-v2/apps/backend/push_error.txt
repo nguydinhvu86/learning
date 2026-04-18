@@ -1,0 +1,7 @@
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma\schema.prisma.
+Datasource "db": MySQL database "polyglot_lms_v2" at "192.168.10.40:3306"
+
+The database is already in sync with the Prisma schema.
+

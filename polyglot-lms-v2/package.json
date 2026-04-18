@@ -1,0 +1,8 @@
+{
+  "name": "polyglot-lms-v2",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}

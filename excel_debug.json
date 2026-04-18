@@ -1,0 +1,20 @@
+{
+  "firstRow": {
+    "STT": 1,
+    "Từ mới": "爱",
+    "Phiên âm": "ài",
+    "Giải thích": "yêu",
+    "Ví dụ (chữ hán)": "我爱你。",
+    "Phiên âm_1": "Wǒ ài nǐ.",
+    "Dịch": "Tôi yêu bạn."
+  },
+  "headers": [
+    "STT",
+    "Từ mới",
+    "Phiên âm",
+    "Giải thích",
+    "Ví dụ (chữ hán)",
+    "Phiên âm_1",
+    "Dịch"
+  ]
+}

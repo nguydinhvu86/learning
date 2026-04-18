@@ -1,0 +1,286 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  TEACHER
+  ACADEMIC_MANAGER
+  CENTER_MANAGER
+  SUPER_ADMIN
+}
+
+enum BlockType {
+  TEXT
+  AUDIO
+  VIDEO
+  FLASHCARD
+  QUIZ
+  NOTE
+  PROMPT
+  VOCABULARY
+  SENTENCE
+  GRAMMAR
+  READING
+}
+
+enum QuestionType {
+  SINGLE_CHOICE
+  MULTI_CHOICE
+  FILL_IN_BLANK
+  TRUE_FALSE
+  SHORT_TEXT
+  SPEAKING_PROMPT
+  WRITING_PROMPT
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  password_hash String
+  role          Role      @default(STUDENT)
+  branch_id     String?
+  status        String    @default("active")
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+
+  branch          Branch?           @relation(fields: [branch_id], references: [id])
+  student_profile StudentProfile?
+  teacher_profile TeacherProfile?
+  progress        StudentProgress[]
+
+  class_memberships ClassMember[] @relation("ClassMemberships")
+  enrollments       Enrollment[]  @relation("StudentEnrollments")
+  submissions       Submission[]  @relation("StudentSubmissions")
+  reviews_given     Review[]      @relation("TeacherReviews")
+  classes_taught    Class[]
+  notifications     Notification[]
+  learning_paths    LearningPath[]
+}
+
+model StudentProfile {
+  id            String   @id @default(uuid())
+  user_id       String   @unique
+  full_name     String
+  phone         String?
+  target_lang   String?
+  current_level String?
+  target_level  String?
+  learning_goal String?
+  user          User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model TeacherProfile {
+  id             String   @id @default(uuid())
+  user_id        String   @unique
+  full_name      String
+  specialization String?
+  user           User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model Center {
+  id         String   @id @default(uuid())
+  name       String
+  location   String?
+  branches   Branch[]
+  created_at DateTime @default(now())
+}
+
+model Branch {
+  id         String   @id @default(uuid())
+  center_id  String
+  name       String
+  users      User[]
+  center     Center   @relation(fields: [center_id], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+}
+
+model Framework {
+  id   String @id @default(uuid())
+  name String @unique // e.g., 'CEFR', 'HSK'
+  levels Level[]
+}
+
+model Level {
+  id           String    @id @default(uuid())
+  framework_id String
+  name         String    // e.g., 'A1', 'HSK1'
+  order        Int
+  framework    Framework @relation(fields: [framework_id], references: [id], onDelete: Cascade)
+  courses      Course[]
+}
+
+model Program {
+  id          String   @id @default(uuid())
+  title       String
+  language    String
+  description String?
+  courses     Course[]
+}
+
+model Course {
+  id          String   @id @default(uuid())
+  program_id  String
+  level_id    String
+  title       String
+  description String?
+  program     Program  @relation(fields: [program_id], references: [id])
+  level       Level    @relation(fields: [level_id], references: [id])
+  units       Unit[]
+  classes     Class[]
+  enrollments Enrollment[]
+}
+
+model Unit {
+  id        String   @id @default(uuid())
+  course_id String
+  title     String
+  order     Int
+  course    Course   @relation(fields: [course_id], references: [id], onDelete: Cascade)
+  lessons   Lesson[]
+}
+
+model Lesson {
+  id     String   @id @default(uuid())
+  unit_id String
+  title  String
+  order  Int
+  unit   Unit     @relation(fields: [unit_id], references: [id], onDelete: Cascade)
+  blocks LessonBlock[]
+}
+
+model LessonBlock {
+  id        String    @id @default(uuid())
+  lesson_id String
+  type      BlockType
+  seq_no    Int
+  content   Json      // Holds text, audio URL, flashcard JSON, etc.
+  lesson    Lesson    @relation(fields: [lesson_id], references: [id], onDelete: Cascade)
+  progress  StudentProgress[]
+}
+
+model StudentProgress {
+  id          String      @id @default(uuid())
+  user_id     String
+  block_id    String
+  status      String      @default("in_progress") // in_progress, completed, mastered
+  score       Int?
+  ease        Float       @default(2.5)
+  next_review DateTime    @default(now())
+
+  user        User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  block       LessonBlock @relation(fields: [block_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, block_id])
+}
+
+model Class {
+  id         String   @id @default(uuid())
+  course_id  String
+  center_id  String?
+  name       String
+  teacher_id String
+  created_at DateTime @default(now())
+
+  course   Course        @relation(fields: [course_id], references: [id])
+  teacher  User          @relation(fields: [teacher_id], references: [id])
+  members  ClassMember[]
+  assignments Assignment[]
+}
+
+model ClassMember {
+  id         String   @id @default(uuid())
+  class_id   String
+  student_id String
+  joined_at  DateTime @default(now())
+
+  class   Class @relation(fields: [class_id], references: [id], onDelete: Cascade)
+  student User  @relation("ClassMemberships", fields: [student_id], references: [id], onDelete: Cascade)
+
+  @@unique([class_id, student_id])
+}
+
+model Enrollment {
+  id         String   @id @default(uuid())
+  student_id String
+  course_id  String
+  status     String   @default("active") // active, completed, dropped
+  created_at DateTime @default(now())
+
+  student User   @relation("StudentEnrollments", fields: [student_id], references: [id], onDelete: Cascade)
+  course  Course @relation(fields: [course_id], references: [id], onDelete: Cascade)
+}
+
+model Assignment {
+  id          String   @id @default(uuid())
+  class_id    String
+  title       String
+  description String?
+  due_date    DateTime?
+  created_at  DateTime @default(now())
+
+  class       Class        @relation(fields: [class_id], references: [id], onDelete: Cascade)
+  submissions Submission[]
+}
+
+model Submission {
+  id            String   @id @default(uuid())
+  assignment_id String
+  student_id    String
+  content       String 
+  status        String   @default("submitted") // submitted, reviewed
+  created_at    DateTime @default(now())
+
+  assignment Assignment @relation(fields: [assignment_id], references: [id], onDelete: Cascade)
+  student    User       @relation("StudentSubmissions", fields: [student_id], references: [id], onDelete: Cascade)
+  review     Review?
+}
+
+model Review {
+  id            String   @id @default(uuid())
+  submission_id String   @unique
+  teacher_id    String
+  score         Int
+  feedback      String?
+  reviewed_at   DateTime @default(now())
+
+  submission Submission @relation(fields: [submission_id], references: [id], onDelete: Cascade)
+  teacher    User       @relation("TeacherReviews", fields: [teacher_id], references: [id])
+}
+
+model LearningPath {
+  id             String   @id @default(uuid())
+  student_id     String
+  target_level   String
+  is_active      Boolean  @default(true)
+  created_at     DateTime @default(now())
+
+  student        User               @relation(fields: [student_id], references: [id], onDelete: Cascade)
+  items          LearningPathItem[]
+}
+
+model LearningPathItem {
+  id          String   @id @default(uuid())
+  path_id     String
+  lesson_id   String
+  status      String   @default("pending") // pending, completed
+  order       Int
+
+  path        LearningPath @relation(fields: [path_id], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id          String   @id @default(uuid())
+  user_id     String
+  title       String
+  message     String
+  is_read     Boolean  @default(false)
+  created_at  DateTime @default(now())
+
+  user        User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}

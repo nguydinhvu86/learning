@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Polyglot Admin Studio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #12121a;
+      --bg-nav: #181824;
+      --bg-card: #20202d;
+      --bg-card-hover: #292938;
+      
+      --accent-green: #34d399;
+      --primary: #3b82f6;
+      --border-color: #2b2b3a;
+      --text-main: #f8fafc;
+      --text-dim: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text-main); height: 100vh; overflow: hidden; display: flex; flex-direction: column;}
+    
+    /* NAVBAR */
+    .navbar { 
+      height: 60px; background: var(--bg-nav); border-bottom: 2px solid var(--border-color); 
+      display: flex; align-items: center; padding: 0 30px; z-index: 50;
+    }
+    .logo { font-size: 1.2rem; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px; margin-right: 50px;}
+    
+    .nav-tabs { display: flex; height: 100%; }
+    .tab { 
+      padding: 0 20px; display: flex; align-items: center; color: var(--text-dim); 
+      font-size: 0.95rem; font-weight: 600; cursor: pointer; border-bottom: 3px solid transparent; gap: 8px;
+    }
+    .tab:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+    .main-content { flex: 1; padding: 40px; overflow-y: auto; max-width:1200px; margin:0 auto; width:100%;}
+    .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+    .header-row h1 { font-size: 2rem; font-weight: 800; color:var(--text-main); }
+    
+    .btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+    .btn:hover { filter: brightness(1.1); }
+    .btn-sm { padding: 6px 12px; font-size: 0.85rem; }
+    .btn-danger { background: #ef4444; }
+    
+    /* Grid & Cards */
+    .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 25px; position: relative; transition:0.2s;}
+    .card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.3);}
+    .card-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; color: #fff; }
+    .card-meta { font-size: 0.85rem; font-weight:700; color: var(--accent-green); margin-bottom: 15px; }
+    
+    /* Table */
+    .table-panel { background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-color); overflow: hidden; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 15px 20px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 0.95rem; }
+    th { color: var(--text-dim); font-size: 0.85rem; font-weight:800; text-transform: uppercase; letter-spacing: 0.5px; background: rgba(0,0,0,0.3); }
+    td { color: #e2e8f0; }
+    tr:hover { background: var(--bg-nav); }
+    
+    /* Modals */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 100; backdrop-filter: blur(5px); }
+    .modal-overlay.show { display: flex; }
+    .modal { background: var(--bg-card); padding: 30px; border-radius: 16px; width: 500px; border: 1px solid var(--border-color); }
+    .modal h3 { margin-bottom: 25px; font-size:1.5rem; font-weight:800; color:#fff;}
+    .input-grp { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
+    .input-grp label { font-size: 0.9rem; font-weight:600; color: var(--text-dim); }
+    .input-grp input, .input-grp select, .input-grp textarea { background: #11111a; border: 2px solid var(--border-color); padding: 12px; border-radius: 8px; color: white; font-family: inherit; width: 100%; outline: none; font-size:1rem; transition:0.2s;}
+    .input-grp input:focus, .input-grp select:focus, .input-grp textarea:focus { border-color: var(--primary); }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px; }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">⚙️ Polyglot Studio Admin</div>
+    <div class="nav-tabs">
+      <div class="tab active" data-target="courses" onclick="showView('courses')">📚 Tổ chức Khóa Học</div>
+      <div class="tab" data-target="lessons" onclick="showView('lessons')">📖 Soạn Bài Giảng</div>
+      <div class="tab" data-target="items" onclick="showView('items')">📝 Nhập Liệu Học Thuật</div>
+      <div class="tab" data-target="users" onclick="showView('users')">👥 Quản Lý Học Viên</div>
+    </div>
+    <div style="margin-left:auto"><a href="index.html" style="color:var(--accent-green); font-weight:700; text-decoration:none">🎓 Truy cập Không gian Học Viên ➔</a></div>
+  </nav>
+
+  <main class="main-content">
+    
+    <!-- VIEW: COURSES -->
+    <div id="view-courses">
+      <div class="header-row">
+        <h1>Quản Lý Khóa Học (Curriculum)</h1>
+        <button class="btn" style="background:var(--primary)" onclick="openModal('courseModal')">➕ Tạo Khóa Học Mới</button>
+      </div>
+      <div class="grid-container" id="coursesList"></div>
+    </div>
+
+    <!-- VIEW: LESSONS -->
+    <div id="view-lessons" style="display:none">
+      <div class="header-row">
+        <h1>Bố trí Bài Giảng</h1>
+        <button class="btn" style="background:var(--primary)" onclick="openModal('lessonModal')">➕ Thêm Bài Giảng</button>
+      </div>
+      <div class="input-grp" style="width:400px; margin-bottom:20px;">
+        <label>Hiển thị giáo trình của Khóa học:</label>
+        <select id="flt-course" onchange="loadLessons()"></select>
+      </div>
+      <div class="table-panel">
+        <table>
+          <thead><tr><th>STT</th><th>Tên Bài Giảng</th><th>Hành động</th></tr></thead>
+          <tbody id="lessonsList"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- VIEW: ITEMS -->
+    <div id="view-items" style="display:none">
+      <div class="header-row">
+        <h1>Studio Nhập Liệu 5 Trụ Cột</h1>
+        <button class="btn" onclick="openModal('itemModal')" style="background:var(--accent-green); color:#064e3b">📝 Khởi tạo Dữ liệu</button>
+      </div>
+      <div style="display:flex; gap:20px; margin-bottom:30px">
+        <div class="input-grp" style="width:300px">
+          <label>Khóa học:</label>
+          <select id="flt-course-items" onchange="populateLessonsDropdown('flt-lesson-items'); setTimeout(loadItems, 300)"></select>
+        </div>
+        <div class="input-grp" style="width:300px">
+          <label>Bài giảng :</label>
+          <select id="flt-lesson-items" onchange="loadItems()"></select>
+        </div>
+      </div>
+      <div class="table-panel">
+        <table>
+          <thead><tr><th>Loại</th><th>Văn bản gốc (Target)</th><th>Phiên âm (Pinyin)</th><th>Bản Dịch / Đáp án</th><th>Action</th></tr></thead>
+          <tbody id="itemsList"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- VIEW: USERS -->
+    <div id="view-users" style="display:none">
+      <div class="header-row">
+        <h1>Quản Lý Học Viên (Student Management)</h1>
+        <button class="btn" onclick="loadUsers()" style="background:var(--primary)">🔄 Làm Mới Dữ Liệu</button>
+      </div>
+      <div class="table-panel">
+        <table>
+          <thead><tr><th>Username</th><th>Vai trò</th><th>Ngày tham gia</th><th>Hành động</th></tr></thead>
+          <tbody id="usersList"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- MODALS -->
+
+  <!-- Modal: Course -->
+  <div class="modal-overlay" id="courseModal">
+    <div class="modal">
+      <h3>Tạo Khóa Học</h3>
+      <div class="input-grp">
+        <label>Tên khóa học (e.g. HSK 1 Cơ Bản)</label>
+        <input type="text" id="c-title">
+      </div>
+      <div class="input-grp">
+        <label>Ngôn ngữ mục tiêu</label>
+        <select id="c-lang"><option value="Chinese">Tiếng Trung (HSK)</option><option value="English">Tiếng Anh (CEFR)</option></select>
+      </div>
+      <div class="input-grp">
+        <label>Mô tả ngắn</label>
+        <textarea id="c-desc" rows="3"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" style="background:var(--bg-nav); color:#fff; border:1px solid var(--border-color)" onclick="closeModal('courseModal')">Hủy bỏ</button>
+        <button class="btn" onclick="saveCourse()">Khởi tạo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Lesson -->
+  <div class="modal-overlay" id="lessonModal">
+    <div class="modal">
+      <h3>Thêm Bài Giảng (Lesson)</h3>
+      <div class="input-grp">
+        <label>Thuộc khóa học</label><select id="l-course"></select>
+      </div>
+      <div class="input-grp">
+        <label>Thứ tự sắp xếp (Order Index)</label><input type="number" id="l-order" value="1">
+      </div>
+      <div class="input-grp">
+        <label>Tên bài giảng (e.g. Phần 1: Giao tiếp làm quen)</label><input type="text" id="l-title">
+      </div>
+      <div class="modal-actions">
+        <button class="btn" style="background:var(--bg-nav); color:#fff; border:1px solid var(--border-color)" onclick="closeModal('lessonModal')">Hủy bỏ</button>
+        <button class="btn" onclick="saveLesson()">Lưu Bài Giảng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Item -->
+  <div class="modal-overlay" id="itemModal">
+    <div class="modal">
+      <h3>Nhập Liệu Sư Phạm</h3>
+      <div class="input-grp"><label>Khóa học</label><select id="i-course" onchange="populateLessonsDropdown('i-lesson', this.value)"></select></div>
+      <div class="input-grp"><label>Bài giảng</label><select id="i-lesson"></select></div>
+      <div class="input-grp">
+        <label>Hình thái nội dung</label>
+        <select id="i-type">
+           <option value="word">1. Từ vựng (Vocabulary Flashcard)</option>
+           <option value="sentence">2. Mẫu Câu (Sentence Recall)</option>
+           <option value="grammar">3. Ngữ Pháp (Grammar Reading)</option>
+           <option value="paragraph">4. Đoạn Văn Hiểu (Paragraph Reading)</option>
+           <option value="exercise">5. Luyện Tập (Quiz Challenge)</option>
+        </select>
+      </div>
+      <div class="input-grp">
+        <label>Ngôn Ngữ Bản Xứ (Target Text) <span style="font-size:0.75rem; color:var(--text-dim)">(Tiếng Trung/Anh)</span></label>
+        <input type="text" id="i-text" placeholder="e.g. 你好 hoặc Hello">
+      </div>
+      <div class="input-grp">
+        <label>Phiên âm (Pinyin/IPA)</label>
+        <input type="text" id="i-pinyin" placeholder="e.g. nǐ hǎo">
+      </div>
+      <div class="input-grp">
+        <label>Bản dịch / Đáp án</label>
+        <textarea id="i-meaning" rows="2" placeholder="Nghĩa phân tích hoặc phần giải đáp của thẻ này..."></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" style="background:var(--bg-nav); color:#fff; border:1px solid var(--border-color)" onclick="closeModal('itemModal')">Thoát</button>
+        <button class="btn" style="background:var(--accent-green); color:#064e3b" onclick="saveItem()">Lưu Dữ Liệu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Student Progress -->
+  <div class="modal-overlay" id="progressModal">
+    <div class="modal" style="width: 800px; max-height:80vh; overflow-y:auto;">
+      <h3>Tiến Độ Học Tập: <span id="p-username" style="color:var(--accent-green)"></span></h3>
+      <div class="grid-container" style="margin-bottom:20px;">
+         <div class="card" style="padding:15px">
+            <div style="font-size:0.8rem; color:var(--text-dim)">Tổng số mục đã học</div>
+            <div style="font-size:1.8rem; font-weight:800; color:#fff" id="p-total">0</div>
+         </div>
+         <div class="card" style="padding:15px">
+            <div style="font-size:0.8rem; color:var(--text-dim)">Hệ số ghi nhớ (Ease TB)</div>
+            <div style="font-size:1.8rem; font-weight:800; color:var(--accent-green)" id="p-ease">0</div>
+         </div>
+      </div>
+      <div class="table-panel" style="margin-top:20px;">
+        <table>
+          <thead><tr><th>Khóa Học</th><th>Bài Giảng</th><th>Mục</th><th>Loại</th><th>Trạng thái (SRS)</th></tr></thead>
+          <tbody id="progressList"></tbody>
+        </table>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" style="background:var(--bg-nav); color:#fff; border:1px solid var(--border-color)" onclick="closeModal('progressModal')">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let globalCourses = [];
+
+    function showView(id) {
+      ['courses','lessons','items','users'].forEach(v => {
+         document.getElementById('view-'+v).style.display = 'none';
+      });
+      document.getElementById('view-'+id).style.display = 'block';
+      document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+      const activeTab = document.querySelector(`.tab[data-target="${id}"]`);
+      if(activeTab) activeTab.classList.add('active');
+      if(id === 'users') loadUsers();
+    }
+
+    function openModal(id) { document.getElementById(id).classList.add('show'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+    // --- COURSES ---
+    async function loadCourses() {
+      try {
+         const res = await fetch('http://localhost:3000/api/admin/courses');
+         globalCourses = await res.json();
+      } catch(e) {
+         return; // gracefully ignore if server offline
+      }
+      
+      let html = '';
+      let options = '';
+      globalCourses.forEach(c => {
+        html += `<div class="card">
+          <div class="card-meta">✨ ${c.language_target}</div>
+          <div class="card-title">${c.title}</div>
+          <div style="color:var(--text-dim); font-size:0.95rem; line-height:1.5;">${c.description}</div>
+          <button class="btn btn-sm btn-danger" style="position:absolute; top:20px; right:20px" onclick="deleteCourse(${c.id})">Xóa</button>
+        </div>`;
+        options += `<option value="${c.id}">${c.title}</option>`;
+      });
+      document.getElementById('coursesList').innerHTML = html;
+      document.getElementById('flt-course').innerHTML = options;
+      document.getElementById('flt-course-items').innerHTML = options;
+      document.getElementById('l-course').innerHTML = options;
+      document.getElementById('i-course').innerHTML = options;
+      
+      if(globalCourses.length > 0) {
+         loadLessons(); 
+         populateLessonsDropdown('flt-lesson-items', globalCourses[0].id);
+         populateLessonsDropdown('i-lesson', globalCourses[0].id);
+         setTimeout(loadItems, 300);
+      }
+    }
+    
+    async function saveCourse() {
+      const payload = {
+        title: document.getElementById('c-title').value,
+        language_target: document.getElementById('c-lang').value,
+        description: document.getElementById('c-desc').value
+      };
+      await fetch('http://localhost:3000/api/admin/courses', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+      closeModal('courseModal'); loadCourses();
+    }
+    async function deleteCourse(id) {
+       if(!confirm('Xóa Khóa học sẽ xóa sạch mọi Bài giảng và Từng vựng liên quan. Bạn chắc chắn?')) return;
+       await fetch('http://localhost:3000/api/admin/courses/delete', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({id}) });
+       loadCourses();
+    }
+
+    // --- LESSONS ---
+    async function fetchLessons(courseId) {
+      const res = await fetch('http://localhost:3000/api/admin/lessons/'+courseId);
+      return await res.json();
+    }
+
+    async function loadLessons() {
+      const cid = document.getElementById('flt-course').value;
+      if(!cid) return;
+      const lessons = await fetchLessons(cid);
+      let html = '';
+      lessons.forEach(l => {
+         html += `<tr>
+           <td><span style="background:var(--border-color); padding:4px 8px; border-radius:6px; font-weight:700">${l.order_index}</span></td>
+           <td style="font-weight:700; font-size:1.05rem">${l.title}</td>
+           <td><button class="btn btn-sm btn-danger" onclick="deleteLesson(${l.id})">Tháo gỡ</button></td>
+         </tr>`;
+      });
+      document.getElementById('lessonsList').innerHTML = html;
+    }
+
+    async function populateLessonsDropdown(targetId, forceCourseId = null) {
+      const cid = forceCourseId || document.getElementById('flt-course-items').value || document.getElementById('i-course').value;
+      if(!cid) return;
+      const lessons = await fetchLessons(cid);
+      document.getElementById(targetId).innerHTML = lessons.map(l => `<option value="${l.id}">${l.title}</option>`).join('');
+    }
+
+    async function saveLesson() {
+      const payload = {
+        course_id: document.getElementById('l-course').value,
+        title: document.getElementById('l-title').value,
+        order_index: document.getElementById('l-order').value
+      };
+      await fetch('http://localhost:3000/api/admin/lessons', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+      closeModal('lessonModal'); loadLessons();
+      populateLessonsDropdown('flt-lesson-items');
+    }
+    async function deleteLesson(id) {
+       await fetch('http://localhost:3000/api/admin/lessons/delete', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({id}) });
+       loadLessons();
+    }
+
+    // --- ITEMS ---
+    async function loadItems() {
+      const lid = document.getElementById('flt-lesson-items').value;
+      if(!lid) { document.getElementById('itemsList').innerHTML = ''; return; }
+      const res = await fetch('http://localhost:3000/api/admin/items/'+lid);
+      const items = await res.json();
+      
+      let html = '';
+      items.forEach(i => {
+         html += `<tr>
+           <td><span style="background:#1e40af; color:#93c5fd; padding:6px 10px; border-radius:6px; font-weight:700; font-size:0.8rem; text-transform:uppercase;">${i.item_type}</span></td>
+           <td style="font-size:1.3rem; font-weight:700; color:#fff">${i.target_text}</td>
+           <td style="color:var(--accent-green); font-family:monospace; font-size:1.1rem">${i.phonetic||'-'}</td>
+           <td style="line-height:1.5">${i.native_meaning}</td>
+           <td><button class="btn btn-sm btn-danger" onclick="deleteItem(${i.id})">Xóa</button></td>
+         </tr>`;
+      });
+      document.getElementById('itemsList').innerHTML = html;
+    }
+
+    async function saveItem() {
+      const payload = {
+        lesson_id: document.getElementById('i-lesson').value,
+        item_type: document.getElementById('i-type').value,
+        target_text: document.getElementById('i-text').value,
+        phonetic: document.getElementById('i-pinyin').value,
+        native_meaning: document.getElementById('i-meaning').value
+      };
+      if(!payload.target_text || !payload.native_meaning) return alert("Bắt buộc khai báo Target Text và Nghĩa!");
+      await fetch('http://localhost:3000/api/admin/items', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+      closeModal('itemModal'); 
+      
+      // Keep input fast for teacher: just clear the specific texts
+      document.getElementById('i-text').value = '';
+      document.getElementById('i-pinyin').value = '';
+      document.getElementById('i-meaning').value = '';
+      document.getElementById('i-text').focus();
+      
+      loadItems();
+    }
+    async function deleteItem(id) {
+       await fetch('http://localhost:3000/api/admin/items/delete', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({id}) });
+       loadItems();
+    }
+
+    // --- USERS & PROGRESS ---
+    async function loadUsers() {
+       const res = await fetch('http://localhost:3000/api/admin/users');
+       const users = await res.json();
+       let html = '';
+       users.forEach(u => {
+          html += `<tr>
+             <td style="font-weight:700; color:#fff">${u.username}</td>
+             <td><span style="background:${u.role==='admin'?'#8b5cf6':'#10b981'}; padding:3px 8px; border-radius:10px; font-size:0.8rem; color:#fff">${u.role}</span></td>
+             <td style="color:var(--text-dim)">${new Date(u.created_at).toLocaleDateString()}</td>
+             <td>
+               <button class="btn btn-sm" onclick="showProgress('${u.id}', '${u.username}')">📊 Xem Tiến Độ</button>
+               <button class="btn btn-sm btn-danger" onclick="deleteUser('${u.id}')">Xóa</button>
+             </td>
+          </tr>`;
+       });
+       document.getElementById('usersList').innerHTML = html;
+    }
+
+    async function deleteUser(id) {
+       if(!confirm("Bạn có chắc chắn muốn xóa học viên này? Mọi dữ liệu học tập sẽ mất!")) return;
+       await fetch('http://localhost:3000/api/admin/users/delete', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({id}) });
+       loadUsers();
+    }
+
+    async function showProgress(id, username) {
+       document.getElementById('p-username').innerText = username;
+       const res = await fetch('http://localhost:3000/api/admin/progress/' + id);
+       const prog = await res.json();
+       
+       document.getElementById('p-total').innerText = prog.length;
+       if(prog.length > 0) {
+          const sumEase = prog.reduce((a, b) => a + b.ease, 0);
+          document.getElementById('p-ease').innerText = (sumEase / prog.length).toFixed(2);
+       } else {
+          document.getElementById('p-ease').innerText = "0";
+       }
+
+       let html = '';
+       const now = Date.now();
+       prog.forEach(p => {
+          let statusText = p.next_review <= now ? '<span style="color:#fbbf24">⏳ Cần ôn tập</span>' : '<span style="color:var(--accent-green)">✅ Đã ghi nhớ</span>';
+          html += `<tr>
+             <td style="font-size:0.85rem; color:var(--text-dim)">${p.course_title}</td>
+             <td style="font-size:0.85rem; color:var(--text-dim)">${p.lesson_title}</td>
+             <td style="font-weight:700">${p.target_text}</td>
+             <td><span style="background:#1e40af; color:#93c5fd; padding:3px 6px; border-radius:4px; font-size:0.75rem">${p.item_type}</span></td>
+             <td>${statusText}</td>
+          </tr>`;
+       });
+       if(prog.length === 0) {
+          html = '<tr><td colspan="5" style="text-align:center; padding:30px">Học viên chưa học bài nào.</td></tr>';
+       }
+       document.getElementById('progressList').innerHTML = html;
+       openModal('progressModal');
+    }
+
+    loadCourses();
+  </script>
+</body>
+</html>

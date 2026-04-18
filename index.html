@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Polyglot Mindmap</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #12121a;
+      --bg-nav: #181824;
+      --bg-side: #181824;
+      --bg-card: #20202d;
+      --bg-card-hover: #292938;
+      
+      --accent-green: #34d399;
+      --border-color: #2b2b3a;
+      --text-main: #f8fafc;
+      --text-dim: #94a3b8;
+      
+      --course-border: #3b82f6;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text-main); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+
+    /* NAVBAR */
+    .navbar { 
+      height: 60px; background: var(--bg-nav); border-bottom: 2px solid var(--border-color); 
+      display: flex; align-items: center; padding: 0 20px; z-index: 50;
+    }
+    .logo { font-size: 1.2rem; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px; margin-right: 30px;}
+    .search-box { 
+      background: #11111a; border: 1px solid var(--border-color); border-radius: 20px; 
+      padding: 6px 15px; display: flex; align-items: center; width: 300px; margin-right: 40px;
+    }
+    .search-box input { background: transparent; border: none; outline: none; color: #fff; width: 100%; font-size: 0.85rem;}
+    
+    .nav-tabs { display: flex; height: 100%; }
+    .tab { 
+      padding: 0 16px; display: flex; align-items: center; color: var(--text-dim); 
+      font-size: 0.9rem; font-weight: 600; cursor: pointer; border-bottom: 3px solid transparent; gap: 6px;
+    }
+    .tab:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .tab.active { color: var(--accent-green); border-bottom-color: var(--accent-green); }
+
+    /* LAYOUT */
+    .app-body { display: flex; flex: 1; overflow: hidden; }
+
+    /* SIDEBAR */
+    .sidebar { width: 260px; background: var(--bg-nav); border-right: 1px solid var(--border-color); padding: 20px 15px; overflow-y: auto;}
+    .sb-title { font-size: 0.75rem; font-weight: 700; color: #64748b; letter-spacing: 1px; margin-bottom: 15px; margin-left: 5px;}
+    
+    .course-card { 
+      background: #1e1e2d; border: 1px solid #2b2b3b; border-radius: 12px; padding: 12px 15px; 
+      margin-bottom: 12px; cursor: pointer; transition: 0.2s; display: flex; justify-content: space-between; align-items: center;
+      border-left: 4px solid transparent;
+    }
+    .course-card:hover { background: #262635; }
+    .course-card.active { border-color: var(--accent-green); border-left-width: 4px; border-left-color: var(--accent-green); background: rgba(52, 211, 153, 0.05); }
+    
+    .cc-info { display: flex; gap: 10px; align-items: center;}
+    .cc-title { font-weight: 700; color: #e2e8f0; font-size: 1rem;}
+    .cc-title.hsk1 { color: var(--accent-green);}
+    .cc-title.hsk2 { color: #60a5fa;}
+    .cc-title.hsk3 { color: #c084fc;}
+    .cc-title.hsk4 { color: #fbbf24;}
+    
+    .cc-meta { display: flex; flex-direction: column; }
+    .cc-sub { font-size: 0.75rem; font-weight: 600; color: #94a3b8; }
+    .active .cc-sub { color: var(--accent-green); }
+
+    /* MAIN CONTENT */
+    .main-area { flex: 1; overflow-y: auto; background: var(--bg-dark); position: relative; display:flex; flex-direction:column; align-items:center;  padding-top:40px;}
+    
+    /* COURSE OVERVIEW MODE */
+    #view-course { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 900px; }
+    
+    .level-hero { margin-bottom: 40px; position: relative; }
+    .level-circle { 
+      width: 140px; height: 140px; border-radius: 50%; background: #4ade80; border: 6px solid #22c55e;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      box-shadow: 0 0 20px rgba(74, 222, 128, 0.3); outline: 8px solid rgba(74, 222, 128, 0.1);
+    }
+    .level-circle h1 { font-size: 2.2rem; font-weight: 800; color: #064e3b; margin-bottom: -5px;}
+    .level-circle p { font-size: 0.85rem; font-weight: 600; color: #064e3b; }
+
+    .lesson-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; }
+    .lesson-card { 
+      background: var(--bg-card); border-radius: 8px; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; 
+      cursor: pointer; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition:0.2s;
+    }
+    .lesson-card:hover { background: var(--bg-card-hover); border-color:#4a4a5e;}
+    .lc-left { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 0.95rem; }
+    .lc-badge { background: #22c55e; color: #064e3b; font-size: 0.8rem; font-weight: 800; padding: 2px 8px; border-radius: 12px; }
+
+    /* PRACTICE MODE (Hidden initially) */
+    #view-practice { display: none; flex-direction: column; align-items: center; width: 100%; height:100%; }
+    .practice-top { display:flex; justify-content:space-between; width:100%; max-width:900px; margin-bottom:20px; padding:0 20px;}
+    .btn-sys { background:var(--bg-card); color:#fff; border:1px solid var(--border-color); padding:8px 16px; border-radius:8px; cursor:pointer;}
+    .btn-sys:hover { background:var(--bg-card-hover); }
+
+    /* Flashcard inside Practice */
+    .flashcard { border-radius: 16px; position: relative; transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer; height: 350px; width: 550px; }
+    .flashcard.is-flipped { transform: rotateX(180deg); }
+    .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px; padding: 30px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border: 1px solid var(--border-color); background: var(--bg-card); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+    .card-back { transform: rotateX(180deg); border-color: var(--accent-green); background: #181824; }
+    .val-t { font-size: 4rem; font-weight: 800; color: #fff; margin-bottom:10px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Inter', sans-serif; letter-spacing: 2px;}
+    .val-p { font-size: 1.3rem; font-weight: 500; color: #94a3b8; font-family: monospace; transition: opacity 0.3s; opacity: 0; }
+    .val-m { font-size: 2.2rem; font-weight: 700; color: var(--accent-green); font-family: 'PingFang SC', 'Microsoft YaHei', 'Inter', sans-serif; }
+
+    /* Practice Top */
+    .btn-speak { background: rgba(52, 211, 153, 0.2); border: 1px solid var(--accent-green); color: var(--accent-green); border-radius: 50%; width: 44px; height: 44px; font-size: 1.2rem; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; margin-left: 15px; }
+    .btn-speak:hover { background: var(--accent-green); color: #064e3b; transform: scale(1.1); }
+    
+    /* Doc inside Practice */
+    .doc-panel { background:var(--bg-card); border-radius:12px; padding:40px; max-width:800px; width:100%; }
+    .doc-t { font-size: 2rem; font-weight: 800; color: #fff; font-family: 'PingFang SC', 'Microsoft YaHei', 'Inter', sans-serif; }
+    .doc-p { font-size: 1.2rem; color: var(--text-dim); margin-top: 10px; margin-bottom: 20px; font-family: monospace; transition: opacity 0.3s; opacity: 0;}
+    .doc-m { font-size: 1.3rem; line-height: 1.6; border-top: 1px solid var(--border-color); padding-top:20px; color:#e2e8f0; font-family: 'PingFang SC', 'Microsoft YaHei', 'Inter', sans-serif;}
+
+    /* Quiz inside Practice */
+    .quiz-panel { background:var(--bg-card); border-radius:12px; padding:40px; max-width:600px; width:100%; text-align:center;}
+    .quiz-q { font-size: 2.2rem; font-weight:800; color:#fff; margin-bottom: 30px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Inter', sans-serif;}
+    .quiz-a { width:100%; background:#11111a; border:2px solid var(--border-color); padding:15px; border-radius:8px; font-size:1.2rem; color:#fff; text-align:center;}
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">🧠 Polyglot Mindmap</div>
+    <div class="search-bar">
+      <span style="opacity:0.5; margin-right:8px;">🔍</span>
+      <input type="text" placeholder="Tìm kiếm: 你好 / Hello / Xin chào...">
+    </div>
+    <div class="nav-tabs" id="main-tabs">
+      <div class="tab active" data-target="course">📚 Tổng Quan Khóa Học</div>
+      <div class="tab" data-target="word">📇 Từ Vựng</div>
+      <div class="tab" data-target="sentence">💬 Mẫu câu</div>
+      <div class="tab" data-target="grammar">✍️ Ngữ pháp</div>
+      <div class="tab" data-target="paragraph">📖 Bài Khóa</div>
+      <div class="tab" data-target="exercise">🎯 Quiz</div>
+    </div>
+    <div style="margin-left:auto; display:flex; align-items:center; gap:20px;">
+      <div id="user-display" style="color:var(--accent-green); font-weight:700;">👤 Guest</div>
+      <a href="admin.html" style="color:#64748b; font-size:0.8rem; text-decoration:none">Admin</a>
+    </div>
+  </nav>
+
+  <!-- APP BODY -->
+  <div class="app-body">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sb-title">POLYGLOT LEVELS</div>
+      <div id="course-list">
+         <div style="color:#64748b; font-size:0.85rem">Đang tải...</div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-area">
+      
+      <!-- 1. COURSE OVERVIEW -->
+      <div id="view-course">
+        <div class="level-hero">
+          <div class="level-circle">
+            <h1 id="hc-title">Lvl 1</h1>
+            <p id="hc-sub">0 words</p>
+          </div>
+        </div>
+        <div class="lesson-grid" id="lesson-grid">
+           <!-- Rendered via JS -->
+        </div>
+      </div>
+
+      <!-- 2. PRACTICE ARENA -->
+      <div id="view-practice">
+         <div class="practice-top">
+            <h2 id="pract-header" style="color:#fff">Học Tập</h2>
+            <div style="display:flex; align-items:center;">
+               <button class="btn-sys" id="btn-toggle-pinyin" onclick="toggleGlobalPinyin()" style="margin-right:15px; border-color:var(--accent-green); color:var(--accent-green);">👁️ Hiện Pinyin</button>
+               <button class="btn-sys" onclick="switchMainTab('course')">⬅ Trở về Khóa Học</button>
+            </div>
+         </div>
+
+         <!-- Flashcard mode -->
+         <div class="flashcard" id="card-el" onclick="fcFlip()" style="display:none">
+          <div class="card-face card-front">
+            <div style="display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
+               <div class="val-t" id="card-t" style="margin-bottom:0">Target</div>
+               <button class="btn-speak" onclick="playAudio(event)">🔊</button>
+            </div>
+            <div class="val-p" id="card-p">Pinyin</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="val-m" id="card-m">Meaning</div>
+          </div>
+         </div>
+
+         <!-- Doc mode -->
+         <div class="doc-panel" id="doc-el" style="display:none">
+           <div style="display:flex; align-items:center;">
+             <div class="doc-t" id="doc-t">Target</div>
+             <button class="btn-speak" onclick="playAudio(event)">🔊</button>
+           </div>
+           <div class="doc-p" id="doc-p">Pinyin</div>
+           <div class="doc-m" id="doc-m">Meaning</div>
+         </div>
+
+         <!-- Quiz mode -->
+         <div class="quiz-panel" id="quiz-el" style="display:none">
+           <div style="display:flex; align-items:center; justify-content:center; margin-bottom:30px;">
+             <div class="quiz-q" id="quiz-q" style="margin-bottom:0">Target</div>
+             <button class="btn-speak" onclick="playAudio(event)">🔊</button>
+           </div>
+           <input type="text" class="quiz-a" id="quiz-a" placeholder="Gõ bản dịch vào đây và nhấn Enter...">
+           <p id="quiz-fb" style="margin-top:20px; font-weight:700"></p>
+         </div>
+
+         <div style="margin-top:30px; display:flex; gap:15px; justify-content:center;">
+            <button class="btn-sys" style="background:var(--bg-card); color:#fff; font-weight:600; border:1px solid var(--border-color); padding:12px 30px; font-family:'Inter';" onclick="prevItem()">⬅ Lùi Lại</button>
+            <button class="btn-sys" style="background:var(--accent-green); color:#064e3b; font-weight:800; border:none; padding:12px 30px; font-family:'Inter';" onclick="nextItem()">Tiếp Theo ➔</button>
+         </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    const API = "http://localhost:3000/api";
+    let allCourses = [];
+    let currentCourse = null;
+    let practiceItems = [];
+    let currentIndex = 0;
+    let currentMode = 'course'; // course, word, sentence, grammar, paragraph, exercise
+    let cardFlipped = false;
+    let isPinyinVisible = false;
+    let currentUser = null;
+    let studentProgress = {};
+
+    function toggleGlobalPinyin() {
+       isPinyinVisible = !isPinyinVisible;
+       const btn = document.getElementById('btn-toggle-pinyin');
+       btn.innerHTML = isPinyinVisible ? '🫣 Ẩn Pinyin' : '👁️ Hiện Pinyin';
+       btn.style.color = isPinyinVisible ? '#94a3b8' : 'var(--accent-green)';
+       btn.style.borderColor = isPinyinVisible ? 'var(--border-color)' : 'var(--accent-green)';
+       applyPinyinVisibility();
+    }
+
+    function applyPinyinVisibility() {
+       const opacity = isPinyinVisible ? '1' : '0';
+       const pe = isPinyinVisible ? 'auto' : 'none';
+       document.getElementById('card-p').style.opacity = opacity;
+       document.getElementById('card-p').style.pointerEvents = pe;
+       document.getElementById('doc-p').style.opacity = opacity;
+       document.getElementById('doc-p').style.pointerEvents = pe;
+    }
+
+    // EVENT: TAB CLICKS
+    document.querySelectorAll('.tab').forEach(t => {
+       t.addEventListener('click', (e) => {
+          let target = e.target.getAttribute('data-target');
+          if(!target) return;
+          switchMainTab(target);
+       });
+    });
+
+    function switchMainTab(mode) {
+       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+       let tab = document.querySelector(`.tab[data-target="${mode}"]`);
+       if(tab) tab.classList.add('active');
+
+       currentMode = mode;
+       if(mode === 'course') {
+          // Show course overview
+          document.getElementById('view-course').style.display = 'flex';
+          document.getElementById('view-practice').style.display = 'none';
+       } else {
+          // Show practice arena
+          document.getElementById('view-course').style.display = 'none';
+          document.getElementById('view-practice').style.display = 'flex';
+          
+          let titlePrefix = "Word";
+          if(mode==='sentence') titlePrefix = "Mẫu Câu";
+          if(mode==='grammar') titlePrefix = "Ngữ Pháp";
+          if(mode==='paragraph') titlePrefix = "Bài Khóa";
+          if(mode==='exercise') titlePrefix = "Luyện Tập";
+          document.getElementById('pract-header').innerText = titlePrefix + " (" + practiceItems.filter(i=>i.item_type===mode).length + " mục)";
+          
+          currentIndex = 0;
+          renderPracticeItem();
+       }
+    }
+
+    async function fetchSidebar() {
+      try {
+        const res = await fetch(`${API}/student/roadmap`);
+        allCourses = await res.json();
+        
+        // Count totals
+        for(let c of allCourses) {
+           let totalWords = 0;
+           for(let l of c.lessons) {
+              const res2 = await fetch(`${API}/student/practice/${l.id}`);
+              l.items = await res2.json();
+              totalWords += l.items.length;
+           }
+           c.totalItems = totalWords;
+        }
+
+        renderSidebar();
+        if(allCourses.length > 0) loadCourse(allCourses[0].id);
+
+      } catch(e) { document.getElementById('course-list').innerHTML = "<div style='color:#ef4444'>Offline</div>"; }
+    }
+
+    function renderSidebar() {
+       let html = '';
+       let idx = 1;
+       allCourses.forEach(c => {
+          const colClass = `hsk${(idx>4?4:idx)}`;
+          html += `
+            <div class="course-card" data-cid="${c.id}" onclick="loadCourse(${c.id})">
+              <div class="cc-info">
+                 <div class="cc-meta">
+                   <div class="cc-title ${colClass}">${c.title}</div>
+                   <div class="cc-sub">${c.language_target}</div>
+                 </div>
+              </div>
+            </div>
+          `;
+          idx++;
+       });
+       document.getElementById('course-list').innerHTML = html;
+    }
+
+    function loadCourse(cid) {
+       document.querySelectorAll('.course-card').forEach(c => c.classList.remove('active'));
+       const el = document.querySelector(`.course-card[data-cid="${cid}"]`);
+       if(el) el.classList.add('active');
+
+       currentCourse = allCourses.find(c => c.id == cid);
+       if(!currentCourse) return;
+
+       // Render Circle
+       document.getElementById('hc-title').innerText = "Lvl " + currentCourse.id;
+       document.getElementById('hc-sub').innerText = currentCourse.totalItems + " items";
+
+       // Render Grid
+       let html = '';
+       currentCourse.lessons.forEach(l => {
+          html += `
+            <div class="lesson-card" onclick="startLesson(${l.id})">
+               <div class="lc-left"><span style="font-size:1.4rem">📚</span> ${l.title}</div>
+               <div class="lc-badge">${l.items.length}</div>
+            </div>
+          `;
+       });
+       document.getElementById('lesson-grid').innerHTML = html;
+       switchMainTab('course');
+    }
+
+    function startLesson(lid) {
+       const lesson = currentCourse.lessons.find(l => l.id == lid);
+       if(!lesson) return;
+       practiceItems = lesson.items;
+       // Switch to Word tab by default
+       switchMainTab('word');
+    }
+
+    function renderPracticeItem() {
+       const filtered = practiceItems.filter(i => i.item_type === currentMode);
+       const card = document.getElementById('card-el');
+       const doc = document.getElementById('doc-el');
+       const quiz = document.getElementById('quiz-el');
+       
+       card.style.display = 'none'; doc.style.display = 'none'; quiz.style.display = 'none';
+
+       if(filtered.length === 0) {
+          doc.style.display = 'block';
+          document.getElementById('doc-t').innerText = "Dữ liệu trống";
+          document.getElementById('doc-p').innerText = "Vui lòng yêu cầu Admin cập nhật nội dung.";
+          document.getElementById('doc-m').innerText = "";
+          return;
+       }
+
+       const item = filtered[currentIndex];
+
+       if(currentMode === 'word' || currentMode === 'sentence') {
+          card.style.display = 'flex';
+          card.classList.remove('is-flipped');
+          cardFlipped = false;
+          document.getElementById('card-t').innerText = item.target_text;
+          document.getElementById('card-p').innerText = item.phonetic || '';
+          document.getElementById('card-m').innerText = item.native_meaning;
+       }
+       else if(currentMode === 'grammar' || currentMode === 'paragraph') {
+          doc.style.display = 'block';
+          document.getElementById('doc-t').innerText = item.target_text;
+          document.getElementById('doc-p').innerText = item.phonetic || '';
+          document.getElementById('doc-m').innerHTML = item.native_meaning.replace(/\n/g, '<br>');
+       }
+       else if(currentMode === 'exercise') {
+          quiz.style.display = 'block';
+          document.getElementById('quiz-q').innerText = item.target_text;
+          document.getElementById('quiz-a').value = '';
+          document.getElementById('quiz-a').disabled = false;
+          document.getElementById('quiz-fb').innerText = '';
+          document.getElementById('quiz-a').focus();
+       }
+       
+       applyPinyinVisibility();
+    }
+
+    function playAudio(e) {
+       e.stopPropagation();
+       const filtered = practiceItems.filter(i => i.item_type === currentMode);
+       if(filtered.length === 0) return;
+       const item = filtered[currentIndex];
+       let text = item.target_text;
+       
+       const ut = new SpeechSynthesisUtterance(text);
+       let lang = 'en-US';
+       if(currentCourse && currentCourse.language_target === 'Chinese') lang = 'zh-CN';
+       ut.lang = lang;
+       ut.rate = 0.85; // Speak slightly slower for learning pronunciation
+       speechSynthesis.speak(ut);
+    }
+
+    function fcFlip() {
+       if(currentMode === 'word' || currentMode === 'sentence') {
+          if(!cardFlipped) {
+             document.getElementById('card-el').classList.add('is-flipped');
+             cardFlipped = true;
+          }
+       }
+    }
+
+    function prevItem() {
+       const filtered = practiceItems.filter(i => i.item_type === currentMode);
+       if(currentIndex > 0) {
+          currentIndex--;
+          renderPracticeItem();
+       }
+    }
+
+    function nextItem() {
+       const filtered = practiceItems.filter(i => i.item_type === currentMode);
+       
+       if(currentMode === 'exercise') {
+          const item = filtered[currentIndex];
+          if(item) {
+             const ans = document.getElementById('quiz-a').value.trim().toLowerCase();
+             const exact = item.native_meaning.trim().toLowerCase();
+             const fb = document.getElementById('quiz-fb');
+             if(ans === exact) {
+                fb.style.color = 'var(--accent-green)';
+                fb.innerText = '✅ Chính xác!';
+                saveProgress(item.id, 'easy');
+             } else {
+                fb.style.color = '#ef4444';
+                fb.innerText = '❌ Sai rồi, đáp án: ' + item.native_meaning;
+                saveProgress(item.id, 'hard');
+                return; // halt progress until they see it
+             }
+          }
+       } else {
+          const item = filtered[currentIndex];
+          if (item) saveProgress(item.id, 'easy');
+       }
+
+       if(currentIndex < filtered.length - 1) {
+          currentIndex++;
+          renderPracticeItem();
+       } else {
+          alert("Bạn đã hoàn thành mục này!");
+       }
+    }
+
+    document.addEventListener('keydown', (e) => {
+       if(document.getElementById('view-practice').style.display === 'flex') {
+          if(currentMode === 'word' || currentMode === 'sentence') {
+             if(e.code === 'Space') { e.preventDefault(); fcFlip(); }
+             if(e.code === 'Enter' || e.code === 'ArrowRight') { nextItem(); }
+             if(e.code === 'ArrowLeft') { prevItem(); }
+          }
+          if(currentMode === 'exercise') {
+             if(e.code === 'Enter') nextItem();
+          }
+       }
+    });
+
+    async function saveProgress(itemId, rating) {
+       if(!currentUser) return;
+       let ease = 2.5; let interval = 0;
+       
+       if(studentProgress[itemId]) {
+          ease = studentProgress[itemId].ease || 2.5;
+          interval = studentProgress[itemId].interval_days || 0;
+       }
+       
+       if(rating === 'easy') {
+          interval = interval === 0 ? 1 : interval * ease;
+       } else {
+          interval = 0;
+          ease = Math.max(1.3, ease - 0.2);
+       }
+       
+       const next_review = Date.now() + Math.round(interval * 86400000);
+       studentProgress[itemId] = { ease, interval_days: interval };
+       
+       try {
+          await fetch(`${API}/student/progress`, {
+             method: 'POST', headers: {'Content-Type': 'application/json'},
+             body: JSON.stringify({ user_id: currentUser.id, item_id: itemId, interval_days: interval, ease, next_review })
+          });
+       } catch(e) {}
+    }
+
+    async function initUser() {
+       let un = localStorage.getItem('polyglot_username');
+       if(!un) {
+          un = prompt("Vui lòng nhập Tên Học Viên của bạn để hệ thống theo dõi tiến độ:");
+          if(!un) un = "Guest";
+          localStorage.setItem('polyglot_username', un);
+       }
+       try {
+          const res = await fetch(`${API}/users/auth`, {
+             method: 'POST', headers: {'Content-Type': 'application/json'},
+             body: JSON.stringify({username: un})
+          });
+          currentUser = await res.json();
+          document.getElementById('user-display').innerText = "👤 " + currentUser.username;
+          
+          const pRes = await fetch(`${API}/student/progress/${currentUser.id}`);
+          const pData = await pRes.json();
+          pData.forEach(p => { studentProgress[p.item_id] = p; });
+       } catch(e) { console.warn("Backend error", e); }
+       fetchSidebar();
+    }
+
+    initUser();
+  </script>
+</body>
+</html>
