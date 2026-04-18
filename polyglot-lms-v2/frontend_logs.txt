@@ -1,0 +1,214 @@
+┌────┬──────────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id │ name                 │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├────┼──────────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 0  │ inside.tsol.vn       │ default     │ N/A     │ fork    │ 0        │ 0      │ 835  │ stopped   │ 0%       │ 0b       │ incall   │ disabled │
+│ 32 │ learning_backend     │ default     │ 0.0.1   │ fork    │ 0        │ 0      │ 15   │ errored   │ 0%       │ 0b       │ incall   │ disabled │
+│ 33 │ learning_frontend    │ default     │ 0.1.0   │ fork    │ 631430   │ 117s   │ 0    │ online    │ 0%       │ 3.4mb    │ incall   │ disabled │
+│ 5  │ makevideo-ai         │ default     │ 0.1.0   │ fork    │ 0        │ 0      │ 19   │ stopped   │ 0%       │ 0b       │ incall   │ disabled │
+│ 6  │ pbx-sync             │ default     │ 0.1.0   │ fork    │ 0        │ 0      │ 24   │ stopped   │ 0%       │ 0b       │ incall   │ disabled │
+└────┴──────────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+[TAILING] Tailing last 100 lines for [learning_frontend] process (change the value with --lines option)
+/home/incall/.pm2/logs/learning-frontend-out.log last 100 lines:
+33|learnin | > frontend@0.1.0 start
+33|learnin | > next start
+33|learnin | 
+33|learnin | 
+33|learnin | > frontend@0.1.0 start
+33|learnin | > next start
+33|learnin | 
+33|learnin | 
+33|learnin | > frontend@0.1.0 start
+33|learnin | > next start
+33|learnin | 
+33|learnin | 
+33|learnin | > frontend@0.1.0 start
+33|learnin | > next start
+33|learnin | 
+33|learnin | 
+33|learnin | > frontend@0.1.0 start
+33|learnin | > next start
+33|learnin | 
+33|learnin | 
+33|learnin | > frontend@0.1.0 start
+33|learnin | > next start
+33|learnin | 
+33|learnin | 
+33|learnin | > frontend@0.1.0 start
+33|learnin | > next start
+33|learnin | 
+33|learnin | 
+33|learnin | > frontend@0.1.0 start
+33|learnin | > next start
+33|learnin | 
+33|learnin | 
+33|learnin | > frontend@0.1.0 start
+33|learnin | > next start
+33|learnin | 
+33|learnin |   ▲ Next.js 14.2.35
+33|learnin |   - Local:        http://localhost:3005
+33|learnin | 
+33|learnin |  ✓ Starting...
+33|learnin |  ✓ Ready in 693ms
+33|learnin |   ▲ Next.js 14.2.35
+33|learnin |   - Local:        http://localhost:3005
+33|learnin | 
+33|learnin |  ✓ Starting...
+33|learnin |  ✓ Ready in 662ms
+33|learnin |   ▲ Next.js 14.2.35
+33|learnin |   - Local:        http://localhost:3005
+33|learnin | 
+33|learnin |  ✓ Starting...
+33|learnin |  ✓ Ready in 621ms
+33|learnin |   ▲ Next.js 14.2.35
+33|learnin |   - Local:        http://localhost:3005
+33|learnin | 
+33|learnin |  ✓ Starting...
+33|learnin |  ✓ Ready in 623ms
+33|learnin | 
+33|learnin | > frontend@0.1.0 start
+33|learnin | > next start
+33|learnin | 
+33|learnin |   ▲ Next.js 14.2.35
+33|learnin |   - Local:        http://localhost:3005
+33|learnin | 
+33|learnin |  ✓ Starting...
+33|learnin |  ✓ Ready in 738ms
+33|learnin | 
+33|learnin | > frontend@0.1.0 start
+33|learnin | > next start -p 3005
+33|learnin | 
+33|learnin |   ▲ Next.js 14.2.35
+33|learnin |   - Local:        http://localhost:3005
+33|learnin | 
+33|learnin |  ✓ Starting...
+33|learnin |  ✓ Ready in 741ms
+33|learnin | 
+33|learnin | > frontend@0.1.0 start
+33|learnin | > next start -p 3005
+33|learnin | 
+33|learnin |   ▲ Next.js 14.2.35
+33|learnin |   - Local:        http://localhost:3005
+33|learnin | 
+33|learnin |  ✓ Starting...
+33|learnin |  ✓ Ready in 1341ms
+33|learnin | 
+33|learnin | > frontend@0.1.0 start
+33|learnin | > next start -p 3005
+33|learnin | 
+33|learnin |   ▲ Next.js 14.2.35
+33|learnin |   - Local:        http://localhost:3005
+33|learnin | 
+33|learnin |  ✓ Starting...
+33|learnin |  ✓ Ready in 767ms
+33|learnin | 
+33|learnin | > frontend@0.1.0 start
+33|learnin | > next start -p 3005
+33|learnin | 
+33|learnin |   ▲ Next.js 14.2.35
+33|learnin |   - Local:        http://localhost:3005
+33|learnin | 
+33|learnin |  ✓ Starting...
+33|learnin |  ✓ Ready in 698ms
+
+/home/incall/.pm2/logs/learning-frontend-error.log last 100 lines:
+33|learnin |     at Module._compile (node:internal/modules/cjs/loader:1812:14) {
+33|learnin |   code: 'MODULE_NOT_FOUND',
+33|learnin |   requireStack: [ '/www/wwwroot/learning/polyglot-lms-v2/apps/frontend/server.js' ]
+33|learnin | }
+33|learnin | /www/wwwroot/learning/polyglot-lms-v2/start_frontend.sh: line 5: ../../node_modules/.bin/next: No such file or directory
+33|learnin | /www/wwwroot/learning/polyglot-lms-v2/start_frontend.sh: line 5: ../../node_modules/.bin/next: No such file or directory
+33|learnin | /www/wwwroot/learning/polyglot-lms-v2/start_frontend.sh: line 5: ../../node_modules/.bin/next: No such file or directory
+33|learnin | /www/wwwroot/learning/polyglot-lms-v2/start_frontend.sh: line 5: ../../node_modules/.bin/next: No such file or directory
+33|learnin | /www/wwwroot/learning/polyglot-lms-v2/start_frontend.sh: line 5: ../../node_modules/.bin/next: No such file or directory
+33|learnin | /www/wwwroot/learning/polyglot-lms-v2/start_frontend.sh: line 5: ../../node_modules/.bin/next: No such file or directory
+33|learnin | /www/wwwroot/learning/polyglot-lms-v2/start_frontend.sh: line 5: ../../node_modules/.bin/next: No such file or directory
+33|learnin | /www/wwwroot/learning/polyglot-lms-v2/start_frontend.sh: line 5: ../../node_modules/.bin/next: No such file or directory
+33|learnin | /www/wwwroot/learning/polyglot-lms-v2/start_frontend.sh: line 5: ../../node_modules/.bin/next: No such file or directory
+33|learnin | /www/wwwroot/learning/polyglot-lms-v2/start_frontend.sh: line 5: ../../node_modules/.bin/next: No such file or directory
+33|learnin | /www/wwwroot/learning/polyglot-lms-v2/start_frontend.sh: line 5: ../../node_modules/.bin/next: No such file or directory
+33|learnin | /www/wwwroot/learning/polyglot-lms-v2/start_frontend.sh: line 5: ../../node_modules/.bin/next: No such file or directory
+33|learnin | /www/wwwroot/learning/polyglot-lms-v2/start_frontend.sh: line 5: ../../node_modules/.bin/next: No such file or directory
+33|learnin | /www/wwwroot/learning/polyglot-lms-v2/start_frontend.sh: line 5: ../../node_modules/.bin/next: No such file or directory
+33|learnin | /www/wwwroot/learning/polyglot-lms-v2/start_frontend.sh: line 5: ../../node_modules/.bin/next: No such file or directory
+33|learnin | /www/wwwroot/learning/polyglot-lms-v2/start_frontend.sh: line 5: ../../node_modules/.bin/next: No such file or directory
+33|learnin | [TypeError: fetch failed] {
+33|learnin |   [cause]: Error: connect ECONNREFUSED 127.0.0.1:3001
+33|learnin |       at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1645:16) {
+33|learnin |     errno: -111,
+33|learnin |     code: 'ECONNREFUSED',
+33|learnin |     syscall: 'connect',
+33|learnin |     address: '127.0.0.1',
+33|learnin |     port: 3001
+33|learnin |   }
+33|learnin | }
+33|learnin | [TypeError: fetch failed] {
+33|learnin |   [cause]: Error: connect ECONNREFUSED 127.0.0.1:3001
+33|learnin |       at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1645:16) {
+33|learnin |     errno: -111,
+33|learnin |     code: 'ECONNREFUSED',
+33|learnin |     syscall: 'connect',
+33|learnin |     address: '127.0.0.1',
+33|learnin |     port: 3001
+33|learnin |   }
+33|learnin | }
+33|learnin | [TypeError: fetch failed] {
+33|learnin |   [cause]: Error: connect ECONNREFUSED 127.0.0.1:3001
+33|learnin |       at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1645:16) {
+33|learnin |     errno: -111,
+33|learnin |     code: 'ECONNREFUSED',
+33|learnin |     syscall: 'connect',
+33|learnin |     address: '127.0.0.1',
+33|learnin |     port: 3001
+33|learnin |   }
+33|learnin | }
+33|learnin | [TypeError: fetch failed] {
+33|learnin |   [cause]: Error: connect ECONNREFUSED 127.0.0.1:3001
+33|learnin |       at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1645:16) {
+33|learnin |     errno: -111,
+33|learnin |     code: 'ECONNREFUSED',
+33|learnin |     syscall: 'connect',
+33|learnin |     address: '127.0.0.1',
+33|learnin |     port: 3001
+33|learnin |   }
+33|learnin | }
+33|learnin | [TypeError: fetch failed] {
+33|learnin |   [cause]: Error: connect ECONNREFUSED 127.0.0.1:3001
+33|learnin |       at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1645:16) {
+33|learnin |     errno: -111,
+33|learnin |     code: 'ECONNREFUSED',
+33|learnin |     syscall: 'connect',
+33|learnin |     address: '127.0.0.1',
+33|learnin |     port: 3001
+33|learnin |   }
+33|learnin | }
+33|learnin | [TypeError: fetch failed] {
+33|learnin |   [cause]: Error: connect ECONNREFUSED 127.0.0.1:3001
+33|learnin |       at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1645:16) {
+33|learnin |     errno: -111,
+33|learnin |     code: 'ECONNREFUSED',
+33|learnin |     syscall: 'connect',
+33|learnin |     address: '127.0.0.1',
+33|learnin |     port: 3001
+33|learnin |   }
+33|learnin | }
+33|learnin | [TypeError: fetch failed] {
+33|learnin |   [cause]: Error: connect ECONNREFUSED 127.0.0.1:3001
+33|learnin |       at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1645:16) {
+33|learnin |     errno: -111,
+33|learnin |     code: 'ECONNREFUSED',
+33|learnin |     syscall: 'connect',
+33|learnin |     address: '127.0.0.1',
+33|learnin |     port: 3001
+33|learnin |   }
+33|learnin | }
+33|learnin | [TypeError: fetch failed] {
+33|learnin |   [cause]: Error: connect ECONNREFUSED 127.0.0.1:3001
+33|learnin |       at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1645:16) {
+33|learnin |     errno: -111,
+33|learnin |     code: 'ECONNREFUSED',
+33|learnin |     syscall: 'connect',
+33|learnin |     address: '127.0.0.1',
+33|learnin |     port: 3001
+33|learnin |   }
+33|learnin | }
+

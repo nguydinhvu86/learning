@@ -1,0 +1,337 @@
+--- FETCHING LOGS ---
+[TAILING] Tailing last 200 lines for [learning_backend] process (change the value with --lines option)
+/home/incall/.pm2/logs/learning-backend-out.log last 200 lines:
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPrismaModule dependencies initialized[39m[38;5;3m +29ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mNotificationModule dependencies initialized[39m[38;5;3m +3ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +0ms[39m
+26|learnin | [33m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [33m   WARN[39m [38;5;3m[LegacyRouteConverter] [39m[33mUnsupported route path: "/api/v1/*". In previous versions, the symbols ?, *, and + were used to denote optional or repeating path parameters. The latest version of "path-to-regexp" now requires the use of named parameters. For example, instead of using a route like /users/* to capture all routes starting with "/users", you should use /users/*path. For more details, refer to the migration guide. Attempting to auto-convert...[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/api/v1}:[39m[38;5;3m +2ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1, GET} route[39m[38;5;3m +4ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/public/settings, GET} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/api/v1/auth}:[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/login, POST} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/refresh, POST} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/me, GET} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/me, PUT} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAcademicController {/api/v1/admin}:[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/dashboard, GET} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/users, GET} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/users/:id/role, PUT} route[39m[38;5;3m +2ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/users/:id/status, PUT} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/users, POST} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/users/:id, PUT} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/learning-path/generate, GET} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/courses, GET} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/settings, PUT} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/metadata, GET} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/programs, POST} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/levels, POST} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/courses, POST} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/courses/:id, PUT} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/courses/:id, DELETE} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/courses/:id/curriculum, GET} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/units, POST} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/units/:id, PUT} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/units/:id, DELETE} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/lessons, POST} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/lessons/:id, PUT} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/lessons/:id, DELETE} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/lessons/:id/blocks, GET} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/blocks, POST} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/blocks/:id, PUT} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/blocks/:id, DELETE} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCurriculumController {/api/v1/curriculum}:[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/curriculum/courses, GET} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/curriculum/courses/:id/roadmap, GET} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/curriculum/lessons/:id, GET} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/curriculum/progress, POST} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPlacementController {/api/v1/placement}:[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/placement/submit, POST} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mProgressController {/api/v1/progress}:[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/progress/lesson-pulse, POST} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/progress/lesson-pulse-undo, POST} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/progress/lesson-reset, POST} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/progress/lesson/:lesson_id, GET} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/progress/sync, POST} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/progress/dashboard, GET} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAssignmentController {/api/v1/assignments}:[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/assignments, POST} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/assignments/:id/submit, POST} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/assignments/submissions/:subId/review, POST} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mClassController {/api/v1/classes}:[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/classes/my-classes, GET} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/classes/:id/students, GET} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mNotificationController {/api/v1/notifications}:[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/my-alerts, GET} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/:id/read, POST} route[39m[38;5;3m +0ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/admin/broadcast, POST} route[39m[38;5;3m +1ms[39m
+26|learnin | [32m[Nest] 604677  - [39m04/18/2026, 6:47:43 PM [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +23ms[39m
+26|learnin | Application is running on: http://localhost:3001/api/v1
+26|learnin | 
+26|learnin | > backend@0.0.1 start:prod
+26|learnin | > node dist/main
+26|learnin | 
+26|learnin | 
+26|learnin | > backend@0.0.1 start:prod
+26|learnin | > node dist/main
+26|learnin | 
+26|learnin | 
+26|learnin | > backend@0.0.1 start:prod
+26|learnin | > node dist/main
+26|learnin | 
+26|learnin | 
+26|learnin | > backend@0.0.1 start:prod
+26|learnin | > node dist/main
+26|learnin | 
+26|learnin | 
+26|learnin | > backend@0.0.1 start:prod
+26|learnin | > node dist/main
+26|learnin | 
+26|learnin | 
+26|learnin | > backend@0.0.1 start:prod
+26|learnin | > node dist/main
+26|learnin | 
+26|learnin | 
+26|learnin | > backend@0.0.1 start:prod
+26|learnin | > node dist/main
+26|learnin | 
+26|learnin | 
+26|learnin | > backend@0.0.1 start:prod
+26|learnin | > node dist/main
+26|learnin | 
+26|learnin | 
+26|learnin | > backend@0.0.1 start:prod
+26|learnin | > node dist/main
+26|learnin | 
+26|learnin | 
+26|learnin | > backend@0.0.1 start:prod
+26|learnin | > node dist/main
+26|learnin | 
+26|learnin | 
+26|learnin | > backend@0.0.1 start:prod
+26|learnin | > node dist/main
+26|learnin | 
+26|learnin | 
+26|learnin | > backend@0.0.1 start:prod
+26|learnin | > node dist/main
+26|learnin | 
+26|learnin | 
+26|learnin | > backend@0.0.1 start:prod
+26|learnin | > node dist/main
+26|learnin | 
+26|learnin | 
+26|learnin | > backend@0.0.1 start:prod
+26|learnin | > node dist/main
+26|learnin | 
+26|learnin | 
+26|learnin | > backend@0.0.1 start:prod
+26|learnin | > node dist/main
+26|learnin | 
+26|learnin | 
+26|learnin | > backend@0.0.1 start:prod
+26|learnin | > node dist/main
+26|learnin | 
+
+/home/incall/.pm2/logs/learning-backend-error.log last 200 lines:
+26|learnin | Node.js v24.14.0
+26|learnin | npm error Lifecycle script `start:prod` failed with error:
+26|learnin | npm error code 1
+26|learnin | npm error path /www/wwwroot/learning/polyglot-lms-v2/apps/backend
+26|learnin | npm error workspace backend@0.0.1
+26|learnin | npm error location /www/wwwroot/learning/polyglot-lms-v2/apps/backend
+26|learnin | npm error command failed
+26|learnin | npm error command sh -c node dist/main
+26|learnin | node:internal/modules/cjs/loader:1459
+26|learnin |   throw err;
+26|learnin |   ^
+26|learnin | 
+26|learnin | Error: Cannot find module '/www/wwwroot/learning/polyglot-lms-v2/apps/backend/dist/main'
+26|learnin |     at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+26|learnin |     at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+26|learnin |     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+26|learnin |     at Module._load (node:internal/modules/cjs/loader:1242:25)
+26|learnin |     at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+26|learnin |     at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+26|learnin |     at node:internal/main/run_main_module:33:47 {
+26|learnin |   code: 'MODULE_NOT_FOUND',
+26|learnin |   requireStack: []
+26|learnin | }
+26|learnin | 
+26|learnin | Node.js v24.14.0
+26|learnin | npm error Lifecycle script `start:prod` failed with error:
+26|learnin | npm error code 1
+26|learnin | npm error path /www/wwwroot/learning/polyglot-lms-v2/apps/backend
+26|learnin | npm error workspace backend@0.0.1
+26|learnin | npm error location /www/wwwroot/learning/polyglot-lms-v2/apps/backend
+26|learnin | npm error command failed
+26|learnin | npm error command sh -c node dist/main
+26|learnin | node:internal/modules/cjs/loader:1459
+26|learnin |   throw err;
+26|learnin |   ^
+26|learnin | 
+26|learnin | Error: Cannot find module '/www/wwwroot/learning/polyglot-lms-v2/apps/backend/dist/main'
+26|learnin |     at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+26|learnin |     at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+26|learnin |     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+26|learnin |     at Module._load (node:internal/modules/cjs/loader:1242:25)
+26|learnin |     at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+26|learnin |     at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+26|learnin |     at node:internal/main/run_main_module:33:47 {
+26|learnin |   code: 'MODULE_NOT_FOUND',
+26|learnin |   requireStack: []
+26|learnin | }
+26|learnin | 
+26|learnin | Node.js v24.14.0
+26|learnin | npm error Lifecycle script `start:prod` failed with error:
+26|learnin | npm error code 1
+26|learnin | npm error path /www/wwwroot/learning/polyglot-lms-v2/apps/backend
+26|learnin | npm error workspace backend@0.0.1
+26|learnin | npm error location /www/wwwroot/learning/polyglot-lms-v2/apps/backend
+26|learnin | npm error command failed
+26|learnin | npm error command sh -c node dist/main
+26|learnin | node:internal/modules/cjs/loader:1459
+26|learnin |   throw err;
+26|learnin |   ^
+26|learnin | 
+26|learnin | Error: Cannot find module '/www/wwwroot/learning/polyglot-lms-v2/apps/backend/dist/main'
+26|learnin |     at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+26|learnin |     at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+26|learnin |     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+26|learnin |     at Module._load (node:internal/modules/cjs/loader:1242:25)
+26|learnin |     at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+26|learnin |     at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+26|learnin |     at node:internal/main/run_main_module:33:47 {
+26|learnin |   code: 'MODULE_NOT_FOUND',
+26|learnin |   requireStack: []
+26|learnin | }
+26|learnin | 
+26|learnin | Node.js v24.14.0
+26|learnin | npm error Lifecycle script `start:prod` failed with error:
+26|learnin | npm error code 1
+26|learnin | npm error path /www/wwwroot/learning/polyglot-lms-v2/apps/backend
+26|learnin | npm error workspace backend@0.0.1
+26|learnin | npm error location /www/wwwroot/learning/polyglot-lms-v2/apps/backend
+26|learnin | npm error command failed
+26|learnin | npm error command sh -c node dist/main
+26|learnin | node:internal/modules/cjs/loader:1459
+26|learnin |   throw err;
+26|learnin |   ^
+26|learnin | 
+26|learnin | Error: Cannot find module '/www/wwwroot/learning/polyglot-lms-v2/apps/backend/dist/main'
+26|learnin |     at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+26|learnin |     at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+26|learnin |     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+26|learnin |     at Module._load (node:internal/modules/cjs/loader:1242:25)
+26|learnin |     at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+26|learnin |     at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+26|learnin |     at node:internal/main/run_main_module:33:47 {
+26|learnin |   code: 'MODULE_NOT_FOUND',
+26|learnin |   requireStack: []
+26|learnin | }
+26|learnin | 
+26|learnin | Node.js v24.14.0
+26|learnin | npm error Lifecycle script `start:prod` failed with error:
+26|learnin | npm error code 1
+26|learnin | npm error path /www/wwwroot/learning/polyglot-lms-v2/apps/backend
+26|learnin | npm error workspace backend@0.0.1
+26|learnin | npm error location /www/wwwroot/learning/polyglot-lms-v2/apps/backend
+26|learnin | npm error command failed
+26|learnin | npm error command sh -c node dist/main
+26|learnin | node:internal/modules/cjs/loader:1459
+26|learnin |   throw err;
+26|learnin |   ^
+26|learnin | 
+26|learnin | Error: Cannot find module '/www/wwwroot/learning/polyglot-lms-v2/apps/backend/dist/main'
+26|learnin |     at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+26|learnin |     at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+26|learnin |     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+26|learnin |     at Module._load (node:internal/modules/cjs/loader:1242:25)
+26|learnin |     at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+26|learnin |     at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+26|learnin |     at node:internal/main/run_main_module:33:47 {
+26|learnin |   code: 'MODULE_NOT_FOUND',
+26|learnin |   requireStack: []
+26|learnin | }
+26|learnin | 
+26|learnin | Node.js v24.14.0
+26|learnin | npm error Lifecycle script `start:prod` failed with error:
+26|learnin | npm error code 1
+26|learnin | npm error path /www/wwwroot/learning/polyglot-lms-v2/apps/backend
+26|learnin | npm error workspace backend@0.0.1
+26|learnin | npm error location /www/wwwroot/learning/polyglot-lms-v2/apps/backend
+26|learnin | npm error command failed
+26|learnin | npm error command sh -c node dist/main
+26|learnin | node:internal/modules/cjs/loader:1459
+26|learnin |   throw err;
+26|learnin |   ^
+26|learnin | 
+26|learnin | Error: Cannot find module '/www/wwwroot/learning/polyglot-lms-v2/apps/backend/dist/main'
+26|learnin |     at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+26|learnin |     at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+26|learnin |     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+26|learnin |     at Module._load (node:internal/modules/cjs/loader:1242:25)
+26|learnin |     at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+26|learnin |     at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+26|learnin |     at node:internal/main/run_main_module:33:47 {
+26|learnin |   code: 'MODULE_NOT_FOUND',
+26|learnin |   requireStack: []
+26|learnin | }
+26|learnin | 
+26|learnin | Node.js v24.14.0
+26|learnin | npm error Lifecycle script `start:prod` failed with error:
+26|learnin | npm error code 1
+26|learnin | npm error path /www/wwwroot/learning/polyglot-lms-v2/apps/backend
+26|learnin | npm error workspace backend@0.0.1
+26|learnin | npm error location /www/wwwroot/learning/polyglot-lms-v2/apps/backend
+26|learnin | npm error command failed
+26|learnin | npm error command sh -c node dist/main
+26|learnin | node:internal/modules/cjs/loader:1459
+26|learnin |   throw err;
+26|learnin |   ^
+26|learnin | 
+26|learnin | Error: Cannot find module '/www/wwwroot/learning/polyglot-lms-v2/apps/backend/dist/main'
+26|learnin |     at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+26|learnin |     at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+26|learnin |     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+26|learnin |     at Module._load (node:internal/modules/cjs/loader:1242:25)
+26|learnin |     at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+26|learnin |     at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+26|learnin |     at node:internal/main/run_main_module:33:47 {
+26|learnin |   code: 'MODULE_NOT_FOUND',
+26|learnin |   requireStack: []
+26|learnin | }
+26|learnin | 
+26|learnin | Node.js v24.14.0
+26|learnin | npm error Lifecycle script `start:prod` failed with error:
+26|learnin | npm error code 1
+26|learnin | npm error path /www/wwwroot/learning/polyglot-lms-v2/apps/backend
+26|learnin | npm error workspace backend@0.0.1
+26|learnin | npm error location /www/wwwroot/learning/polyglot-lms-v2/apps/backend
+26|learnin | npm error command failed
+26|learnin | npm error command sh -c node dist/main
+26|learnin | node:internal/modules/cjs/loader:1459
+26|learnin |   throw err;
+26|learnin |   ^
+26|learnin | 
+26|learnin | Error: Cannot find module '/www/wwwroot/learning/polyglot-lms-v2/apps/backend/dist/main'
+26|learnin |     at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+26|learnin |     at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+26|learnin |     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+26|learnin |     at Module._load (node:internal/modules/cjs/loader:1242:25)
+26|learnin |     at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+26|learnin |     at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+26|learnin |     at node:internal/main/run_main_module:33:47 {
+26|learnin |   code: 'MODULE_NOT_FOUND',
+26|learnin |   requireStack: []
+26|learnin | }
+26|learnin | 
+26|learnin | Node.js v24.14.0
+26|learnin | npm error Lifecycle script `start:prod` failed with error:
+26|learnin | npm error code 1
+26|learnin | npm error path /www/wwwroot/learning/polyglot-lms-v2/apps/backend
+26|learnin | npm error workspace backend@0.0.1
+26|learnin | npm error location /www/wwwroot/learning/polyglot-lms-v2/apps/backend
+26|learnin | npm error command failed
+26|learnin | npm error command sh -c node dist/main
+

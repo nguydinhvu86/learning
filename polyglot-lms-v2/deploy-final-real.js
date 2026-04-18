@@ -36,7 +36,6 @@ module.exports = {
     
     echo "--- BUILD NEXT.JS ---" &&
     cd /www/wwwroot/learning/polyglot-lms-v2/apps/frontend &&
-    node fix_api_urls.js &&
     rm -rf .next || true &&
     npm run build &&
     echo '#!/bin/bash' > start.sh &&
@@ -46,11 +45,12 @@ module.exports = {
 
     echo "--- BUILD NEST.JS ---" &&
     cd /www/wwwroot/learning/polyglot-lms-v2/apps/backend &&
+    npm install &&
     npx prisma generate &&
     npm run build &&
     echo '#!/bin/bash' > start_backend.sh &&
     echo 'export PORT=3001' >> start_backend.sh &&
-    echo 'npm run start:prod' >> start_backend.sh &&
+    echo 'node dist/src/main.js' >> start_backend.sh &&
     chmod +x start_backend.sh &&
     
     echo "--- REBOOTING PM2 ---" &&

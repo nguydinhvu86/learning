@@ -1,0 +1,31 @@
+(Not all processes could be identified, non-owned process info
+ will not be shown, you would have to be root to see it all.)
+tcp6       0      0 :::3001                 :::*                    LISTEN      630691/node         
+Note: Unnecessary use of -X or --request, POST is already inferred.
+*   Trying 127.0.0.1:3001...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0* Connected to localhost (127.0.0.1) port 3001 (#0)
+> POST /api/v1/auth/login HTTP/1.1
+> Host: localhost:3001
+> User-Agent: curl/7.81.0
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 47
+> 
+} [47 bytes data]
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 400 Bad Request
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: *
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 108
+< ETag: W/"6c-JAB0NiNGSQSUrPBW3SOZAGDnHkE"
+< Date: Sat, 18 Apr 2026 23:14:06 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+< 
+{ [108 bytes data]
+100   155  100   108  100    47  20926   9106 --:--:-- --:--:-- --:--:-- 38750
+* Connection #0 to host localhost left intact
+{"message":["password must be longer than or equal to 6 characters"],"error":"Bad Request","statusCode":400}

@@ -1,0 +1,31 @@
+--- CHECKING BACKEND ---
+bash: line 3: pm2: command not found
+--- CHECKING PUBLIC NEXT.JS PROXY ---
+Note: Unnecessary use of -X or --request, POST is already inferred.
+*   Trying 124.158.9.5:80...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0* Connected to 124.158.9.5 (124.158.9.5) port 80 (#0)
+> POST /api/v1/auth/login HTTP/1.1
+> Host: study.tsol.vn
+> User-Agent: curl/7.81.0
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 47
+> 
+} [47 bytes data]
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 404 Not Found
+< Server: nginx
+< Date: Sat, 18 Apr 2026 23:20:03 GMT
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 77
+< Connection: keep-alive
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: *
+< ETag: W/"4d-9yhwy6U5teozMlVsB8xPl+JPA24"
+< 
+{ [77 bytes data]
+100   124  100    77  100    47   3964   2420 --:--:-- --:--:-- --:--:--  6526100   124  100    77  100    47   3928   2398 --:--:-- --:--:-- --:--:--  6200
+* Connection #0 to host 124.158.9.5 left intact
+{"message":"Cannot POST /v1/auth/login","error":"Not Found","statusCode":404}
