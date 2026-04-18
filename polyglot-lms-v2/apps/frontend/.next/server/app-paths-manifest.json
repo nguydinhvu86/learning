@@ -1,0 +1,7 @@
+{
+  "/admin/dashboard/page": "app/admin/dashboard/page.js",
+  "/student/dashboard/page": "app/student/dashboard/page.js",
+  "/student/course/[courseId]/page": "app/student/course/[courseId]/page.js",
+  "/admin/course-builder/[courseId]/page": "app/admin/course-builder/[courseId]/page.js",
+  "/student/placement/page": "app/student/placement/page.js"
+}
