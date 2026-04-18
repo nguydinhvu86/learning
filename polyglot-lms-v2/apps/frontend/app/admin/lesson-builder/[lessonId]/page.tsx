@@ -84,22 +84,30 @@ export default function LessonBuilderPage() {
        if (b.type === 'VOCABULARY' || b.type === 'SENTENCE') {
          const targetType = b.type === 'VOCABULARY' ? 'FLASHCARD' : 'FLASHCARD_SENTENCE';
          const syncBlock = lesson.blocks.find((blk: any) => blk.type === targetType);
+         
+         const updatedSyncContent: any = syncBlock ? JSON.parse(JSON.stringify(syncBlock.content || {})) : {};
+         if (b.type === 'VOCABULARY') {
+           const words = parsedContent.words || [parsedContent];
+           updatedSyncContent.cards = words.map((w: any) => ({
+             term: w.term, pinyin: w.pinyin || w.phonetic, meaning: w.meaning, audio_url: w.audio_url
+           }));
+         } else {
+           const sentences = parsedContent.sentences || [parsedContent];
+           updatedSyncContent.sentences = sentences.map((s: any) => ({
+             text: s.text || s.term, meaning: s.meaning, phonetic: s.phonetic || s.pinyin, audio_url: s.audio_url
+           }));
+         }
+
          if (syncBlock) {
-           const updatedSyncContent = JSON.parse(JSON.stringify(syncBlock.content || {}));
-           if (b.type === 'VOCABULARY') {
-             const words = parsedContent.words || [parsedContent];
-             updatedSyncContent.cards = words.map((w: any) => ({
-               term: w.term, pinyin: w.pinyin || w.phonetic, meaning: w.meaning, audio_url: w.audio_url
-             }));
-           } else {
-             const sentences = parsedContent.sentences || [parsedContent];
-             updatedSyncContent.sentences = sentences.map((s: any) => ({
-               text: s.text || s.term, meaning: s.meaning, phonetic: s.phonetic || s.pinyin, audio_url: s.audio_url
-             }));
-           }
            await fetch(`/api/v1/admin/blocks/${syncBlock.id}`, {
              method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
              body: JSON.stringify({ content: updatedSyncContent })
+           });
+         } else {
+           const nextSeq = (lesson.blocks?.length || 0) + 1;
+           await fetch(`/api/v1/admin/blocks`, {
+             method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+             body: JSON.stringify({ lesson_id: lessonId, type: targetType, seq_no: nextSeq, content: updatedSyncContent })
            });
          }
        }
@@ -196,22 +204,30 @@ export default function LessonBuilderPage() {
           if (block.type === 'VOCABULARY' || block.type === 'SENTENCE') {
             const targetType = block.type === 'VOCABULARY' ? 'FLASHCARD' : 'FLASHCARD_SENTENCE';
             const syncBlock = lesson.blocks.find((blk: any) => blk.type === targetType);
+            
+            const updatedSyncContent: any = syncBlock ? JSON.parse(JSON.stringify(syncBlock.content || {})) : {};
+            if (block.type === 'VOCABULARY') {
+              const words = existingContent.words || [];
+              updatedSyncContent.cards = words.map((w: any) => ({
+                term: w.term, pinyin: w.pinyin || w.phonetic, meaning: w.meaning, audio_url: w.audio_url
+              }));
+            } else {
+              const sentences = existingContent.sentences || [];
+              updatedSyncContent.sentences = sentences.map((s: any) => ({
+                text: s.text || s.term, meaning: s.meaning, phonetic: s.phonetic || s.pinyin, audio_url: s.audio_url
+              }));
+            }
+
             if (syncBlock) {
-              const updatedSyncContent = JSON.parse(JSON.stringify(syncBlock.content || {}));
-              if (block.type === 'VOCABULARY') {
-                const words = existingContent.words || [];
-                updatedSyncContent.cards = words.map((w: any) => ({
-                  term: w.term, pinyin: w.pinyin || w.phonetic, meaning: w.meaning, audio_url: w.audio_url
-                }));
-              } else {
-                const sentences = existingContent.sentences || [];
-                updatedSyncContent.sentences = sentences.map((s: any) => ({
-                  text: s.text || s.term, meaning: s.meaning, phonetic: s.phonetic || s.pinyin, audio_url: s.audio_url
-                }));
-              }
               await fetch(`/api/v1/admin/blocks/${syncBlock.id}`, {
                 method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify({ content: updatedSyncContent })
+              });
+            } else {
+              const nextSeq = (lesson.blocks?.length || 0) + 1;
+              await fetch(`/api/v1/admin/blocks`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ lesson_id: lessonId, type: targetType, seq_no: nextSeq, content: updatedSyncContent })
               });
             }
           }
