@@ -39,6 +39,10 @@ module.exports = {
     cd apps/frontend &&
     rm -rf .next || true &&
     npm run build &&
+
+    echo "--- GENERATING PRISMA CLIENT ---" &&
+    cd ../backend &&
+    npx prisma generate &&
     
     echo "--- REBOOTING PM2 ---" &&
     cd /www/wwwroot/learning/polyglot-lms-v2 &&

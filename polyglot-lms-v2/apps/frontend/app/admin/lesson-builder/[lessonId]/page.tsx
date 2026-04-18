@@ -96,8 +96,9 @@ export default function LessonBuilderPage() {
       const type = e.target.value;
       setBlockType(type);
       if(type === 'GRAMMAR') setJsonContent('{\n  "title": "Cấu trúc A + B",\n  "explanation": "Dùng để...",\n  "examples": ["Example 1"]\n}');
-      if(type === 'READING') setJsonContent('{\n  "title": "Đoạn văn",\n  "text": "Nội dung...",\n  "translation": "Dịch nghĩa..."\n}');
+      if(type === 'READING') setJsonContent('{\n  "doan van": []\n}');
       if(type === 'SENTENCE') setJsonContent('{\n  "sentence": "你好",\n  "pinyin": "nǐ hǎo",\n  "meaning": "Xin chào"\n}');
+      if(type === 'FLASHCARD_SENTENCE') setJsonContent('{\n  "sentences": []\n}');
   }
 
   const handleBlockSpecificImport = async (e: React.ChangeEvent<HTMLInputElement>, block: any) => {
@@ -124,6 +125,7 @@ export default function LessonBuilderPage() {
           if (!existingContent.cards) existingContent.cards = [];
           if (!existingContent.sentences) existingContent.sentences = [];
           if (!existingContent.examples) existingContent.examples = [];
+          if (!existingContent["doan van"]) existingContent["doan van"] = [];
 
           for (const row of data as any[]) {
             const term = row['Term'] || row['Cụm từ gốc'] || row['Từ vựng'] || row['term'] || row['Term '] || row['Mặt trước'];
@@ -149,6 +151,10 @@ export default function LessonBuilderPage() {
               existingContent.sentences.push({ text: parsedItem.term, meaning: parsedItem.meaning, phonetic: parsedItem.pinyin, audio_url: parsedItem.audio_url });
             } else if (block.type === 'GRAMMAR') {
               existingContent.examples.push({ text: parsedItem.term, meaning: parsedItem.meaning, phonetic: parsedItem.pinyin });
+            } else if (block.type === 'FLASHCARD_SENTENCE') {
+              existingContent.sentences.push({ text: parsedItem.term, meaning: parsedItem.meaning, phonetic: parsedItem.pinyin, audio_url: parsedItem.audio_url });
+            } else if (block.type === 'READING') {
+              existingContent["doan van"].push({ text: parsedItem.term, meaning: parsedItem.meaning, phonetic: parsedItem.pinyin, audio_url: parsedItem.audio_url });
             }
           }
 
@@ -259,7 +265,8 @@ export default function LessonBuilderPage() {
                              <span className={`text-xs font-black uppercase px-2 py-1 rounded inline-block
                                   ${b.type === 'VOCABULARY' ? 'bg-amber-100 text-amber-700' : 
                                     b.type === 'GRAMMAR' ? 'bg-blue-100 text-blue-700' :
-                                    b.type === 'QUIZ' ? 'bg-rose-100 text-rose-700' : 'bg-slate-200 text-slate-700'}`}>{b.type}</span>
+                                    b.type === 'QUIZ' ? 'bg-rose-100 text-rose-700' :
+                                    b.type === 'FLASHCARD_SENTENCE' ? 'bg-purple-100 text-purple-700' : 'bg-slate-200 text-slate-700'}`}>{b.type}</span>
                              <button onClick={() => toggleBlock(b.id)} className="text-xs font-bold text-slate-500 hover:text-slate-800 bg-slate-100 px-3 py-1 rounded-lg transition-colors">
                                {collapsedBlocks[b.id] ? '👀 Mở rộng JSON' : '🙈 Thu nhỏ lại'}
                              </button>
@@ -269,7 +276,7 @@ export default function LessonBuilderPage() {
                           )}
                        </div>
                        <div className="flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition shrink-0 ml-2">
-                           {['VOCABULARY', 'FLASHCARD', 'SENTENCE', 'GRAMMAR'].includes(b.type) && (
+                           {['VOCABULARY', 'FLASHCARD', 'SENTENCE', 'GRAMMAR', 'FLASHCARD_SENTENCE', 'READING'].includes(b.type) && (
                               <>
                                 <a href="/Template_Vocabulary.xlsx" download className="px-3 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold rounded text-center block transition-colors">
                                   📥 Tải Mẫu
@@ -308,6 +315,7 @@ export default function LessonBuilderPage() {
                        <option value="GRAMMAR">📋 GRAMMAR (Ngữ Pháp)</option>
                        <option value="READING">📚 READING (Bài Đọc)</option>
                        <option value="SENTENCE">💬 SENTENCE (Mẫu câu)</option>
+                       <option value="FLASHCARD_SENTENCE">🃏 FLASHCARD - SENTENCE (Luyện thẻ mẫu câu)</option>
                     </select>
                   </div>
 
@@ -358,7 +366,7 @@ export default function LessonBuilderPage() {
                   )}
 
                   {/* FALLBACK JSON */}
-                  {['GRAMMAR', 'READING', 'SENTENCE'].includes(blockType) && (
+                  {['GRAMMAR', 'READING', 'SENTENCE', 'FLASHCARD_SENTENCE'].includes(blockType) && (
                      <div>
                        <label className="font-bold text-sm block mb-1 text-slate-700">Code JSON Tùy Biến (Sắp có Form thông minh riêng)</label>
                        <textarea value={jsonContent} onChange={e => setJsonContent(e.target.value)}
