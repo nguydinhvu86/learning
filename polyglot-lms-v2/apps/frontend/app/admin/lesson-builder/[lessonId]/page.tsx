@@ -79,6 +79,31 @@ export default function LessonBuilderPage() {
          method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
          body: JSON.stringify({ content: parsedContent })
        });
+
+       // Auto-Sync logic for Manual Edit
+       if (b.type === 'VOCABULARY' || b.type === 'SENTENCE') {
+         const targetType = b.type === 'VOCABULARY' ? 'FLASHCARD' : 'FLASHCARD_SENTENCE';
+         const syncBlock = lesson.blocks.find((blk: any) => blk.type === targetType);
+         if (syncBlock) {
+           const updatedSyncContent = JSON.parse(JSON.stringify(syncBlock.content || {}));
+           if (b.type === 'VOCABULARY') {
+             const words = parsedContent.words || [parsedContent];
+             updatedSyncContent.cards = words.map((w: any) => ({
+               term: w.term, pinyin: w.pinyin || w.phonetic, meaning: w.meaning, audio_url: w.audio_url
+             }));
+           } else {
+             const sentences = parsedContent.sentences || [parsedContent];
+             updatedSyncContent.sentences = sentences.map((s: any) => ({
+               text: s.text || s.term, meaning: s.meaning, phonetic: s.phonetic || s.pinyin, audio_url: s.audio_url
+             }));
+           }
+           await fetch(`/api/v1/admin/blocks/${syncBlock.id}`, {
+             method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+             body: JSON.stringify({ content: updatedSyncContent })
+           });
+         }
+       }
+
        loadLesson();
      } catch (e) {
        alert('Mã JSON sửa không hợp lệ!');
@@ -166,6 +191,30 @@ export default function LessonBuilderPage() {
           });
           
           if (!res.ok) throw new Error('API server từ chối dữ liệu (có thể do quá lớn hoặc lỗi kết nối).');
+
+          // Auto-Sync logic for Excel Import
+          if (block.type === 'VOCABULARY' || block.type === 'SENTENCE') {
+            const targetType = block.type === 'VOCABULARY' ? 'FLASHCARD' : 'FLASHCARD_SENTENCE';
+            const syncBlock = lesson.blocks.find((blk: any) => blk.type === targetType);
+            if (syncBlock) {
+              const updatedSyncContent = JSON.parse(JSON.stringify(syncBlock.content || {}));
+              if (block.type === 'VOCABULARY') {
+                const words = existingContent.words || [];
+                updatedSyncContent.cards = words.map((w: any) => ({
+                  term: w.term, pinyin: w.pinyin || w.phonetic, meaning: w.meaning, audio_url: w.audio_url
+                }));
+              } else {
+                const sentences = existingContent.sentences || [];
+                updatedSyncContent.sentences = sentences.map((s: any) => ({
+                  text: s.text || s.term, meaning: s.meaning, phonetic: s.phonetic || s.pinyin, audio_url: s.audio_url
+                }));
+              }
+              await fetch(`/api/v1/admin/blocks/${syncBlock.id}`, {
+                method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ content: updatedSyncContent })
+              });
+            }
+          }
 
           alert(`Đã Import thành công file Excel vào Data khối ${block.type}!`);
           targetInput.value = '';
