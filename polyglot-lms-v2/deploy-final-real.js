@@ -36,6 +36,7 @@ module.exports = {
     
     echo "--- BUILD NEXT.JS ---" &&
     cd /www/wwwroot/learning/polyglot-lms-v2/apps/frontend &&
+    node fix_api_urls.js &&
     rm -rf .next || true &&
     npm run build &&
     echo '#!/bin/bash' > start.sh &&
