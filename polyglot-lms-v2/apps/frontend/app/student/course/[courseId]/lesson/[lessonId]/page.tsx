@@ -312,7 +312,7 @@ export default function LessonViewer({ params }: { params: { courseId: string, l
                   let icon = '🧩';
                   let title = b.type;
                   if (b.type === 'VOCABULARY') { icon = '📚'; title = 'Từ Vựng'; }
-                  if (b.type === 'FLASHCARD') { icon = '🔄'; title = 'Luyện Thẻ'; }
+                  if (b.type === 'FLASHCARD' || b.type === 'FLASHCARD_SENTENCE') { icon = '🔄'; title = 'Luyện Thẻ'; }
                   if (b.type === 'SENTENCE') { icon = '💬'; title = 'Mẫu Câu'; }
                   if (b.type === 'GRAMMAR') { icon = '⚙️'; title = 'Ngữ Pháp'; }
                   if (b.type === 'READING') { icon = '📖'; title = 'Bài Đọc'; }
@@ -353,7 +353,7 @@ export default function LessonViewer({ params }: { params: { courseId: string, l
                 </div>
               )}
 
-              {block.type === 'FLASHCARD' && (() => {
+              {(block.type === 'FLASHCARD' || block.type === 'FLASHCARD_SENTENCE') && (() => {
                 const allCards = content.cards || [];
                 const itemsPerPage = 10;
                 const totalPages = Math.ceil(allCards.length / itemsPerPage);
