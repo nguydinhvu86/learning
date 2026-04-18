@@ -7,17 +7,13 @@ module.exports = {
   apps: [
     {
       name: 'learning_backend',
-      script: 'npm',
-      args: 'run start:prod',
-      cwd: '/www/wwwroot/learning/polyglot-lms-v2/apps/backend',
-      env: { PORT: 3001 }
+      script: 'start_backend.sh',
+      cwd: '/www/wwwroot/learning/polyglot-lms-v2/apps/backend'
     },
     {
       name: 'learning_frontend',
-      script: 'npm',
-      args: 'run start',
-      cwd: '/www/wwwroot/learning/polyglot-lms-v2/apps/frontend',
-      env: { PORT: 3005 }
+      script: 'start.sh',
+      cwd: '/www/wwwroot/learning/polyglot-lms-v2/apps/frontend'
     }
   ]
 };
@@ -42,10 +38,19 @@ module.exports = {
     cd /www/wwwroot/learning/polyglot-lms-v2/apps/frontend &&
     rm -rf .next || true &&
     npm run build &&
+    echo '#!/bin/bash' > start.sh &&
+    echo 'export PORT=3005' >> start.sh &&
+    echo 'npm run start -- -p 3005' >> start.sh &&
+    chmod +x start.sh &&
 
-    echo "--- GENERATING PRISMA CLIENT ---" &&
+    echo "--- BUILD NEST.JS ---" &&
     cd /www/wwwroot/learning/polyglot-lms-v2/apps/backend &&
     npx prisma generate &&
+    npm run build &&
+    echo '#!/bin/bash' > start_backend.sh &&
+    echo 'export PORT=3001' >> start_backend.sh &&
+    echo 'npm run start:prod' >> start_backend.sh &&
+    chmod +x start_backend.sh &&
     
     echo "--- REBOOTING PM2 ---" &&
     cd /www/wwwroot/learning/polyglot-lms-v2 &&
