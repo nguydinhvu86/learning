@@ -10,6 +10,8 @@ export default function LessonBuilderPage() {
 
   // Form states
   const [showAddModal, setShowAddModal] = useState(false);
+  const [editingBlock, setEditingBlock] = useState<any>(null);
+  const [editJsonStr, setEditJsonStr] = useState<string>('');
   const [blockType, setBlockType] = useState('VOCABULARY');
   const [collapsedBlocks, setCollapsedBlocks] = useState<Record<string, boolean>>({});
 
@@ -69,11 +71,16 @@ export default function LessonBuilderPage() {
      }
   };
 
-  const handleEditBlock = async (b: any) => {
-     const newStr = prompt('Chỉnh sửa JSON Data của Block:', JSON.stringify(b.content));
-     if(!newStr) return;
+  const handleEditBlock = (b: any) => {
+     setEditingBlock(b);
+     setEditJsonStr(JSON.stringify(b.content, null, 2));
+  };
+
+  const handleSaveEditBlock = async () => {
+     if(!editingBlock || !editJsonStr) return;
+     const b = editingBlock;
      try {
-       const parsedContent = JSON.parse(newStr);
+       const parsedContent = JSON.parse(editJsonStr);
        const token = localStorage.getItem('polyglot_token');
        await fetch(`/api/v1/admin/blocks/${b.id}`, {
          method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
@@ -112,9 +119,12 @@ export default function LessonBuilderPage() {
          }
        }
 
+       setEditingBlock(null);
+       alert('Đã cập nhật JSON thành công!');
        loadLesson();
-     } catch (e) {
-       alert('Mã JSON sửa không hợp lệ!');
+     } catch (e: any) {
+       console.error("Lỗi khi Edit Block:", e);
+       alert(`Mã JSON sửa không hợp lệ: ${e.message}\nBạn vui lòng kiểm tra lại từng dấu ngoặc và dấu phẩy!`);
      }
   };
 
@@ -440,6 +450,34 @@ export default function LessonBuilderPage() {
                   )}
                   
                   <button onClick={handleAddBlock} className="w-full bg-indigo-600 text-white font-bold py-4 rounded-xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-500/30 text-lg">LƯU XUỐNG DATABASE</button>
+               </div>
+             </div>
+          </div>
+       )}
+
+       {editingBlock && (
+          <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center animate-in zoom-in-95 duration-200">
+             <div className="bg-white p-8 rounded-2xl shadow-2xl w-[800px] max-w-[95vw] border border-indigo-100 relative">
+               <button onClick={() => setEditingBlock(null)} className="absolute top-6 right-6 text-xl font-bold text-gray-400 hover:text-black hover:bg-gray-100 w-8 h-8 rounded flex items-center justify-center transition">✕</button>
+               <h2 className="text-2xl font-black mb-2 text-gray-800 flex items-center">
+                 <span className="bg-amber-100 text-amber-700 p-2 rounded-lg mr-3 text-sm">EDIT</span>
+                 Chỉnh Sửa Mã JSON Gốc
+               </h2>
+               <p className="text-gray-500 mb-6 text-sm">Tuyệt đối cẩn thận với cú pháp (dấu phẩy, dấu ngoặc kép, mảng). Giao diện này khắc phục lỗi mã bị cắt ngắn của trình duyệt.</p>
+               
+               <div className="space-y-4">
+                 <textarea 
+                    value={editJsonStr} 
+                    onChange={e => setEditJsonStr(e.target.value)}
+                    className="w-full h-[50vh] px-6 py-4 font-mono text-sm bg-slate-900 text-emerald-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner leading-relaxed"
+                 />
+                 
+                 <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
+                    <button onClick={() => setEditingBlock(null)} className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl transition">Hủy bỏ</button>
+                    <button onClick={handleSaveEditBlock} className="px-8 py-3 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-500/30 flex items-center">
+                       💾 Ghi Đè Dữ Liệu
+                    </button>
+                 </div>
                </div>
              </div>
           </div>
