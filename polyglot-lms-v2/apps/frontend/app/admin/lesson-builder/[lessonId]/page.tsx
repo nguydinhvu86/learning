@@ -140,36 +140,37 @@ export default function LessonBuilderPage() {
     if (direction === 'UP' && index === 0) return;
     if (direction === 'DOWN' && index === lesson.blocks.length - 1) return;
 
-    const currentBlock = lesson.blocks[index];
-    const targetIndex = direction === 'UP' ? index - 1 : index + 1;
-    const targetBlock = lesson.blocks[targetIndex];
-
-    const currentSeq = currentBlock.seq_no;
-    const targetSeq = targetBlock.seq_no;
-
     const token = localStorage.getItem('polyglot_token');
 
-    // Optimistic UI update
+    // Nudging algorithm: Swap in the array
     const newBlocks = [...lesson.blocks];
-    newBlocks[index] = { ...currentBlock, seq_no: targetSeq };
-    newBlocks[targetIndex] = { ...targetBlock, seq_no: currentSeq };
-    newBlocks.sort((a, b) => a.seq_no - b.seq_no);
+    const targetIndex = direction === 'UP' ? index - 1 : index + 1;
+    const temp = newBlocks[index];
+    newBlocks[index] = newBlocks[targetIndex];
+    newBlocks[targetIndex] = temp;
+
+    // Healing Algorithm: Reassign perfect sequential integers to ALL blocks
+    newBlocks.forEach((b, i) => {
+       b.seq_no = i + 1;
+    });
+
+    // Optimistic Apply
     setLesson({ ...lesson, blocks: newBlocks });
 
     try {
-      await Promise.all([
-        fetch(`/api/v1/admin/blocks/${currentBlock.id}`, {
-          method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-          body: JSON.stringify({ content: currentBlock.content, seq_no: targetSeq })
-        }),
-        fetch(`/api/v1/admin/blocks/${targetBlock.id}`, {
-          method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-          body: JSON.stringify({ content: targetBlock.content, seq_no: currentSeq })
-        })
-      ]);
+      // Fire concurrent updates for ALL blocks to freeze the new chronology
+      await Promise.all(
+        newBlocks.map((b) => 
+          fetch(`/api/v1/admin/blocks/${b.id}`, {
+            method: 'PUT', 
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify({ seq_no: b.seq_no }) // Securely isolate the sequence update without touching large content
+          })
+        )
+      );
       loadLesson();
     } catch (e) {
-      alert("Lỗi khi di chuyển block!");
+      alert("Lỗi khi đồng bộ trật tự hiển thị!");
       loadLesson();
     }
   };
