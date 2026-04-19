@@ -100,8 +100,8 @@ export default function LessonBuilderPage() {
            }));
          } else {
            const sentences = parsedContent.sentences || [parsedContent];
-           updatedSyncContent.sentences = sentences.map((s: any) => ({
-             text: s.text || s.term, meaning: s.meaning, phonetic: s.phonetic || s.pinyin, audio_url: s.audio_url
+           updatedSyncContent.cards = sentences.map((s: any) => ({
+             term: s.text || s.term || s.sentence, meaning: s.meaning, pinyin: s.phonetic || s.pinyin, audio_url: s.audio_url
            }));
          }
 
@@ -223,8 +223,8 @@ export default function LessonBuilderPage() {
               }));
             } else {
               const sentences = existingContent.sentences || [];
-              updatedSyncContent.sentences = sentences.map((s: any) => ({
-                text: s.text || s.term, meaning: s.meaning, phonetic: s.phonetic || s.pinyin, audio_url: s.audio_url
+              updatedSyncContent.cards = sentences.map((s: any) => ({
+                term: s.text || s.term || s.sentence, meaning: s.meaning, pinyin: s.phonetic || s.pinyin, audio_url: s.audio_url
               }));
             }
 
