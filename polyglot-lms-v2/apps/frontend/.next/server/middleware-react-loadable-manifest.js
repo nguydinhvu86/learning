@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{}"
+self.__REACT_LOADABLE_MANIFEST='{"app\\\\admin\\\\lesson-builder\\\\[lessonId]\\\\page.tsx -> xlsx":{"id":162,"files":["static/chunks/98f82933.278162036ad4c09d.js","static/chunks/406.075097cf1ed4292d.js"]}}';

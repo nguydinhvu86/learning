@@ -2,6 +2,16 @@ import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards, Request } f
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { RolesGuard, Roles } from '../auth/roles.guard';
 import { PrismaService } from '../prisma/prisma.service';
+import { IsOptional, IsNumber } from 'class-validator';
+
+export class UpdateBlockDto {
+  @IsOptional()
+  content?: any;
+  @IsOptional()
+  @IsNumber()
+  seq_no?: number;
+}
+
 
 @ApiTags('Admin')
 @ApiBearerAuth()
@@ -371,7 +381,7 @@ export class AcademicController {
 
   @Put('blocks/:id')
   @Roles('ACADEMIC_MANAGER', 'CENTER_MANAGER', 'SUPER_ADMIN')
-  async updateBlock(@Param('id') id: string, @Body() dto: { content: any, seq_no?: number }) {
+  async updateBlock(@Param('id') id: string, @Body() dto: UpdateBlockDto) {
     const updateData: any = { content: dto.content };
     if(dto.seq_no) updateData.seq_no = Number(dto.seq_no);
     const block = await this.prisma.lessonBlock.update({ where: { id }, data: updateData });

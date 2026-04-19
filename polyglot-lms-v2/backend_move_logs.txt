@@ -1,0 +1,105 @@
+[TAILING] Tailing last 50 lines for [learning_backend] process (change the value with --lines option)
+/home/incall/.pm2/logs/learning-backend-error.log last 50 lines:
+46|learnin |   270     });
+46|learnin |   271 }
+46|learnin |   272 async createBlock(dto) {
+46|learnin | → 273     const block = await this.prisma.lessonBlock.create(
+46|learnin | Value '' not found in enum 'BlockType'
+46|learnin |     at $n.handleRequestError [90m(/www/wwwroot/learning/polyglot-lms-v2/apps/backend/[39mnode_modules/[4m@prisma/client[24m/runtime/library.js:121:7505[90m)[39m
+46|learnin |     at $n.handleAndLogRequestError [90m(/www/wwwroot/learning/polyglot-lms-v2/apps/backend/[39mnode_modules/[4m@prisma/client[24m/runtime/library.js:121:6623[90m)[39m
+46|learnin |     at $n.request [90m(/www/wwwroot/learning/polyglot-lms-v2/apps/backend/[39mnode_modules/[4m@prisma/client[24m/runtime/library.js:121:6307[90m)[39m
+46|learnin |     at async l [90m(/www/wwwroot/learning/polyglot-lms-v2/apps/backend/[39mnode_modules/[4m@prisma/client[24m/runtime/library.js:130:9633[90m)[39m
+46|learnin |     at async AcademicController.createBlock [90m(/www/wwwroot/learning/polyglot-lms-v2/apps/backend/[39mdist/src/admin/academic.controller.js:273:23[90m)[39m
+46|learnin |     at async /www/wwwroot/learning/polyglot-lms-v2/node_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28
+46|learnin |     at async /www/wwwroot/learning/polyglot-lms-v2/node_modules/[4m@nestjs/core[24m/router/router-proxy.js:9:17 {
+46|learnin |   clientVersion: [32m'5.22.0'[39m
+46|learnin | }
+46|learnin | [31m[Nest] 636081  - [39m04/19/2026, 7:03:33 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mPrismaClientUnknownRequestError: 
+46|learnin | Invalid `this.prisma.lessonBlock.create()` invocation in
+46|learnin | /www/wwwroot/learning/polyglot-lms-v2/apps/backend/dist/src/admin/academic.controller.js:273:53
+46|learnin | 
+46|learnin |   270     });
+46|learnin |   271 }
+46|learnin |   272 async createBlock(dto) {
+46|learnin | → 273     const block = await this.prisma.lessonBlock.create(
+46|learnin | Value '' not found in enum 'BlockType'
+46|learnin |     at $n.handleRequestError [90m(/www/wwwroot/learning/polyglot-lms-v2/apps/backend/[39mnode_modules/[4m@prisma/client[24m/runtime/library.js:121:7505[90m)[39m
+46|learnin |     at $n.handleAndLogRequestError [90m(/www/wwwroot/learning/polyglot-lms-v2/apps/backend/[39mnode_modules/[4m@prisma/client[24m/runtime/library.js:121:6623[90m)[39m
+46|learnin |     at $n.request [90m(/www/wwwroot/learning/polyglot-lms-v2/apps/backend/[39mnode_modules/[4m@prisma/client[24m/runtime/library.js:121:6307[90m)[39m
+46|learnin |     at async l [90m(/www/wwwroot/learning/polyglot-lms-v2/apps/backend/[39mnode_modules/[4m@prisma/client[24m/runtime/library.js:130:9633[90m)[39m
+46|learnin |     at async AcademicController.createBlock [90m(/www/wwwroot/learning/polyglot-lms-v2/apps/backend/[39mdist/src/admin/academic.controller.js:273:23[90m)[39m
+46|learnin |     at async /www/wwwroot/learning/polyglot-lms-v2/node_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28
+46|learnin |     at async /www/wwwroot/learning/polyglot-lms-v2/node_modules/[4m@nestjs/core[24m/router/router-proxy.js:9:17 {
+46|learnin |   clientVersion: [32m'5.22.0'[39m
+46|learnin | }
+46|learnin | [31m[Nest] 636081  - [39m04/19/2026, 7:03:37 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mPrismaClientUnknownRequestError: 
+46|learnin | Invalid `this.prisma.lessonBlock.create()` invocation in
+46|learnin | /www/wwwroot/learning/polyglot-lms-v2/apps/backend/dist/src/admin/academic.controller.js:273:53
+46|learnin | 
+46|learnin |   270     });
+46|learnin |   271 }
+46|learnin |   272 async createBlock(dto) {
+46|learnin | → 273     const block = await this.prisma.lessonBlock.create(
+46|learnin | Value '' not found in enum 'BlockType'
+46|learnin |     at $n.handleRequestError [90m(/www/wwwroot/learning/polyglot-lms-v2/apps/backend/[39mnode_modules/[4m@prisma/client[24m/runtime/library.js:121:7505[90m)[39m
+46|learnin |     at $n.handleAndLogRequestError [90m(/www/wwwroot/learning/polyglot-lms-v2/apps/backend/[39mnode_modules/[4m@prisma/client[24m/runtime/library.js:121:6623[90m)[39m
+46|learnin |     at $n.request [90m(/www/wwwroot/learning/polyglot-lms-v2/apps/backend/[39mnode_modules/[4m@prisma/client[24m/runtime/library.js:121:6307[90m)[39m
+46|learnin |     at async l [90m(/www/wwwroot/learning/polyglot-lms-v2/apps/backend/[39mnode_modules/[4m@prisma/client[24m/runtime/library.js:130:9633[90m)[39m
+46|learnin |     at async AcademicController.createBlock [90m(/www/wwwroot/learning/polyglot-lms-v2/apps/backend/[39mdist/src/admin/academic.controller.js:273:23[90m)[39m
+46|learnin |     at async /www/wwwroot/learning/polyglot-lms-v2/node_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28
+46|learnin |     at async /www/wwwroot/learning/polyglot-lms-v2/node_modules/[4m@nestjs/core[24m/router/router-proxy.js:9:17 {
+46|learnin |   clientVersion: [32m'5.22.0'[39m
+46|learnin | }
+
+/home/incall/.pm2/logs/learning-backend-out.log last 50 lines:
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/users, POST} route[39m[38;5;3m +1ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/users/:id, PUT} route[39m[38;5;3m +1ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/learning-path/generate, GET} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/courses, GET} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/settings, PUT} route[39m[38;5;3m +1ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/metadata, GET} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/programs, POST} route[39m[38;5;3m +1ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/levels, POST} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/courses, POST} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/courses/:id, PUT} route[39m[38;5;3m +1ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/courses/:id, DELETE} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/courses/:id/curriculum, GET} route[39m[38;5;3m +1ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/units, POST} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/units/:id, PUT} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/units/:id, DELETE} route[39m[38;5;3m +1ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/lessons, POST} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/lessons/:id, PUT} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/lessons/:id, DELETE} route[39m[38;5;3m +1ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/lessons/:id/blocks, GET} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/blocks, POST} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/blocks/:id, PUT} route[39m[38;5;3m +1ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/admin/blocks/:id, DELETE} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCurriculumController {/v1/curriculum}:[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/curriculum/courses, GET} route[39m[38;5;3m +1ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/curriculum/courses/:id/roadmap, GET} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/curriculum/lessons/:id, GET} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/curriculum/progress, POST} route[39m[38;5;3m +1ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPlacementController {/v1/placement}:[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/placement/submit, POST} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mProgressController {/v1/progress}:[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/progress/lesson-pulse, POST} route[39m[38;5;3m +1ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/progress/lesson-pulse-undo, POST} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/progress/lesson-reset, POST} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/progress/lesson/:lesson_id, GET} route[39m[38;5;3m +1ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/progress/sync, POST} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/progress/dashboard, GET} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAssignmentController {/v1/assignments}:[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/assignments, POST} route[39m[38;5;3m +1ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/assignments/:id/submit, POST} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/assignments/submissions/:subId/review, POST} route[39m[38;5;3m +1ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mClassController {/v1/classes}:[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/classes/my-classes, GET} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/classes/:id/students, GET} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mNotificationController {/v1/notifications}:[39m[38;5;3m +1ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/notifications/my-alerts, GET} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/notifications/:id/read, POST} route[39m[38;5;3m +0ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/notifications/admin/broadcast, POST} route[39m[38;5;3m +1ms[39m
+46|learnin | [32m[Nest] 636609  - [39m04/19/2026, 7:08:03 AM [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +23ms[39m
+46|learnin | Application is running on: http://localhost:3001/v1
+46|learnin | Swagger Docs available at: http://localhost:3001/v1/docs
+
