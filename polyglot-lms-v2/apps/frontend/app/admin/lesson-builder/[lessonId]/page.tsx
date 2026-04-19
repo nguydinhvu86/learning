@@ -135,6 +135,45 @@ export default function LessonBuilderPage() {
      loadLesson();
   };
 
+  const handleMoveBlock = async (index: number, direction: 'UP' | 'DOWN') => {
+    if (!lesson || !lesson.blocks) return;
+    if (direction === 'UP' && index === 0) return;
+    if (direction === 'DOWN' && index === lesson.blocks.length - 1) return;
+
+    const currentBlock = lesson.blocks[index];
+    const targetIndex = direction === 'UP' ? index - 1 : index + 1;
+    const targetBlock = lesson.blocks[targetIndex];
+
+    const currentSeq = currentBlock.seq_no;
+    const targetSeq = targetBlock.seq_no;
+
+    const token = localStorage.getItem('polyglot_token');
+
+    // Optimistic UI update
+    const newBlocks = [...lesson.blocks];
+    newBlocks[index] = { ...currentBlock, seq_no: targetSeq };
+    newBlocks[targetIndex] = { ...targetBlock, seq_no: currentSeq };
+    newBlocks.sort((a, b) => a.seq_no - b.seq_no);
+    setLesson({ ...lesson, blocks: newBlocks });
+
+    try {
+      await Promise.all([
+        fetch(`/api/v1/admin/blocks/${currentBlock.id}`, {
+          method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify({ content: currentBlock.content, seq_no: targetSeq })
+        }),
+        fetch(`/api/v1/admin/blocks/${targetBlock.id}`, {
+          method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify({ content: targetBlock.content, seq_no: currentSeq })
+        })
+      ]);
+      loadLesson();
+    } catch (e) {
+      alert("Lỗi khi di chuyển block!");
+      loadLesson();
+    }
+  };
+
   const handleTypeChange = (e: any) => {
       const type = e.target.value;
       setBlockType(type);
@@ -366,7 +405,11 @@ export default function LessonBuilderPage() {
                               <button onClick={() => handleGenerateQuiz(b)} className="px-3 py-1 bg-amber-100 hover:bg-amber-200 text-amber-700 text-xs font-bold rounded shadow-sm">🪄 Tạo Quiz 20 Câu</button>
                            )}
                            <button onClick={() => handleEditBlock(b)} className="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold rounded">Edit JSON</button>
-                           <button onClick={() => handleDeleteBlock(b.id)} className="px-3 py-1 bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold rounded">Delete</button>
+                           <div className="flex space-x-1 mt-1 border-t border-gray-100 pt-1">
+                               <button onClick={() => handleMoveBlock(index, 'UP')} disabled={index === 0} className={`flex-1 px-2 py-1 text-xs font-bold text-center rounded ${index === 0 ? 'bg-gray-100 text-gray-300 cursor-not-allowed' : 'bg-sky-50 text-sky-600 hover:bg-sky-100 cursor-pointer'}`}>↑ Lên</button>
+                               <button onClick={() => handleMoveBlock(index, 'DOWN')} disabled={index === lesson.blocks.length - 1} className={`flex-1 px-2 py-1 text-xs font-bold text-center rounded ${index === lesson.blocks.length - 1 ? 'bg-gray-100 text-gray-300 cursor-not-allowed' : 'bg-sky-50 text-sky-600 hover:bg-sky-100 cursor-pointer'}`}>↓ Xuống</button>
+                            </div>
+                            <button onClick={() => handleDeleteBlock(b.id)} className="px-3 py-1 bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold rounded">Delete</button>
                        </div>
                     </div>
                   ))}
