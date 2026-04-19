@@ -393,7 +393,7 @@ export class AcademicController {
   @Roles('ACADEMIC_MANAGER', 'CENTER_MANAGER', 'SUPER_ADMIN')
   async createBlock(@Body() dto: CreateBlockDto) {
     const block = await this.prisma.lessonBlock.create({
-      data: { lesson_id: dto.lesson_id, type: dto.type, seq_no: Number(dto.seq_no), content: dto.content }
+      data: { lesson_id: dto.lesson_id, type: dto.type as any, seq_no: Number(dto.seq_no), content: dto.content }
     });
     return { success: true, block };
   }
