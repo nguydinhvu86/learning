@@ -58,7 +58,6 @@ module.exports = {
     cat << 'EOF' > ecosystem.config.js
 ${fileContent}
 EOF
-    pm2 stop all || true &&
     pm2 delete learning_frontend || true &&
     pm2 delete learning_backend || true &&
     pm2 start ecosystem.config.js &&
