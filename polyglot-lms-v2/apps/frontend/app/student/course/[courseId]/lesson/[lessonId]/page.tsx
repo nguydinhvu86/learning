@@ -354,7 +354,8 @@ export default function LessonViewer({ params }: { params: { courseId: string, l
               )}
 
               {(block.type === 'FLASHCARD' || block.type === 'FLASHCARD_SENTENCE') && (() => {
-                const allCards = content.cards || [];
+                const rawCards = content.cards && content.cards.length > 0 ? content.cards : (content.sentences || []);
+                const allCards = rawCards.map((c: any) => ({ ...c, term: c.term || c.text || c.sentence }));
                 const itemsPerPage = 10;
                 const totalPages = Math.ceil(allCards.length / itemsPerPage);
                 const currentPage = blockPages[block.block_id] || 0;
