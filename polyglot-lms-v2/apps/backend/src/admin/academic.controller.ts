@@ -392,7 +392,8 @@ export class AcademicController {
   @Post('blocks')
   @Roles('ACADEMIC_MANAGER', 'CENTER_MANAGER', 'SUPER_ADMIN')
   async createBlock(@Body() dto: CreateBlockDto) {
-    console.log("==> RAW DTO RECEIVED: ", JSON.stringify(dto));
+    console.log("=== DTO.TYPE ===", String(dto.type));
+    console.log("=== DTO KEYS ===", Object.keys(dto));
     const block = await this.prisma.lessonBlock.create({
       data: { lesson_id: dto.lesson_id, type: dto.type as any, seq_no: Number(dto.seq_no), content: dto.content }
     });

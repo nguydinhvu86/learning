@@ -9,7 +9,7 @@ conn.on('ready', () => {
     if (err) throw err;
     let out = '';
     stream.on('close', () => {
-      require('fs').writeFileSync('backend_crash.log', out);
+      require('fs').writeFileSync('backend_crash2.log', out);
       conn.end();
     })
     .on('data', data => out += data.toString())
