@@ -17,6 +17,7 @@ export default function LessonViewer({ params }: { params: { courseId: string, l
   const [progressPercent, setProgressPercent] = useState(0);
   const [showResumeModal, setShowResumeModal] = useState(false);
   const [savedSessionState, setSavedSessionState] = useState<any>(null);
+  const [quizSubmitted, setQuizSubmitted] = useState<Record<string, boolean>>({});
 
   const speak = (text: string, lang?: string) => {
     if ('speechSynthesis' in window) {
@@ -262,6 +263,31 @@ export default function LessonViewer({ params }: { params: { courseId: string, l
        });
        return newResults;
     });
+    setQuizSubmitted(prev => {
+       const newSubmitted = { ...prev };
+       delete newSubmitted[quizBlockId];
+       return newSubmitted;
+    });
+  };
+
+  const handleGradeQuiz = (blockId: string, questions: any[]) => {
+     let correctCount = 0;
+     let newResults: Record<string, boolean> = {};
+
+     questions.forEach((q, idx) => {
+        const identifier = `${blockId}_${idx}`;
+        // If undefined, it defaults to false (wrong)
+        const isCorrect = quizAnswers[identifier] === q.correct;
+        newResults[identifier] = isCorrect;
+        if (isCorrect) correctCount++;
+     });
+
+     setQuizResults(prev => ({ ...prev, ...newResults }));
+     setQuizSubmitted(prev => ({ ...prev, [blockId]: true }));
+     
+     const score = Math.round((correctCount / questions.length) * 100);
+     const status = score >= 80 ? 'mastered' : 'completed';
+     submitProgress(blockId, status, score);
   };
 
   if (loading) {
@@ -538,6 +564,38 @@ export default function LessonViewer({ params }: { params: { courseId: string, l
                          </div>
                        );
                      })}
+                  </div>
+
+                  {quizSubmitted[block.block_id] && (() => {
+                     const numQuestions = (content.questions || [content]).length;
+                     let corrects = 0;
+                     let incorrects = 0;
+                     
+                     (content.questions || [content]).forEach((qItem: any, qIdx: number) => {
+                        const identifier = `${block.block_id}_${qIdx}`;
+                        if (quizResults[identifier]) corrects++;
+                        else incorrects++;
+                     });
+                     
+                     return (
+                       <div className="mt-8 p-6 bg-indigo-50 border border-indigo-100 rounded-xl text-center animate-in fade-in zoom-in duration-500">
+                         <h4 className="text-2xl font-black text-indigo-800 mb-2">Kết Quả Bài Làm</h4>
+                         <p className="text-lg text-gray-700">
+                           Tổng điểm: <span className="font-bold text-emerald-600">{corrects} Đúng</span> / <span className="font-bold text-rose-500">{incorrects} Sai</span>
+                         </p>
+                       </div>
+                     );
+                  })()}
+
+                  <div className="mt-8 pt-6 border-t border-gray-100 flex justify-end gap-3 flex-wrap">
+                    <button onClick={() => handleStudentGenerateQuiz(block.block_id)} className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl transition">
+                      Tạo bài kiểm tra mới
+                    </button>
+                    {!quizSubmitted[block.block_id] && (
+                      <button onClick={() => handleGradeQuiz(block.block_id, content.questions || [content])} className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg transition">
+                        Chấm Bài
+                      </button>
+                    )}
                   </div>
                 </div>
               )}
