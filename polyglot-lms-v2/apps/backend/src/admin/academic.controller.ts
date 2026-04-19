@@ -4,6 +4,25 @@ import { RolesGuard, Roles } from '../auth/roles.guard';
 import { PrismaService } from '../prisma/prisma.service';
 import { IsOptional, IsNumber } from 'class-validator';
 
+import { IsString, IsNotEmpty } from 'class-validator';
+
+export class CreateBlockDto {
+  @IsString()
+  @IsNotEmpty()
+  lesson_id: string;
+
+  @IsString()
+  @IsNotEmpty()
+  type: string;
+
+  @IsOptional()
+  content?: any;
+
+  @IsOptional()
+  @IsNumber()
+  seq_no?: number;
+}
+
 export class UpdateBlockDto {
   @IsOptional()
   content?: any;
@@ -372,7 +391,7 @@ export class AcademicController {
 
   @Post('blocks')
   @Roles('ACADEMIC_MANAGER', 'CENTER_MANAGER', 'SUPER_ADMIN')
-  async createBlock(@Body() dto: { lesson_id: string, type: any, seq_no: number, content: any }) {
+  async createBlock(@Body() dto: CreateBlockDto) {
     const block = await this.prisma.lessonBlock.create({
       data: { lesson_id: dto.lesson_id, type: dto.type, seq_no: Number(dto.seq_no), content: dto.content }
     });
