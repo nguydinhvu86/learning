@@ -312,7 +312,8 @@ export default function LessonViewer({ params }: { params: { courseId: string, l
                   let icon = '🧩';
                   let title = b.type;
                   if (b.type === 'VOCABULARY') { icon = '📚'; title = 'Từ Vựng'; }
-                  if (b.type === 'FLASHCARD' || b.type === 'FLASHCARD_SENTENCE') { icon = '🔄'; title = 'Luyện Thẻ'; }
+                  if (b.type === 'FLASHCARD') { icon = '🔄'; title = 'Luyện Thẻ Từ'; }
+                  if (b.type === 'FLASHCARD_SENTENCE') { icon = '🔄'; title = 'Luyện Thẻ Câu'; }
                   if (b.type === 'SENTENCE') { icon = '💬'; title = 'Mẫu Câu'; }
                   if (b.type === 'GRAMMAR') { icon = '⚙️'; title = 'Ngữ Pháp'; }
                   if (b.type === 'READING') { icon = '📖'; title = 'Bài Đọc'; }
@@ -367,7 +368,7 @@ export default function LessonViewer({ params }: { params: { courseId: string, l
                     <div className="flex items-center space-x-3">
                       <h3 className="text-xl font-bold flex items-center text-indigo-800">
                         <span className="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center mr-3">🔄</span>
-                        Thực hành Flashcard
+                        {block.type === 'FLASHCARD_SENTENCE' ? 'Luyện Thẻ Câu' : 'Luyện Thẻ Từ'}
                       </h3>
                       {totalPages > 1 && showFlashcards ? (
                         <span className="text-sm font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">Trang {currentPage + 1} / {totalPages}</span>
