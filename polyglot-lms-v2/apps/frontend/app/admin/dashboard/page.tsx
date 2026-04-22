@@ -277,7 +277,7 @@ export default function AdminDashboard() {
         
         <nav className="flex-1 space-y-4">
           <a onClick={() => setActiveTab('dashboard')} className={`block px-4 py-3 rounded font-semibold cursor-pointer transition ${activeTab === 'dashboard' ? 'bg-emerald-600 shadow' : 'hover:bg-slate-800'}`}>Dashboard</a>
-          <a onClick={() => { setActiveTab('users'); loadUsers(); }} className={`block px-4 py-3 rounded font-semibold cursor-pointer transition ${activeTab === 'users' ? 'bg-emerald-600 shadow' : 'hover:bg-slate-800'}`}>Quản lý Học viên / GV</a>
+          <a onClick={() => { setActiveTab('users'); loadUsers(); loadCourses(); }} className={`block px-4 py-3 rounded font-semibold cursor-pointer transition ${activeTab === 'users' ? 'bg-emerald-600 shadow' : 'hover:bg-slate-800'}`}>Quản lý Học viên / GV</a>
           <a onClick={() => { setActiveTab('courses'); loadCourses(); }} className={`block px-4 py-3 rounded font-semibold cursor-pointer transition ${activeTab === 'courses' ? 'bg-emerald-600 shadow' : 'hover:bg-slate-800'}`}>Quản trị Khóa học</a>
           <a onClick={() => setActiveTab('config')} className={`block px-4 py-3 rounded font-semibold cursor-pointer transition ${activeTab === 'config' ? 'bg-emerald-600 shadow' : 'hover:bg-slate-800'}`}>Cấu hình Chương trình</a>
           <a onClick={() => { setActiveTab('website'); loadSettings(); }} className={`block px-4 py-3 rounded font-semibold cursor-pointer transition ${activeTab === 'website' ? 'bg-emerald-600 shadow' : 'hover:bg-slate-800'}`}>Cấu hình Website</a>
