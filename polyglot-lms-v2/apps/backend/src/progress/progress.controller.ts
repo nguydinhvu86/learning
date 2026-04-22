@@ -25,6 +25,39 @@ export class ProgressController {
             create: { user_id: userId, block_id: blockId, status: 'completed' }
         });
     }
+    
+    // Gamification Logic: Update EXP and Streak
+    const profile = await this.prisma.studentProfile.findUnique({ where: { user_id: userId } });
+    if (profile && dto.completed_block_ids.length > 0) {
+       const today = new Date();
+       today.setHours(0,0,0,0);
+       
+       let { current_streak, longest_streak, exp, last_study_date } = profile;
+       exp += dto.completed_block_ids.length * 10; // 10 EXP per block
+       
+       if (last_study_date) {
+           const lastDate = new Date(last_study_date);
+           lastDate.setHours(0,0,0,0);
+           const diffTime = today.getTime() - lastDate.getTime();
+           const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+           
+           if (diffDays === 1) {
+              current_streak++;
+           } else if (diffDays > 1) {
+              current_streak = 1;
+           }
+           // if diffDays === 0, they already studied today, keep current streak
+       } else {
+           current_streak = 1;
+       }
+       if (current_streak > longest_streak) longest_streak = current_streak;
+       
+       await this.prisma.studentProfile.update({
+          where: { id: profile.id },
+          data: { exp, current_streak, longest_streak, last_study_date: new Date() }
+       });
+    }
+
     return { success: true };
   }
 
@@ -100,6 +133,18 @@ export class ProgressController {
     };
   }
 
+  @Get('leaderboard')
+  @Roles('STUDENT')
+  @ApiOperation({ summary: 'Get global top 10 exp leaderboard' })
+  async getLeaderboard() {
+      const topStudents = await this.prisma.studentProfile.findMany({
+         orderBy: { exp: 'desc' },
+         take: 10,
+         select: { id: true, full_name: true, exp: true, current_streak: true, target_level: true, user_id: true }
+      });
+      return { success: true, data: topStudents };
+  }
+
   @Get('dashboard')
   @Roles('STUDENT')
   @ApiOperation({ summary: 'Get summary progress statistics for the dashboard' })
@@ -131,11 +176,16 @@ export class ProgressController {
         return diff > 0; // If next_review is in the past, it's due
     }).length;
 
+    // Get profile gamification data
+    const profile = await this.prisma.studentProfile.findUnique({ where: { user_id: userId } });
+
     return {
       total_enrolled: 0, // Could fetch actual course enrollments if linked in schema
       lessons_mastered: Math.floor(completedBlocks.length / 5), // Rough estimation: 5 blocks = 1 lesson mastery equivalent for dashboard flex
       items_to_review: items_to_review > 0 ? items_to_review : 2, // fallback so UI isn't fully empty if they just started
       accuracy_rate: accuracy_rate || 100, // if no scores recorded, default to 100%
+      exp: profile?.exp || 0,
+      current_streak: profile?.current_streak || 0,
       recent_achievements: [
         { label: 'Started E-Learning Journey', date: new Date().toISOString() }
       ]

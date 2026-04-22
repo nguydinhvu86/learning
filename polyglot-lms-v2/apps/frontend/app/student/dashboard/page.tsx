@@ -7,6 +7,7 @@ import NotificationBell from '../../components/NotificationBell';
 export default function StudentDashboard() {
   const [courses, setCourses] = useState<any[]>([]);
   const [stats, setStats] = useState<any>(null);
+  const [leaderboard, setLeaderboard] = useState<any[]>([]);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [showSettings, setShowSettings] = useState(false);
   const [profile, setProfile] = useState({ full_name: '', phone: '', password: '' });
@@ -57,6 +58,14 @@ export default function StudentDashboard() {
     })
     .then(res => res.json())
     .then(data => setStats(data))
+    .catch(console.error);
+
+    // Fetch leaderboard
+    fetch(`/api/v1/progress/leaderboard`, {
+       headers: { 'Authorization': `Bearer ${token}` }
+    })
+    .then(res => res.json())
+    .then(data => { if(data.success) setLeaderboard(data.data); })
     .catch(console.error);
 
     // Fetch user profile
@@ -145,6 +154,10 @@ export default function StudentDashboard() {
              <h1 className="text-2xl font-black tracking-tight text-white drop-shadow-md">Student Studio</h1>
           </div>
           <div className="flex items-center space-x-6">
+            <div className="flex items-center bg-orange-900/30 px-4 py-1.5 rounded-full border border-orange-500/30 shadow-[0_0_10px_rgba(249,115,22,0.2)]">
+               <span className="text-orange-500 mr-2 text-lg">🔥</span>
+               <span className="text-orange-400 font-bold">{stats?.current_streak || 0} Ngày</span>
+            </div>
             <button onClick={() => setShowSettings(true)} className="text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors bg-emerald-900/40 px-3 py-1.5 rounded-lg border border-emerald-500/30">Cài đặt tài khoản</button>
             <NotificationBell />
             <button onClick={handleLogout} className="text-sm font-semibold text-slate-400 hover:text-slate-300 transition-colors">Đăng xuất</button>
@@ -154,32 +167,65 @@ export default function StudentDashboard() {
       
       <main className="relative z-10 mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         
-        {/* Statistics Widgets */}
-        <section className="mb-14 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="group relative bg-slate-800/40 rounded-3xl p-6 border border-slate-700/50 backdrop-blur-md overflow-hidden hover:border-emerald-500/30 transition-colors">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full filter blur-[50px] group-hover:bg-emerald-500/20 transition-all"></div>
-            <div className="relative z-10">
-               <h3 className="text-slate-400 text-sm font-semibold uppercase tracking-wider mb-2 flex items-center"><span className="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span> Mastered Lessons</h3>
-               <p className="text-4xl font-black text-white">{stats?.lessons_mastered}</p>
+        {/* Statistics and Leaderboards Widgets */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-14">
+          <section className="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="group relative bg-slate-800/40 rounded-3xl p-6 border border-slate-700/50 backdrop-blur-md overflow-hidden hover:border-emerald-500/30 transition-colors">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full filter blur-[50px] group-hover:bg-emerald-500/20 transition-all"></div>
+              <div className="relative z-10">
+                 <h3 className="text-slate-400 text-sm font-semibold uppercase tracking-wider mb-2 flex items-center"><span className="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span> Mastered Lessons</h3>
+                 <p className="text-4xl font-black text-white">{stats?.lessons_mastered || 0}</p>
+                 <p className="mt-2 text-emerald-400 font-bold text-sm">+{stats?.exp || 0} Tổng EXP</p>
+              </div>
             </div>
-          </div>
-          
-          <div className="group relative bg-slate-800/40 rounded-3xl p-6 border border-slate-700/50 backdrop-blur-md overflow-hidden hover:border-green-500/30 transition-colors">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/10 rounded-full filter blur-[50px] group-hover:bg-green-500/20 transition-all"></div>
-            <div className="relative z-10">
-               <h3 className="text-slate-400 text-sm font-semibold uppercase tracking-wider mb-2 flex items-center"><span className="w-2 h-2 rounded-full bg-green-500 mr-2"></span> Items to Review</h3>
-               <p className="text-4xl font-black text-white">{stats?.items_to_review}</p>
+            
+            <div className="group relative bg-slate-800/40 rounded-3xl p-6 border border-slate-700/50 backdrop-blur-md overflow-hidden hover:border-green-500/30 transition-colors">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/10 rounded-full filter blur-[50px] group-hover:bg-green-500/20 transition-all"></div>
+              <div className="relative z-10">
+                 <h3 className="text-slate-400 text-sm font-semibold uppercase tracking-wider mb-2 flex items-center"><span className="w-2 h-2 rounded-full bg-green-500 mr-2"></span> Tham khảo Ôn tập</h3>
+                 <p className="text-4xl font-black text-white">{stats?.items_to_review || 0}</p>
+              </div>
             </div>
-          </div>
-          
-          <div className="group relative bg-slate-800/40 rounded-3xl p-6 border border-slate-700/50 backdrop-blur-md overflow-hidden hover:border-teal-500/30 transition-colors">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/10 rounded-full filter blur-[50px] group-hover:bg-teal-500/20 transition-all"></div>
-            <div className="relative z-10">
-               <h3 className="text-slate-400 text-sm font-semibold uppercase tracking-wider mb-2 flex items-center"><span className="w-2 h-2 rounded-full bg-teal-500 mr-2"></span> Global Accuracy</h3>
-               <p className="text-4xl font-black text-white">{stats?.accuracy_rate}%</p>
+            
+            <div className="group relative bg-slate-800/40 rounded-3xl p-6 border border-slate-700/50 backdrop-blur-md overflow-hidden hover:border-teal-500/30 transition-colors">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/10 rounded-full filter blur-[50px] group-hover:bg-teal-500/20 transition-all"></div>
+              <div className="relative z-10">
+                 <h3 className="text-slate-400 text-sm font-semibold uppercase tracking-wider mb-2 flex items-center"><span className="w-2 h-2 rounded-full bg-teal-500 mr-2"></span> Global Accuracy</h3>
+                 <p className="text-4xl font-black text-white">{stats?.accuracy_rate || 0}%</p>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+
+          {/* Leaderboard Panel */}
+          <section className="lg:col-span-1 bg-slate-800/40 rounded-3xl p-6 border border-slate-700/50 backdrop-blur-md relative overflow-hidden flex flex-col">
+            <div className="absolute top-[-20%] right-[-10%] w-32 h-32 bg-yellow-500/10 rounded-full filter blur-[40px] pointer-events-none"></div>
+            <h3 className="text-white font-black text-xl mb-4 flex items-center">
+              <span className="text-yellow-400 mr-2">🏆</span> Top Vinh Danh
+            </h3>
+            <div className="space-y-3 overflow-y-auto flex-1 pr-2 custom-scrollbar">
+               {leaderboard.length === 0 ? <p className="text-slate-400 text-sm text-center">Chưa có dữ liệu thi đua.</p> : leaderboard.map((student, idx) => (
+                  <div key={student.id || idx} className="flex items-center justify-between p-3 bg-slate-800/80 rounded-xl border border-slate-700/50 hover:border-yellow-500/30 transition-colors group">
+                     <div className="flex items-center space-x-3">
+                        <div className={`w-8 h-8 flex items-center justify-center rounded-full font-black text-sm shrink-0
+                           ${idx === 0 ? 'bg-yellow-100 text-yellow-600 shadow-[0_0_10px_rgba(250,204,21,0.5)]' 
+                           : idx === 1 ? 'bg-slate-300 text-slate-700' 
+                           : idx === 2 ? 'bg-amber-700 text-amber-100' 
+                           : 'bg-slate-700 text-slate-400'}`}>
+                           {idx + 1}
+                        </div>
+                        <div className="truncate pr-2 max-w-[120px]">
+                           <p className="text-white font-bold text-sm truncate">{student.full_name}</p>
+                           <p className="text-slate-400 text-xs flex items-center mt-0.5">
+                              <span className="text-emerald-400 font-black mr-2 whitespace-nowrap">{student.exp} XP</span>
+                              <span className="whitespace-nowrap flex items-center text-orange-400"><span className="text-xs mr-1">🔥</span>{student.current_streak}</span>
+                           </p>
+                        </div>
+                     </div>
+                  </div>
+               ))}
+            </div>
+          </section>
+        </div>
 
         {/* Courses Section */}
         <section>

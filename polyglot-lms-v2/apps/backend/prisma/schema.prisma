@@ -65,15 +65,19 @@ model User {
 }
 
 model StudentProfile {
-  id            String   @id @default(uuid())
-  user_id       String   @unique
+  id            String    @id @default(uuid())
+  user_id       String    @unique
   full_name     String
   phone         String?
   target_lang   String?
   current_level String?
   target_level  String?
   learning_goal String?
-  user          User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  exp             Int       @default(0)
+  current_streak  Int       @default(0)
+  longest_streak  Int       @default(0)
+  last_study_date DateTime?
+  user          User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model TeacherProfile {

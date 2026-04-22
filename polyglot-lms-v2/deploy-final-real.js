@@ -46,7 +46,7 @@ module.exports = {
     echo "--- BUILD NEST.JS ---" &&
     cd /www/wwwroot/learning/polyglot-lms-v2/apps/backend &&
     npm install &&
-
+    npx prisma db push &&
     npx prisma generate &&
     npm run build &&
     echo '#!/bin/bash' > start_backend.sh &&
