@@ -6,6 +6,7 @@ import NotificationBell from '../../components/NotificationBell';
 
 export default function StudentDashboard() {
   const [courses, setCourses] = useState<any[]>([]);
+  const [liveClasses, setLiveClasses] = useState<any[]>([]);
   const [stats, setStats] = useState<any>(null);
   const [leaderboard, setLeaderboard] = useState<any[]>([]);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
@@ -80,6 +81,13 @@ export default function StudentDashboard() {
     })
     .catch(console.error);
 
+    // Fetch live assigned classes
+    fetch(`/api/v1/student/my-classes`, {
+       headers: { 'Authorization': `Bearer ${token}` }
+    })
+    .then(res => res.json())
+    .then(data => { if(Array.isArray(data)) setLiveClasses(data); })
+    .catch(console.error);
   }, []);
 
   const saveProfile = async () => {
@@ -226,6 +234,35 @@ export default function StudentDashboard() {
             </div>
           </section>
         </div>
+
+        {/* Live Classes Section */}
+        {liveClasses.length > 0 && (
+          <section className="mb-14">
+            <h2 className="text-2xl font-black text-white mb-4 flex items-center">
+              <span className="w-8 h-8 rounded-full bg-rose-500/20 text-rose-500 flex items-center justify-center mr-3 animate-pulse shadow-[0_0_15px_rgba(244,63,94,0.3)]">🔴</span>
+              Lớp học trực tuyến (Webinar)
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+               {liveClasses.map(c => (
+                  <div key={c.id} className="bg-slate-900/60 rounded-3xl border border-rose-500/30 overflow-hidden hover:shadow-[0_10px_30px_-10px_rgba(244,63,94,0.3)] backdrop-blur-lg transition-all duration-300 p-6 flex flex-col justify-between">
+                     <div>
+                        <div className="flex justify-between items-start mb-2">
+                           <h3 className="text-xl font-bold text-white leading-tight pr-2">{c.name}</h3>
+                           <span className="bg-rose-500/20 border border-rose-500/50 text-rose-400 text-xs font-black px-2 py-1 rounded shadow-sm shadow-rose-900 flex-shrink-0 animate-pulse">LIVE</span>
+                        </div>
+                        <p className="text-slate-400 text-sm mb-6 flex items-center">
+                           <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                           {c.course_title}
+                        </p>
+                     </div>
+                     <Link href={`/student/live/${c.id}`} className="w-full block text-center bg-gradient-to-r from-rose-600 to-red-500 hover:from-rose-500 hover:to-red-400 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-rose-600/30 ring-1 ring-rose-500">
+                        Vào lớp Live ngay
+                     </Link>
+                  </div>
+               ))}
+            </div>
+          </section>
+        )}
 
         {/* Courses Section */}
         <section>

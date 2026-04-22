@@ -1,4 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, UseGuards, Request } from '@nestjs/common';
+import { RolesGuard, Roles } from './auth/roles.guard';
 import { AppService } from './app.service';
 import { PrismaService } from './prisma/prisma.service';
 
@@ -28,5 +29,25 @@ export class AppController {
     } catch(e) {
       return { id: 'global', platform_name: 'Polyglot Hub', tagline: 'E-Learning Ecosystem', description: '...', company_name: 'TSOL', company_description: '...', company_url: '#' };
     }
+  }
+
+  @Get('student/my-classes')
+  @UseGuards(RolesGuard)
+  @Roles('STUDENT')
+  async getStudentClasses(@Request() req: any) {
+     const userId = req.user?.sub || req.user?.id || req.user?.user_id;
+     if (!userId) return [];
+     
+     const memberships = await this.prisma.classMember.findMany({
+        where: { student_id: userId },
+        include: { class: { include: { course: true } } }
+     });
+     
+     return memberships.map(m => ({
+        id: m.class.id,
+        name: m.class.name,
+        course_title: m.class.course?.title || '',
+        joined_at: m.joined_at
+     }));
   }
 }

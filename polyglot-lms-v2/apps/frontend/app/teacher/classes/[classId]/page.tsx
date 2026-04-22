@@ -41,9 +41,14 @@ export default function ClassRoster({ params }: { params: { classId: string } })
             </Link>
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">Quản lý Lớp & Học viên</h1>
           </div>
-          <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-500 shadow">
-            + Thêm Học Viên Lệch
-          </button>
+          <div className="flex items-center space-x-3">
+            <Link href={`/teacher/classes/${params.classId}/live`} className="bg-rose-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-rose-500 shadow shadow-rose-200 flex items-center transition">
+               <span className="mr-2 animate-pulse">🔴</span> Bắt đầu Webinar
+            </Link>
+            <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-500 shadow">
+              + Thêm Học Viên Lệch
+            </button>
+          </div>
         </div>
       </header>
 

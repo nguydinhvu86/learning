@@ -18,6 +18,47 @@ export default function LessonViewer({ params }: { params: { courseId: string, l
   const [showResumeModal, setShowResumeModal] = useState(false);
   const [savedSessionState, setSavedSessionState] = useState<any>(null);
   const [quizSubmitted, setQuizSubmitted] = useState<Record<string, boolean>>({});
+  const [recordingStatus, setRecordingStatus] = useState<Record<string, string>>({});
+  const [transcripts, setTranscripts] = useState<Record<string, string>>({});
+
+  const startPronunciationTest = (blockId: string, idx: number, targetText: string) => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+       alert("Trình duyệt không hỗ trợ chấm điểm phát âm. Hãy dùng Google Chrome!");
+       return;
+    }
+    const identifier = `${blockId}_${idx}`;
+    const recognition = new SpeechRecognition();
+    const isChinese = /[\u4e00-\u9fa5]/.test(targetText);
+    recognition.lang = isChinese ? 'zh-CN' : 'en-US';
+    recognition.interimResults = false;
+    
+    setRecordingStatus(prev => ({ ...prev, [identifier]: 'recording' }));
+    recognition.start();
+
+    recognition.onresult = (e: any) => {
+       const transcript = e.results[0][0].transcript;
+       setTranscripts(prev => ({ ...prev, [identifier]: transcript }));
+       
+       const cleanText = (str: string) => str.toLowerCase().replace(/[.,!?;:'"＂，。？！]/g, '').replace(/\s+/g, '');
+       const cleanTarget = cleanText(targetText);
+       const cleanResult = cleanText(transcript);
+       
+       // Extremely forgiving match logic for UX
+       const isCorrect = cleanResult.includes(cleanTarget) || cleanTarget.includes(cleanResult) || cleanResult === cleanTarget;
+       
+       setRecordingStatus(prev => ({ ...prev, [identifier]: isCorrect ? 'correct' : 'incorrect' }));
+       if (isCorrect) {
+          submitProgress(blockId, 'mastered', 100);
+       }
+    };
+    recognition.onerror = () => {
+       setRecordingStatus(prev => ({ ...prev, [identifier]: 'idle' }));
+    };
+    recognition.onend = () => {
+       setRecordingStatus(prev => prev[identifier] === 'recording' ? { ...prev, [identifier]: 'idle' } : prev);
+    };
+  };
 
   const speak = (text: string, lang?: string) => {
     if ('speechSynthesis' in window) {
@@ -688,18 +729,55 @@ export default function LessonViewer({ params }: { params: { courseId: string, l
                     )}
                   </div>
                   <div className="space-y-4">
-                    {currentSentences.map((sent: any, i: number) => (
-                      <div key={i} className="flex p-4 bg-gray-50 rounded-xl items-start group hover:bg-emerald-50/50 transition">
-                         <button onClick={() => speak(sent.text)} className="w-10 h-10 rounded-full bg-white border border-gray-200 text-gray-600 group-hover:text-emerald-600 group-hover:border-emerald-300 flex items-center justify-center mr-4 transition flex-shrink-0 mt-1 shadow-sm">
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clipRule="evenodd"/></svg>
-                        </button>
-                        <div>
+                    {currentSentences.map((sent: any, i: number) => {
+                      const absoluteIdx = currentPage * itemsPerPage + i;
+                      const identifier = `${block.block_id}_${absoluteIdx}`;
+                      const status = recordingStatus[identifier];
+                      const transcript = transcripts[identifier];
+                      
+                      return (
+                      <div key={i} className="flex p-4 bg-gray-50 rounded-xl items-start group hover:bg-emerald-50/50 transition duration-300">
+                         <div className="flex flex-col items-center mr-4 space-y-2 mt-1 flex-shrink-0">
+                           <button onClick={() => speak(sent.text)} title="Nghe bản địa (TTS)" className="w-10 h-10 rounded-full bg-white border border-gray-200 text-sky-500 hover:text-sky-600 hover:bg-sky-50 hover:border-sky-300 flex items-center justify-center transition shadow-sm">
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clipRule="evenodd"/></svg>
+                           </button>
+                           <button onClick={() => startPronunciationTest(block.block_id, absoluteIdx, sent.text)} title="Chấm điểm phát âm AI" className={`w-10 h-10 rounded-full flex items-center justify-center transition shadow-sm border 
+                               ${status === 'recording' ? 'bg-rose-100 text-rose-500 border-rose-300 animate-pulse ring-4 ring-rose-200' 
+                               : status === 'correct' ? 'bg-emerald-100 text-emerald-600 border-emerald-400' 
+                               : status === 'incorrect' ? 'bg-amber-100 text-amber-600 border-amber-300'
+                               : 'bg-white border-gray-200 text-emerald-500 hover:text-emerald-600 hover:bg-emerald-50 hover:border-emerald-300 group-hover:scale-105'}`}>
+                               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+                           </button>
+                         </div>
+                        <div className="flex-1 min-w-0">
                           <div className="text-xl font-bold text-gray-800">{sent.text}</div>
                           {showPhonetics && sent.phonetic && <div className="text-md text-emerald-600 font-bold font-mono my-1">{sent.phonetic}</div>}
                           {showMeaning && <div className="text-gray-600 italic">{sent.meaning}</div>}
+                          
+                          {/* AI Recognition Feedback UI */}
+                          {status && status !== 'idle' && (
+                             <div className={`mt-4 p-3 pr-4 rounded-xl border text-sm max-w-lg shadow-sm animate-in fade-in slide-in-from-top-2 duration-300 flex items-start gap-3
+                                ${status === 'recording' ? 'bg-rose-50 border-rose-200 text-rose-700'
+                                : status === 'correct' ? 'bg-emerald-50 border-emerald-300 text-emerald-800 font-bold'
+                                : 'bg-amber-50 border-amber-200 text-amber-800'}`}>
+                                <div className="mt-0.5 text-lg">
+                                  {status === 'recording' ? '🎙️' : status === 'correct' ? '🎉' : '🎧'}
+                                </div>
+                                <div className="flex-1">
+                                  {status === 'recording' ? 'AI đang lắng nghe... (Hãy đọc rõ từng âm tiết)' : 
+                                   status === 'correct' ? 'Tuyệt vời! Bạn phát âm rất chuẩn xác (100 Mastery EXP 🌟)' : 
+                                   <>
+                                     <div className="font-semibold text-amber-900 mb-1">Cần cố gắng hơn. AI nhận ra bạn đã đọc:</div>
+                                     <div className="bg-white px-3 py-1.5 rounded-lg border border-amber-100 font-mono text-amber-700">"{transcript || 'Không nghe rõ âm thanh'}"</div>
+                                     <div className="text-xs text-amber-600 mt-2 font-normal">Mẹo: Thử nói chậm lại và hướng luồng hơi gần Mic hơn.</div>
+                                   </>}
+                                </div>
+                             </div>
+                          )}
                         </div>
                       </div>
-                    ))}
+                      );
+                    })}
                   </div>
 
                   {totalPages > 1 && (
